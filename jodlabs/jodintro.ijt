@@ -1,0 +1,475 @@
+LABTITLE=: 'JOD Introduction'
+LABAUTHOR=: 0 : 0
+John D. Baker
+bakerjd99@hotmail.com
+)
+LABCOMMENTS=: 'This lab introduces the JOD system - revised for J 5.0x July 2002'
+LABERRORS=: 1
+LABFOCUS=: 0
+
+NB. =========================================================
+Lab Section What is JOD?
+JOD is a J word storage and retrieval system.
+
+The basic idea behind JOD is that J programming is best viewed as organizing a collection of words to perform a task. Organized collections of words have a better name: DICTIONARIES!
+)
+
+NB. =========================================================
+Lab Section
+JOD is a J addon.  It is installed in the (~addons\general\jod) branch of the current J system folder by the package manager or by unzipping the distribution zip (jod.zip).  The next lab step initializes the JOD system. 
+
+NOTE: setup will run only if the file 
+(~addons\general\jod\install.ed)  does not exist.
+)
+NB. used by this lab
+require 'files dir task'
+
+NB. =========================================================
+Lab Section Test JOD installation and install if necessary
+This step checks the JOD setup and installs if necessary. The setup is done by starting (jconsole) process that runs the necesssary procedures.
+
+The setup process will spawn another window and wait until you "Press any key" to close it.
+)
+NB. run setup in another process
+fork jpath '~addons\general\jod\jodbak\installjod.bat'
+
+NB. =========================================================
+Lab Section
+Start JOD.  Once installed JOD operates like a standard J load script.  You can (load) and (require) it.
+)
+NB. insure scripts is updated in this process
+((0!:0) :: _1:) <jpath '~system\extras\config\scripts.ijs'
+
+NB. start JOD - will fail if the setup is invalid
+require 'jod'
+
+NB. =========================================================
+Lab Section Create (lab) and (labdev) dictionaries
+JOD is installed without any dictionaries.   To use JOD you must create some dictionaries.  This lab uses two example dictionaries (lab) and (labdev).  JOD dictionaries are created with the (newd) "new dictionary" verb.  The next two steps create the (lab) and (labdev) dictionaries in the default location (~user\joddicts).
+
+Before creating (lab) and (labdev) remove any current (lab) and (labdev) dictionaries.
+
+WARNING: if these dictionaries matter to you DO NOT EXECUTE THE NEXT LAB STEP.
+)
+
+NB. =========================================================
+Lab Section Remove old (lab) and (labdev) dictionaries
+Remove any current lab dictionaries.
+)
+NB. unregister any lab dictionaries - ignore errors
+3 regd&> ;:'labdev lab'
+
+NB. remove dictionary directories and all contents - ignore errors
+shell 'rd "',(jpath '~temp'),'\joddicts\labdev" /s /q'
+shell 'rd "',(jpath '~temp'),'\joddicts\lab" /s /q'
+
+NB. =========================================================
+Lab Section Create (lab) and (labdev) dictionaries
+This step creates the (lab) and (labdev) dictionaries.
+)
+NB. close any open dictionaries
+3 od ''
+
+NB. create (lab) and  (labdev) dictionaries
+newd 'lab'
+newd 'labdev'
+
+NB. list available dictionaries
+od ''
+
+NB. =========================================================
+Lab Section Opening a closing dictionaries.
+The JOD command for opening and closing dictionaries is (od) or (open dictionary). JOD commands are short and easy to type.
+
+(od) can open dictionaries read/write and read/only. As you might expect read/only dictionaries cannot be changed by JOD commands.
+)
+NB. open read/write
+od 'labdev'
+
+NB. open read/only
+2 od 'lab'
+
+NB. =========================================================
+Lab Section Some command return code basics
+All JOD commands return boxed list results. The first item is a return code: (1) good (0) bad.  Remaining items are messages and, usually, error related information.  JOD commands perform extensive argument checking.  If you break a JOD command please email me (bakerjd99@gmail.com) and tell me what you did.
+)
+NB. some erroneous open commands
+od 'i am a missing dictionary'
+
+NB. bad types
+od 9
+
+NB. bad ranks
+od 3 3$'boo'
+
+NB. =========================================================
+Lab Section Online JOD documentation
+JOD has extensive online (html) and offline (pdf) documentation.  The online documents are the most current and can be accessed with the (jodhelp) verb.
+
+(jodhelp) spawns a browser task. Browser selection is controlled by the (setwwwbrowser) verb in the jod utility class (jodutil). This class is loaded into locale (ajodutil). In the default setup JOD prefers FireFox but will fall back on Internet Explorer if FireFox is not found.  If no browser is found check the strings (WWw0) and (WWw1) in (ajodutil).
+
+The next step spawns a browser and looks for JOD online help.  Of course you must be on the internet for this to work!
+)
+NB. help for JOD z interface words can be obtained with (jodhelp)
+
+NB. list all words for which help exists
+jodhelp~ 0
+
+NB. JOD help for particular words
+NB. jodhelp 'put'
+NB. jodhelp 'newd'
+
+NB. there are items on this list that are not words, for example:
+NB. jodhelp 'jodindex'
+
+NB. =========================================================
+Lab Section
+This step spawns a browser session.  It can take a few seconds to get to online help.
+)
+NB. display documentation for a particular JOD verb
+NB. jodhelp 'put'
+
+NB. display JOD online help index.
+jodhelp ''
+
+NB. =========================================================
+Lab Section Dictionary paths
+The open dictionaries of JOD define a search and fetch path. The (did) (dictionary identification) verb lists the path.
+)
+NB. show path
+did 0
+
+NB. =========================================================
+Lab Section
+The dyadic form of (did) returns details about the contents of each dictionary on the path.
+)
+NB. dictionary details
+0 did 0
+
+NB. did ~ 0   NB. handy idiom
+
+NB. =========================================================
+Lab Section Some object orientation
+The JOD system is a complete and detailed example of object oriented programming in J.  The system consists of a number of classes (prefixed with 'ajod').  When the system loads a variety of objects are created.  The basic architecture is a main dictionary object that contains four subobjects. Each open dictionary is also associated with a directory object. Directory objects are created and destroyed as required.
+)
+NB. objects beginning with 'ajod' are the JOD classes.
+conl 0
+
+NB. JOD consists of six basic objects and as
+NB. many directory objects as there are path items.
+conl 1
+
+NB. =========================================================
+Lab Section The put dictionary concept
+The first dictionary on the path is special.  It is the only  dictionary that can be modified by JOD commands.  Because most dictionary modifications are put's I call this dictionary the "put" dictionary.
+
+It's important to understand that you can use the contents of the other dictionaries on the path but you cannot change them in any way.
+)
+NB. first path dictionary is the put dictionary
+did 0
+
+NB. =========================================================
+Lab Section Creating new dictionaries.
+Before modifying the contents of any dictionary let's create a new "toy" dictionary and make it the put dictionary.
+
+Before creating (toy) remove any old (toy)'s.  IF YOU CARE ABOUT THE DATA IN (toy)
+DO NOT EXECUTE THE NEXT LAB STEP!
+)
+
+NB. =========================================================
+Lab Section
+Remove any old (toy)'s and recreate.
+)
+NB. close open dictionaries
+3 od ''
+
+NB. clear out old (toy)'s - ignore errors
+3 regd 'toy'
+shell 'rd "',(jpath '~temp'),'\joddicts\toy" /s /q'
+
+NB. create (toy)
+newd 'toy'
+
+NB. open toy, labdev and lab - toy is the put dictionary
+od ;:'toy labdev lab'
+
+NB. insure toy is read/write
+dpset 'READWRITE'
+
+NB. =========================================================
+Lab Section Getting and putting words.
+In the first section I said JOD is a word storage and retrieval system.  Now we are ready to (put) and (get) some words.
+
+First create some words to store.
+)
+NB. create some words
+random=: ?10 10$100  NB. numeric noun
+text=: 'this is a test of the one pure thing'
+floats=: 2 + % 100#100
+symbols=: s: ' once more with feeling'
+boxed=: <"1 i. 2 3
+rationals=: 100 + % (>:i. 10x) ^ 50
+unicode=: u: 'this is now unicode'
+each=: &.>           NB. tacit adverb
+explicit=: 4 : 0
+NB. explicit verb
+x +. y
+)
+
+words=: ;:'random text floats symbols boxed rationals unicode each explicit'
+
+NB. =========================================================
+Lab Section
+(put) is the JOD command that stores words.
+
+Save and erase the words.  Take some time to convince yourself that the words have been erased before proceeding.
+)
+
+NB. save words
+put words
+
+NB. erase definitions
+erase words
+
+NB. =========================================================
+Lab Section
+Now retrieve the stored words and check that they are properly restored.
+)
+NB. get words
+get words
+
+NB. =========================================================
+Lab Section Documentation 101
+One of my pet peeves is undocumented code!
+
+How often have you had to face hundreds, maybe thousands, of lines of code with nary a comment in sight. Comments are not for wimps and girly-men. Telling comments are a hallmark of good code.
+
+JOD provides a number of ways to document words. When a word is introduced it's a good idea to store a short one line description of the word.
+)
+NB. store short word descriptions
+0 8 put 'random';'random integer table'
+
+0 8 put 'each';'applies left argument to array items'
+
+NB. =========================================================
+Lab Section
+Of course you can view your stored descriptions with (get).
+)
+NB. get short explanations
+0 8 get 'random';'each'
+
+NB. =========================================================
+Lab Section
+More detailed documentation can be stored and retrieved. This step loads a realistic example of word documentation into the current put dictionary and then displays with (disp).
+
+(disp) is a JOD utility.  It is the only verb that returns
+a character list (when successful) instead of the usual boxed (rc;value)
+)
+NB. loads (changestr) and (changestr) documentation into the current put dictionary
+script '~addons\general\jod\jodlabs\labexample001.ijs'
+
+NB. =========================================================
+Lab Section
+This steps displays the long document loaded in the previous step.
+)
+NB. show long documentation
+0 9 disp 'changestr'
+
+NB. =========================================================
+Lab Section More putting and getting.
+(put) and (get) are quite flexible and can store entire locales.  The locales can be named or numbered.
+)
+NB. save the (ajodmake) locale/class in "toy"
+'ajodmake' put zz=: nl_ajodmake_ i. 4
+
+NB. retrieve the (ajodmake) words into an 'xxx' locale
+'xxx' get zz
+
+NB. =========================================================
+Lab Section Searching for words
+Like most storage systems JOD provides facilities for searching the contents of its database.
+
+The main search command is (dnl) (dictionary name lists).
+)
+NB. list all the words on the path beginning with 'du'
+list }. dnl 'du'
+
+NB. =========================================================
+Lab Section
+(dnl) can search for words, tests, groups, suites and macros.  This step creates some groups and then lists all the groups on the path that begin with 'JOD'
+)
+NB. create some groups
+grp 'strings';'changestr'
+grp 'JODmake';nl_ajodmake_ i.4
+
+NB. groups beginning with 'JOD'
+2 1 dnl 'JOD'
+
+NB. =========================================================
+Lab Section What are these funny argument numbers?
+By now you have probably noticed that many JOD commands take integer arguments.  JOD argument codes are of basically three types, object codes, option codes and qualifiers.
+
+The objects JOD stores and retrieves all have object codes.  The next table displays JOD object codes
+)
+NB. JOD object codes
+(<"0 i. 5) ,. ;:'WORD TEST GROUP SUITE MACRO'
+
+NB. =========================================================
+Lab Section
+Option and qualifier codes select and modify options.  They are all integers. For more information about argument codes read JOD's online documentation.
+
+Now look at some more (dnl) commands.
+)
+NB. (group, option 1 - match prefix) - case matters
+2 1 dnl 'J'
+
+NB. (macro, option 2 - name contains string) - no macros yet
+4 2 dnl 'ar'
+
+NB. make a macro and search again
+4 put 'arrgh';JSCRIPT_ajod_;'NB. my do nothing J macro'
+
+4 2 dnl 'ar'
+
+NB. =========================================================
+Lab Section Groups and suites
+JOD provides a simple way to group words and tests.  A group is a collection of J words.  A suite is a collection of J test scripts.  You create and modify groups and suites with the (grp) verb.
+)
+NB. create a group of words with names beginning with 'ch'
+grp 'testgroup' ; }. dnl 'ch'
+
+NB. create a test suite - note left argument code
+3 grp 'testsuite' ; }. 1 dnl ''
+
+NB. =========================================================
+Lab Section
+You can list the contents of groups or suites with (grp)
+)
+NB. list contents of JODdob group
+grp 'JODdob'
+
+NB. contents of testsuite, note suite code left argument
+3 grp 'testsuite'
+
+NB. =========================================================
+Lab Section Making groups and suites
+One of the main advantages of storing J code in JOD vs. a plain script is that you can modify words, tests, groups, suites and documentation at will and then generate many scripts all with the most current object definitions.
+
+The next two commands generate all the JOD source code files.
+)
+NB. close dictionaries
+3 od ''
+
+NB. open joddev and jod read/only
+2 od ;:'joddev jod'
+
+NB. run buildjodsource macro
+rm 'buildjodsource'
+
+NB. =========================================================
+Lab Section Macros
+The next section displays a macro I run to format the leading comment block of JOD words.
+)
+NB. display macro
+4 disp 'documentjod'
+
+NB. =========================================================
+Lab Section
+Macros are not restricted to J scripts.  You can also store HTML, LaTeX, XML and plain TEXT scripts in the JOD dictionaries.  Only J scripts can be run however.
+)
+NB. make toy the put dictionary again
+od ;:'toy main joddev jod' [ 3 od ''
+
+NB. store LaTeX (22) and HTML (23) texts
+4 put 'latex';22;'... LaTeX code ...'
+4 put 'html';23;' ... HTML code ...'
+
+NB. =========================================================
+Lab Section Global references
+JOD has facilities for carrying out static name analysis on J words and tests.
+
+The (globs) and (uses) verbs analyze and store name references.
+)
+NB. analyze names
+get 'docct'
+
+NB. classify name use in base locale word
+11 globs 'docct'
+
+NB. =========================================================
+Lab Section
+You can update global word references.
+)
+NB. store (docct) in "toy"
+put 'docct'
+
+NB. 0 is the word code - stores global references
+0 globs 'docct'
+
+NB. =========================================================
+Lab Section
+(uses) retrieves stored references.
+)
+NB. global references stored for (docct)
+uses 'docct'
+
+NB. =========================================================
+Lab Section
+(uses) becomes very "useful" when all words have stored references.  The next command may take sometime
+(less than a minute) to run.
+)
+NB. insure toy is the put dictionary
+od ;:'toy main joddev jod' [ 3 od ''
+
+NB. update all JODmake global references - show last 10 rows
+_10 {. s=: s ,. 0 globs&> s=: }. grp'JODmake'
+
+NB. =========================================================
+Lab Section
+(uses) can return many reference lists at once. The same path search mechanism is used for retrieving references.
+)
+NB. global references of words beginning with 'ch'
+uses }. dnl'ch'
+
+NB. =========================================================
+Lab Section The uses union
+Option 31 of (uses) returns the uses-union of a word.  The uses-union is basically a unique list all the words on the call tree of a word.
+
+Note that locale names are separated from normal names in (uses) result.  Locale references are treated like black boxes.
+)
+NB. uses union of two words
+31 uses ;:'doc wrdglobals'
+
+NB. =========================================================
+Lab Section Backing up and restoring dictionaries
+JOD is database for J words, scripts and other precious program texts.  Most database systems have means for backing up and restoring databases and JOD does as well.  The (packd) verb backups up a database.
+)
+NB. save a backup of the current put dictionary
+packd 'toy'
+
+NB. =========================================================
+Lab Section
+(packd) copies the current dictionary files to the backup subdirectory and prefixes all the files with a unique ever increasing backup number.
+)
+NB. list put dictionary backup files
+BDIR=: {:{.  DPATH__ST__JODobj   NB. put directory
+dir BAK__BDIR,'*.ijf'            NB. backup files
+
+NB. =========================================================
+Lab Section
+(restd) restores the last backup by selecting backup files with the highest prefix.
+)
+NB. restore last backup
+restd 'toy'
+
+NB. =========================================================
+Lab Section Final words
+You now have some idea of what JOD is all about. To learn more read the *.PDF files, especially JOD.PDF, examine the source code files generated in this lab and play with the system. The macros and tests in the (joddev) and (jod) dictionaries contain many uses of JOD commands. If you have any problems, questions or complaints please email me at bakerjd99@gmail.com
+
+John D. Baker
+bakerjd99@gmail.com
+Irvine CA 2007
+)
+NB. close any open dictionaries
+3 od ''
+
