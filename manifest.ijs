@@ -4,24 +4,24 @@ VERSION=: '0.1.1'
 PLATFORMS=: 'win'      
 LABCATEGORY=: 'General'
 FILES=: 0 : 0
-manifest.ijs
-jod.md5
-jodbak/installjod.bat
-jodbak/resetjod.bat
 installjod.ijs
-resetjod.ijs
+jod.md5
 jodparms.ijs
 jodprofile.ijs
-jodbak/jodbak.ijs
+manifest.ijs
+resetjod.ijs
+jodbak/installjod.bat
 jodbak/installjodbak.ijs
-jodbak/resetjodbak.ijs
-jodbak/jodprofilebak.ijs
+jodbak/jodbak.ijs
 jodbak/jodparmsbak.ijs
+jodbak/jodprofilebak.ijs
+jodbak/resetjod.bat
+jodbak/resetjodbak.ijs
 joddoc/htmldoc/jodindex.html
 joddoc/pdfdoc/jod.pdf
 jodexts/jodtoolsbak.ijs
-jodlabs/jodintro.ijt
 jodlabs/joddump.ijt
+jodlabs/jodintro.ijt
 jodlabs/labexample001.ijs
 )
 RELEASE=: 'j602'
