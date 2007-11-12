@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.1.1  Build Number: 62  Date: 06 Nov 2007 10:27:51
+NB. Version: 0.1.1  Build Number: 63  Date: 12 Nov 2007 10:46:03
 
 NB.*jodtools c-- JOD tools class - extends JOD utility class.
 NB.
@@ -614,11 +614,11 @@ nt=:3 : 0
 
 NB.*nt v-- edit a new test script using JOD conventions.
 NB.
-NB. This verb looks for (TESTSTUB) on the path of open
+NB. This  verb  looks   for  (TESTSTUB)  on  the  path   of  open
 NB. dictionaries allowing easy user defined test script formats.
-NB. 
+NB.
 NB. monad:  nt clTest
-NB.   
+NB.
 NB.   nt 'scriptname'
 
 name=. y -. ' '
