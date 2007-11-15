@@ -1,21 +1,21 @@
 # MD5 checksums for jod.md5 version: 0.1.2
-# 12 Nov 2007 11:21:21
+# 15 Nov 2007 13:10:32
 
 fb7f59acd71a7ca7b2bc60c792638cef *installjod.ijs
 189b969ded23fe4b39408fcc2b9c2edf *jodparms.ijs
-dc6500cc456b18291777ea2d0dbdcab8 *jodprofile.ijs
+f1ef8fb6916dc6b8c86ef93e9d3ceb39 *jodprofile.ijs
 eabb1d31bd2791517ce422782caf392d *manifest.ijs
 6100f074fbba89e4c608454d0880abf1 *resetjod.ijs
 4b0773eeb406510063117fb808d5a089 *jodbak/installjod.bat
 fb7f59acd71a7ca7b2bc60c792638cef *jodbak/installjodbak.ijs
-85ad0b2236a44d697f5a5e52b948a042 *jodbak/jodbak.ijs
+0c6507e44cad17fae3c1ca659c17a99e *jodbak/jodbak.ijs
 189b969ded23fe4b39408fcc2b9c2edf *jodbak/jodparmsbak.ijs
-dc6500cc456b18291777ea2d0dbdcab8 *jodbak/jodprofilebak.ijs
+f1ef8fb6916dc6b8c86ef93e9d3ceb39 *jodbak/jodprofilebak.ijs
 d9552043e28093b6220126155dcba02b *jodbak/resetjod.bat
 6100f074fbba89e4c608454d0880abf1 *jodbak/resetjodbak.ijs
 cdfb7483a98d3d8d66f910577831d065 *joddoc/htmldoc/jodindex.html
 8326c5b16e08d4b1f8d9ff4f4510f647 *joddoc/pdfdoc/jod.pdf
-c92d50eb1a4027d7af7a8bac9c324c3f *jodexts/jodtoolsbak.ijs
+c6fc698848ef213c8d8b81b27940a5dd *jodexts/jodtoolsbak.ijs
 ee31877153ff276dd0c17e8fad80074a *jodlabs/joddump.ijt
 4eb43b9c04ea72b2adc829a704e40cd7 *jodlabs/jodintro.ijt
 8a394df73c94295724a7886d6618e1ff *jodlabs/labexample001.ijs

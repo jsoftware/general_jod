@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.1.1  Build Number: 63  Date: 12 Nov 2007 10:46:03
+NB. Version: 0.1.1  Build Number: 64  Date: 12 Nov 2007 16:06:14
 
 NB.*jodtools c-- JOD tools class - extends JOD utility class.
 NB.
@@ -40,7 +40,7 @@ CR=:13{a.
 DOCUMENTMARK=:123 126 78 126 125 61 58 32 123 126 67 126 125 32 58 32 48 10 10 78 66 46 42 123 126 78 126 125 32 123 126 84 126 125 45 45 32 119 111 114 100 116 101 120 116 10 78 66 46 10 78 66 46 32 109 111 110 97 100 58 32 32 123 126 78 126 125 32 63 63 10 78 66 46 32 100 121 97 100 58 32 32 63 63 32 123 126 78 126 125 32 63 63 10 10 39 78 73 77 80 32 123 126 78 126 125 39 10 41{a.
 
 NB. jodtools z interface words
-IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp getrx hlpnl jodage lg locgrp ltx mg mls mt noexp notgrp nt nw obnames pr refnames revonex swex tt usedby'
+IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp ltx mg mls mt noexp notgrp nt nw obnames pr refnames revonex swex tt usedby'
 
 NB. comment tag marking end of scripts.ijs entries that are JOD (mls) generated
 JODLOADEND=:'NB.</JODLoadScripts>'
