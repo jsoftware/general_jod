@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.1.1  Build Number: 64  Date: 12 Nov 2007 16:06:14
+NB. Version: 0.1.3  Build Number: 66  Date: 17 Nov 2007 16:56:10
 
 NB.*jodtools c-- JOD tools class - extends JOD utility class.
 NB.
