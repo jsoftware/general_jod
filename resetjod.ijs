@@ -85,7 +85,10 @@ NB. to remove JOD generated load scripts uncomment the next two lines
 NB. dat=: (bls;els) splitstrs dat
 NB. dat=: ; dat #~ -. +./@:(bls&E.)&> dat
 
-dat (1!:2) <SF
+NB. trims all leading and trailing white space
+allwhitetrim=:] #~ [: -. [: (*./\. +. *./\) ] e. (9 10 13 32{a.)"_
+
+(allwhitetrim dat) (1!:2) <SF
 NB. run scripts.ijs to make changes active
 ((0!:0) :: _1:) <SF
 18!:4 <'base'
