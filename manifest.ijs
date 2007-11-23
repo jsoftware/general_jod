@@ -22,6 +22,7 @@ joddoc/pdfdoc/jod.pdf
 jodexts/jodtoolsbak.ijs
 jodlabs/joddump.ijt
 jodlabs/jodintro.ijt
+jodlabs/jodprjm.ijt
 jodlabs/labexample001.ijs
 )
 RELEASE=:'j602'

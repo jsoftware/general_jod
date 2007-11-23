@@ -10,7 +10,7 @@ NB. =========================================================
 Lab Section Introduction
 JOD source code is distributed in three JOD dump scripts stored in (jodsource.zip). Dump scripts are plain ASCII J scripts that can be loaded with J's standard script processing verbs.
 
-This lab assumes the JOD and zfiles addons have been installed. If you haven't setup JOD run the lab (jodintro.ijt) (JOD Introduction) or run (jobak/installjod.bat).
+This lab assumes the JOD and zfiles addons have been installed. If you haven't setup JOD run the lab (jodintro.ijt) "JOD Introduction" or run (jobak/installjod.bat).
 
 If zfiles is not available use the J package manager to download and install it.
 )
@@ -28,7 +28,7 @@ This lab assumes (jodsource.zip) has been downloaded by the package manager and 
 
 ~addons\general\jodsource
 
-If you haven't downloaded (jodsource.zip) use the package manager to download the (jodsource) before continuing with this lab.
+If you haven't downloaded (jodsource.zip) use the package manager to download it before continuing with this lab.
 )
 NB. check for jodsource.zip
 require 'files'
@@ -40,20 +40,20 @@ NB. =========================================================
 Lab Section Configure a ~jodsource directory
 To run a JOD dump script simply open a new dictionary and use (0!:0). 
 
-For this lab the source dictionaries are created in the (~jodsource) relative directory.  You will need to configure a J folder to point to an actual directory.  I STRONGLY RECOMMEND using a directory that is not in the J system tree!  You don't want your precious dictionary databases being wiped by installing the next J version.
+For this lab the source dictionaries are created in the (~JODSOURCE) relative directory.  You will need to configure a J folder to point to an actual directory. I STRONGLY RECOMMEND using a directory that is not in the J system tree! You don't want your precious dictionary databases being wiped by installing the next J version.
 
-Before proceeding configure a (~jodsource) directory.
+Before proceeding configure a (~JODSOURCE) directory.
 )
-NB. configure a ~jodsource directory before proceeding to the next step.
+NB. configure a ~JODSOURCE directory before proceeding to the next step.
 
 NB. =========================================================
 Lab Section Create utilsload dictionary
 Dump scripts are loaded into dictionaries.  Create a (utilsload) dictionary.
 )
-NB. create a new utils directory in (~jodsource) - it will be renamed later
-NB. You must configure (~jodsource) and point to an actual empty directory.
+NB. create a new utils directory in (~JODSOURCE) - it will be renamed later
+NB. You must configure (~JODSOURCE) and point to an actual empty directory.
 
-newd 'utilsload';(jpath '~jodsource\utilsload');'main utility dictionary'
+newd 'utilsload';(jpath '~JODSOURCE\utilsload');'main utility dictionary'
 
 NB. close any open dictionaries and open
 od 'utilsload' [ 3 od ''
@@ -98,8 +98,8 @@ Lab Section Load jod
 The utilities dictionary is now loaded and cross references have been updated.  To complete the restoration of JOD source code we now create and load (jodload) and (joddevload).
 )
 NB. create dictionaries
-newd 'jodload';(jpath '~jodsource\jodload');'jod source code dictionary'
-newd 'joddevload';(jpath '~jodsource\joddevload');'jod development put dictionary'
+newd 'jodload';(jpath '~JODSOURCE\jodload');'jod source code dictionary'
+newd 'joddevload';(jpath '~JODSOURCE\joddevload');'jod development put dictionary'
 
 NB. =========================================================
 Lab Section
