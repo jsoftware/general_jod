@@ -24,7 +24,7 @@ jodlabs/jodintro.ijt
 jodlabs/jodprjm.ijt
 jodlabs/labexample001.ijs
 )
-RELEASE=:'j602'
+RELEASE=:'j601 j602'
 DESCRIPTION=: 0 : 0
 JOD (J Object Dictionary) is a J programming tool. It offers
 a word oriented database for all types of J words. JOD 
