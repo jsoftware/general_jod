@@ -1,10 +1,10 @@
-# MD5 checksums for jod.md5 version: 0.1.3
-# 23 Nov 2007 09:26:41
+# MD5 checksums for jod.md5 version: 0.2.1
+# 23 Nov 2007 09:51:25
 
 fb7f59acd71a7ca7b2bc60c792638cef *installjod.ijs
 189b969ded23fe4b39408fcc2b9c2edf *jodparms.ijs
 f1ef8fb6916dc6b8c86ef93e9d3ceb39 *jodprofile.ijs
-cdc8a23d5f1c29f8df92440d9312661c *manifest.ijs
+7dbd1ef514ac9673c553a73938898127 *manifest.ijs
 6100f074fbba89e4c608454d0880abf1 *resetjod.ijs
 4b0773eeb406510063117fb808d5a089 *jodbak/installjod.bat
 fb7f59acd71a7ca7b2bc60c792638cef *jodbak/installjodbak.ijs
