@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.2.3  Build Number: 158  Date: 23 Nov 2007 11:28:50
+NB. Version: 0.2.4  Build Number: 173  Date: 27 Nov 2007 14:54:50
 (9!:41) 0
 jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -121,8 +121,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODBUILDCNT=:158
-JODVERSION=:'0.2.3'
+JODVMD=:'0.2.4';173;'27 Nov 2007 14:48:27'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -166,7 +165,6 @@ badsts=:0:
 badunique=:#~:[:#~.
 beforestr=:]{.~1&(i.~)@([E.])
 boxopen=:<^:(L.=0:)
-bx=:#i.@#
 catrefs=:3 :0
 if.(,a:)-:,y do.''
 else.
@@ -274,22 +272,23 @@ if.fex<JODPROF do.(_9-:((0!:0) ::_9:) <JODPROF ) {1 0 else.1 end.
 )
 createmast=:3 :0
 b=.y
-d=.PATHDEL,~(justdrv,':'"_,justpath)b
+f=.PATHDEL,~(justdrv,':'"_,justpath)b
 if.badappend jcreate b do.
 jderr ERR011
 return.
 end.
 b=.jopen_jfiles_ b
 a=.(<0;now'')jappend b
-a=.a,(<JODVERSION;JODBUILDCNT,didnum 0)jappend b
+'d c'=.2{.JODVMD
+a=.a,(<d;c,didnum 0)jappend b
 a=.a,(4 0$'')jappend b
 a=.a,(4 0$'')jappend b
 a=.a,(3#<'')jappend b
-0!:0<d,PARMFILE
-c=.<dptable MASTERPARMS
-a=.a,c jappend b
-a=.a,c jappend b
-a=.a,c jappend b
+0!:0<f,PARMFILE
+e=.<dptable MASTERPARMS
+a=.a,e jappend b
+a=.a,e jappend b
+a=.a,e jappend b
 a=.a,(i.0)jappend b
 jclose_jfiles_ b
 if.0><./a do.
@@ -361,7 +360,7 @@ a=.genguid<16#' '
 if.0~:>{.a do.jderr ERR021
 else.
 a=.,(a.i.>{:a){truth 8
-b=.bx a
+b=.I.a
 +/(2x^b)b}a
 end.
 )
@@ -790,7 +789,7 @@ a=.>jread JMASTER;CNMFTAB
 if.0=y do.
 a=.(<"0({:$a)#0)3}a
 else.
-a=.(<0)(<3;bx(;3{a)e.readobid obidfile 0)}a
+a=.(<0)(<3;I.(;3{a)e.readobid obidfile 0)}a
 end.
 (<a)jreplace JMASTER;CNMFTAB
 )
@@ -809,15 +808,13 @@ tc=:3!:0
 trimnl=:-.&' '&.>
 truth=:#:@i.@(2&^)
 tstamp=:3 :0
-if.0=#y do.w=.6!:0''else.w=.y end.
-r=.}:$w
-t=.2 1 0 3 4 5{"1[_6[\,6{."1<.w
-d=.'+++::'2 6 11 14 17}"1[2 4 5 3 3 3":t
+b=.<.y,(0=#y)#6!:0''
+'b m d h n s'=.6{.b
 a=._3[\'   JanFebMarAprMayJunJulAugSepOctNovDec'
-d=.,((1 {"1 t){a)3 4 5}"1 d
-d=.'0'(I.d=' ')}d
-d=.' '(I.d='+')}d
-(r,20)$d
+f=._2:{.'0'&,@":
+t=.(2":d),(m{a),(":b),;f&.>h,n,s
+r=.'xx xxx xxxx xx:xx:xx'
+t(I.r='x')}r
 )
 uses=:3 :0
 0 uses y
@@ -2650,6 +2647,7 @@ rm;dhnms2p5_48hthm3d&revision=_latest
 dpset;dhnms2p5_50cjggzs&revision=_latest
 rtt;dhnms2p5_51gn6fh2&revision=_latest
 mls;dhnms2p5_61f7b8p8&revision=_latest
+jodhelp;dhnms2p5_63fb3zw9&revision=_latest
 )
 JODHELP=:|:alltrim&.>(';'&beforestr;';'&afterstr)&><;._2 JODHELP-.CR
 JODHELP=:((<URLPFX),&.>1{JODHELP)(1)}JODHELP
@@ -2715,7 +2713,7 @@ end.y
 compj=:3 :0
 if.badrc a=.(WORD,NVTABLE)get y do.a return.else.a=.rv a end.
 b=.0<;1 {"1 a
-a=.(compressj@:ctit&.>(b#{:"1 a)-.&.>TAB)(<(bx b);2)}a
+a=.(compressj@:ctit&.>(b#{:"1 a)-.&.>TAB)(<(I.b);2)}a
 (WORD,1)wttext__MK a
 )
 compressj=:3 :0
@@ -2956,9 +2954,15 @@ end.
 rtt=:3 :0
 0 rtt y
 :
+if.(3-:x )+.4-:x do.
+if.badrc c=.(SUITE,_2)make y do.c return.end.
+b=.rv c
+x=.x-3
+else.
 if.badrc c=.TEST get y do.c return.end.
 c=.rv c
 b=.;({:"1 c),&.>LF
+end.
 a=.18!:5''
 18!:4<'base'
 try.

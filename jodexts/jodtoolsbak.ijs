@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.2.3  Build Number: 72  Date: 23 Nov 2007 11:28:52
+NB. Version: 0.2.4  Build Number: 84  Date: 27 Nov 2007 14:54:52
 
 NB.*jodtools c-- JOD tools class - extends JOD utility class.
 NB.
@@ -9,7 +9,7 @@ NB.  allnames combines names from (refnames) and (obnames)
 NB.  allrefs  all names referenced by objects on name list                            
 NB.  delgrp   remove words/tests from groups/suites                                   
 NB.  getrx    get required to execute                                                 
-NB.  hlpnl    displays short descriptions of objects on (y.)                          
+NB.  hlpnl    displays short descriptions of objects on (y)                          
 NB.  jodage   days since last change and creation of JOD objects
 NB.  jodhelp   display online JOD help                     
 NB.  lg       make and load JOD group                                                 
@@ -42,11 +42,14 @@ DOCUMENTMARK=:123 126 78 126 125 61 58 32 123 126 67 126 125 32 58 32 48 10 10 7
 NB. jodtools z interface words
 IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp ltx mg mls mt noexp notgrp nt nw obnames pr refnames revonex swex tt usedby'
 
-NB. comment tag marking end of scripts.ijs entries that are JOD (mls) generated
+NB. comment tag marking end of scripts
 JODLOADEND=:'NB.</JODLoadScripts>'
 
-NB. comment tag marking start of scripts.ijs entries that are JOD (mls) generated
+NB. comment tag marking start of scripts
 JODLOADSTART=:'NB.<JODLoadScripts>'
+
+NB. JODTOOLS version, build count and make date
+JODTOOLSVMD=:'0.2.4';84;'27 Nov 2007 14:48:29'
 
 NB. line feed character
 LF=:10{a.
@@ -338,7 +341,7 @@ NB.   firstperiod 'not here {m. or here [u. or here (x.) or here u. but here. Go
 NB. mask out J arguments in at most first 500 chars
 y=. (500<.#y){.y
 args=. ;&.> , { (<<"0' ([{'),<;:'m. n. x. y. u. v. *.'
-y=.' ' (bx _2  (|. !. 0) +./ args E.&> <y)} y
+y=.' ' (I. _2  (|. !. 0) +./ args E.&> <y)} y
 
 NB. first period after masking
 y i. '.'
@@ -496,8 +499,10 @@ else.
 end.
 )
 
-
+NB. get text from edit window as Latex
 ltx=:] ; 22"_ ; gt
+
+NB. make group
 mg=:2 _1&make
 
 
@@ -729,9 +734,13 @@ elseif.do.
 end.
 )
 
-
+NB. put and cross reference word
 pr=:0&globs ,:~ put
+
+NB. get text from edit window as plain ascii text
 pt=:] ; 25"_ ; gt
+
+
 putfc=:0 8"_ put fsen
 refnames=:[: /:~ [: ~. [: ; 1: {"1 [: > {:
 
@@ -768,7 +777,7 @@ end.
 strexp=:3 : 0
 
 NB.*strexp v-- returns a boxed list of words containing string
-NB. (y.) in short description.
+NB. (y) in short description.
 NB.
 NB. monad:  blcl =. strexp clStr
 NB.
@@ -782,7 +791,7 @@ else.
 end.
 )
 
-
+NB. extract single line explanation from word header comment and save
 swex=:0 8&put@:fsen
 
 
