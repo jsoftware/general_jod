@@ -191,3 +191,12 @@ NB. regd 'utils';{:3 regd 'utilsload'
 NB. regd 'jod';{:3 regd 'jodload'
 NB. regd 'joddev';{:3 regd 'joddevload'
 
+NB. =========================================================
+Lab Section Summary
+This lab showed how to load dump scripts.  JOD source dictionaries where loaded.  To use the JOD source dictionaries make sure they are named (joddev), (jod) and (utils).
+
+John D. Baker
+November 2007
+bakerjd99@gmail.com
+)
+

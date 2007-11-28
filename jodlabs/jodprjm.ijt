@@ -18,11 +18,13 @@ This lab assumes:
 
 (3) A ~JODPROJECT folder pointing to (joddev)'s root directory has been configured.
 
+(4) A ~JODTEST folder pointing to test directory has been configured.
+
 To setup JOD run the lab "JOD Introduction" or execute (~addons\general\jod\jodbak\installjod.bat)
 
 To install the jodsource addon use the J Package Manager and then run the lab "JOD Source Code Dump Scripts."
 
-Use J's configure tool to set ~JODPROJECT.
+Use J's configure tool to set ~JODPROJECT and ~JODTEST.
 )
 require 'jod'
 
@@ -94,15 +96,25 @@ NB. press the Project Manager "Load"
 
 NB. =========================================================
 Lab Section Run Basic JOD tests
-NIMP - run basic JOD tests
+An example test script has been generated from JOD and referenced.  Before running this script create some test dictionaries.  
+
+Test dictionary creation requires a configured ~JODTEST directory.
 )
-NB. press the "Test" button
+NB. create test dictionaries - many JOD test scripts refer to these dictionary names
+1 rtt 'createtestdictionaries'
+
+NB. =========================================================
+Lab Section
+This step runs the project test script.  There are many other test scripts stored in the JOD development dictionaries.  These scripts provide numerous examples of how to use and abuse JOD words.
+)
+NB. Press the Project Manager's "Test" button.
 
 NB. =========================================================
 Lab Section Conclusion
-This lab showed how you use JOD with the J Project Manager.
+This lab showed how to use JOD with the J Project Manager.
 
 John D. Baker
 November 2007
+bakerjd99@gmail.com
 )
 
