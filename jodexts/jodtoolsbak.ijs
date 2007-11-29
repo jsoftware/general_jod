@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.2.4  Build Number: 85  Date: 28 Nov 2007 09:58:19
+NB. Version: 0.2.4  Build Number: 86  Date: 29 Nov 2007 10:45:01
 
 NB.*jodtools c-- JOD tools class - extends JOD utility class.
 NB.
@@ -49,7 +49,7 @@ NB. comment tag marking start of scripts
 JODLOADSTART=:'NB.<JODLoadScripts>'
 
 NB. JODTOOLS version, build count and make date
-JODTOOLSVMD=:'0.2.4';85;'27 Nov 2007 14:54:52'
+JODTOOLSVMD=:'0.2.4';86;'28 Nov 2007 09:58:19'
 
 NB. line feed character
 LF=:10{a.
@@ -409,16 +409,19 @@ jodage=:3 : 0
 NB.*jodage  v--  days  since  last  change  and creation  of  JOD
 NB. objects.
 NB.
-NB. monad:  jodage zl | cl | blcl
+NB. monad:  jodage cl | blcl
 NB.
-NB.   age }. dnl 'ageus'
+NB.   jodage 'jodage'
+NB.   jodage }. dnl 're'
 NB.
-NB. dyad:  iaCode jodage zl|cl|blcl
+NB. dyad:  iaCode jodage cl | blcl
+NB.
+NB.   2 jodage }. grp''
 
 0 jodage y
 :
 if. badil x do. jderr 'invalid option(s)'
-elseif. y=. boxopen y
+elseif. y=. ,boxopen y
         badrc changed=. (({.x),14) get y do. changed
 elseif. badrc created=. (({.x),13) get y do. created
 elseif.do.
