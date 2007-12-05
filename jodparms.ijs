@@ -1,4 +1,4 @@
-NB.*jodparms s-- default dictionary parameters
+NB.*jodparms s-- default dictionary parameters.
 NB.
 NB. This file is used to set  the  default  dictionary parameters
 NB. table  in the master file. When  a  new dictionary is created

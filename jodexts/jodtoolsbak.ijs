@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.2.4  Build Number: 86  Date: 29 Nov 2007 10:45:01
+NB. Version: 0.2.4  Build Number: 88  Date:  5 Dec 2007 11:41:15
 
 NB.*jodtools c-- JOD tools class - extends JOD utility class.
 NB.
@@ -49,7 +49,7 @@ NB. comment tag marking start of scripts
 JODLOADSTART=:'NB.<JODLoadScripts>'
 
 NB. JODTOOLS version, build count and make date
-JODTOOLSVMD=:'0.2.4';86;'28 Nov 2007 09:58:19'
+JODTOOLSVMD=:'0.2.4';88;' 4 Dec 2007 10:11:34'
 
 NB. line feed character
 LF=:10{a.
