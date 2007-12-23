@@ -38,6 +38,22 @@ JODSECDRV_z_=: 'e:'
 
 NB. following are handy (z) locale shortcuts:
 
+NB. project shortcuts - use explicit 
+NB. defintions so it's easy to reset the group/suite
+ag_z_=: 3 : 'JODGRP addgrp y'
+as_z_=: 3 : '(JODSUI;3) addgrp y'
+dg_z_=: 3 : 'JODGRP delgrp y'
+ds_z_=: 3 : '(JODSUI;3) delgrp y'
+   
+NB. referenced group words not in group
+nx_z_=: 3 : '(allrefs  }. gn) -. gn=. grp JODGRP'
+   
+NB. words in group using a word
+ug_z_=: 3 : 'y usedby }. grp JODGRP'
+   
+NB. generate & save load script
+sg_z_=: 3 : 'mls JODGRP [ y'
+
 NB. top (put dictionary) words, groups in revision order
 tw_z_=: revo
 tg_z_=: 2&revo
@@ -78,7 +94,6 @@ showpass_z_=:] [ 1!:2&2
 
 NB. open working dictionaries and run project macros
 NB. set up current project (1 suppress IO, 0 or elided display)
-NB. 1 rm 'prjJODSetup' [ smoutput od ;:'joddev jod utils'
 NB. 1 rm 'prjThumbutilsSetup' [ smoutput od ;: 'imagedev image utils'
 NB. 1 rm 'prjflickr' [ smoutput od ;:'flickrutdev flickrut utils'
 NB. 1 rm 'prjcbh' [ smoutput od ;:'cbh utils'

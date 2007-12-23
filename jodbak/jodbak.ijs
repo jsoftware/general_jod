@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.2.4  Build Number: 180  Date: 16 Dec 2007 22:53:55
+NB. Version: 0.2.4  Build Number: 187  Date: 22 Dec 2007 13:50:21
 (9!:41) 0
 jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -121,7 +121,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.2.4';180;'12 Dec 2007 14:58:09'
+JODVMD=:'0.2.4';187;'22 Dec 2007 13:50:21'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -2610,14 +2610,6 @@ ok({.m )}.m jscript y
 )
 coclass'ajodutil'
 coinsert'ajod'
-AUTHORMARK=:'author:'
-CREATEDMARK=:'created:'
-DYADMARK=:'dyad:'
-MONADMARK=:'monad:'
-VERBATIMMARK=:'verbatim:'
-ROOTWORDSMARK=:'rootwords:'
-DOCUMENTMARKS=:AUTHORMARK;CREATEDMARK;DYADMARK;MONADMARK;VERBATIMMARK;ROOTWORDSMARK
-URLPFX=:'http://docs.google.com/View?docID='
 JODHELP=:0 :0 
 jodindex;dhnms2p5_9cq8xhz&revision=_latest
 files;dhnms2p5_39dvxwps&revision=_latest
@@ -2649,6 +2641,15 @@ rtt;dhnms2p5_51gn6fh2&revision=_latest
 mls;dhnms2p5_61f7b8p8&revision=_latest
 jodhelp;dhnms2p5_63fb3zw9&revision=_latest
 )
+ASSUMESMARK=:'assumes:'
+AUTHORMARK=:'author:'
+CREATEDMARK=:'created:'
+DYADMARK=:'dyad:'
+MONADMARK=:'monad:'
+VERBATIMMARK=:'verbatim:'
+ROOTWORDSMARK=:'rootwords:'
+DOCUMENTMARKS=:ASSUMESMARK;AUTHORMARK;CREATEDMARK;DYADMARK;MONADMARK;VERBATIMMARK;ROOTWORDSMARK
+URLPFX=:'http://docs.google.com/View?docID='
 JODHELP=:|:alltrim&.>(';'&beforestr;';'&afterstr)&><;._2 JODHELP-.CR
 JODHELP=:((<URLPFX),&.>1{JODHELP)(1)}JODHELP
 ERR0250=:' is a noun no internal document'
