@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.2.5  Build Number: 103  Date:  6 Feb 2008 19:23:11
+NB. Version: 0.3.0  Build Number: 118  Date:  1 Apr 2008 09:50:13
 
 NB.*jodtools c-- JOD tools class - extends JOD utility class.
 NB.
@@ -43,13 +43,13 @@ NB. jodtools z interface words
 IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp ltx mg mls mt noexp notgrp nt nw obnames pr refnames revonex swex tt usedby'
 
 NB. comment tag marking end of scripts
-JODLOADEND=:'NB.</JODLoadScripts>'
+JODLOADEND=:'NB.</JOD_Load_Scripts>'
 
 NB. comment tag marking start of scripts
-JODLOADSTART=:'NB.<JODLoadScripts>'
+JODLOADSTART=:'NB.<JOD_Load_Scripts>'
 
 NB. JODTOOLS version, build count and make date
-JODTOOLSVMD=:'0.2.5';103;' 6 Feb 2008 19:23:11'
+JODTOOLSVMD=:'0.3.0';118;' 1 Apr 2008 09:50:13'
 
 NB. line feed character
 LF=:10{a.

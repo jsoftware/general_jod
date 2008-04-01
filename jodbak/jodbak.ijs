@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.2.5  Build Number: 193  Date:  6 Feb 2008 19:23:09
+NB. Version: 0.3.0  Build Number: 208  Date:  1 Apr 2008 09:50:08
 (9!:41) 0
 jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -121,7 +121,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.2.5';193;' 6 Feb 2008 19:23:09'
+JODVMD=:'0.3.0';208;' 1 Apr 2008 09:50:08'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -2611,11 +2611,11 @@ ok({.m )}.m jscript y
 coclass'ajodutil'
 coinsert'ajod'
 JODHELP=:0 :0 
-jodindex;dhnms2p5_9cq8xhz&revision=_latest
-files;dhnms2p5_39dvxwps&revision=_latest
-codes;dhnms2p5_37gjfb3r&revision=_latest
+Jodindex;dhnms2p5_9cq8xhz&revision=_latest
+Codes;dhnms2p5_37gjfb3r&revision=_latest
 packd;dhnms2p5_16hj6jwg&revision=_latest
 get;dhnms2p5_132wxnx&revision=_latest
+getrx;dhnms2p5_65gtct8gfm&revision=_latest
 put;dhnms2p5_8gdgmc2&revision=_latest
 doc;dhnms2p5_18jjt8kb&revision=_latest
 compj;dhnms2p5_6gzfzhk&revision=_latest
@@ -2639,7 +2639,22 @@ rm;dhnms2p5_48hthm3d&revision=_latest
 dpset;dhnms2p5_50cjggzs&revision=_latest
 rtt;dhnms2p5_51gn6fh2&revision=_latest
 mls;dhnms2p5_61f7b8p8&revision=_latest
+lg;dhnms2p5_66dkqqggdn&revision=_latest
+addgrp;dhnms2p5_67fddj8gqh&revision=_latest
+delgrp;dhnms2p5_68djhkzzfn&revision=_latest
+hlpnl;dhnms2p5_697jn5sr68&revision=_latest
+Classes;dhnms2p5_70d6qn9nhb&revision=_latest
+locgrp;dhnms2p5_72hdbsjkgh&revision=_latest
+revonex;dhnms2p5_74d5tgxzdr&revision=_latest
+usedby;dhnms2p5_75cgbqhkcv&revision=_latest
+nw;dhnms2p5_76c3k9fpcb&revision=_latest
+pr;dhnms2p5_77hrqtjsgd&revision=_latest
+nt;dhnms2p5_78gn73r7gm&revision=_latest
+notgrp;dhnms2p5_79dpgb3jcn&revision=_latest
 jodhelp;dhnms2p5_63fb3zw9&revision=_latest
+jodage;dhnms2p5_64hsbqnq&revision=_latest
+AContents;dhnms2p5_80f4nj56c5&revision=_latest
+Release;dhnms2p5_84f6mckkch&revision=_latest
 )
 ASSUMESMARK=:'assumes:'
 AUTHORMARK=:'author:'
@@ -2652,6 +2667,7 @@ DOCUMENTMARKS=:ASSUMESMARK;AUTHORMARK;CREATEDMARK;DYADMARK;MONADMARK;VERBATIMMAR
 URLPFX=:'http://docs.google.com/View?docID='
 JODHELP=:|:alltrim&.>(';'&beforestr;';'&afterstr)&><;._2 JODHELP-.CR
 JODHELP=:((<URLPFX),&.>1{JODHELP)(1)}JODHELP
+JODHELP=:(/:0{JODHELP){"1 JODHELP
 ERR0250=:' is a noun no internal document'
 ERR0251=:'not loaded - load'
 ERR0252=:'not J script(s) ->'

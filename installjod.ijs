@@ -71,12 +71,12 @@ end.
 NB. append JOD entries to scripts.ijs
 dat=: 1!:1 <jpath '~system\extras\config\scripts.ijs'
 jl=:'  ',CRLF,'  ',CRLF
-jl=:jl,'NB.<JOD_system_packages>',CRLF
+jl=:jl,'NB.<JOD_System_Packages>',CRLF
 jl=:jl,'buildpublic 0 : 0',CRLF
 jl=:jl,'jod       ',JODRELATIVE,'jodnws',CRLF
 jl=:jl,'jodtools  ',JODRELATIVE,'jodexts\jodtools',CRLF
 jl=:jl,')',CRLF
-jl=:jl,'NB.</JOD_system_packages>',CRLF
+jl=:jl,'NB.</JOD_System_Packages>',CRLF
 
 NB. modify scripts.ijs only if jod items are missing
 ((JODPATH,'jodnws');dat) ifnostrwrite (dat,jl);jpath '~system\extras\config\scripts.ijs'
