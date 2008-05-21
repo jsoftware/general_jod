@@ -1,0 +1,100 @@
+LABTITLE=: 'JOD Best Practices'
+LABAUTHOR=: 0 : 0
+John D, Baker 
+bakerjd99@gmail.com
+)
+LABCOMMENTS=: 'Best practices for JOD.'
+LABFOCUS=: 1
+
+NB. =========================================================
+Lab Section Introduction
+Software tools are like loaded guns: powerful weapons for slaying your coding problems but also dangerous when used improperly.  Have you ever shot yourself in the foot with software?  I know I'm missing a few toes and I bet you are as well. 
+
+This lab outlines a number of "best practices" or guidelines for using JOD.  I've learned the hard way so, if you take this advice to heart, you might be spared!
+)
+
+NB. =========================================================
+Lab Section JOD does not belong in the J tree
+"JOD DOES NOT BELONG IN THE J TREE."
+
+My first and most important bit of advice is simply:
+
+NEVER NEVER NEVER store your JOD dictionaries in J install directories!
+
+Create a JOD master dictionary directory root that is completely independent of J.  It's also a good idea to define a subdirectory structure that mirrors J's versions.  JOD creates binary jfiles.  These files are fairly stable but binaries can change when J changes.
+)
+NB. create a master JOD directory root outside of J's directories.
+newd 'bptest';'c:\jodroot\602\bptest';'best practices test dictionary'
+
+NB. =========================================================
+Lab Section Take a script dump
+"BACKUP BACKUP BACKUP."
+
+It is literally a snap to make a backup with JOD.  So backup often!
+)
+NB. open the best practice dictionary
+od 'bptest'
+
+NB. back it up
+packd 'bptest'
+
+NB. restores recovers the must current backup
+restd 'bptest'
+
+NB. =========================================================
+Lab Section
+"TAKE A SCRIPT DUMP."
+
+JOD backups handle binary jfiles but it's also a good idea to "dump" your dictionaries as plain text.  JOD can dump all open dictionaries as a single J script. Script dumps are the most stable way to store J dictionaries.  The jodsource addon distributes all JOD source code in this form.
+)
+NB. dump only (bptest)
+od 'bptest' [ 3 od ''
+
+NB. (make) creates a dictionary dump in the dump subdirectory
+bptestdump=: showpass make ''
+
+NB. =========================================================
+Lab Section Make a master re-register script
+JOD dump scripts can be used to reload, copy and merge dictionaries.
+)
+NB. reload bptest
+od 'bptest' [ 3 od ''
+0!:0 {:bptestdump
+
+NB. copy/merge bptest dictionary
+newd 'bpcopy';'c:\jodroot\602\bpcopy'
+od 'bpcopy' [ 3 od ''
+0!:0 {:bptestdump
+
+NB. =========================================================
+Lab Section Set library dictionaries to READONLY
+"MAKE A MASTER RE-REGISTER SCRIPT."
+
+JOD only sees the dictionaries registered in the jmaster.ijf file so maintaining a list of registered dictionaries is a good idea.  JOD can generate a re-register script that you can edit.  
+
+Generate a re-register script and put it in your main JOD dictionary directory root.
+)
+NB. generate re-register script
+rereg=: showpass ;{: 5 od ''
+
+NB. save it in the master root
+rereg write_ajod_ 'c:\jodroot\602\jodregister.ijs'
+
+NB. =========================================================
+Lab Section
+"SET LIBRARY DICTIONARIES TO READONLY."
+
+Open JOD dictionaries define a search path.  The first dictionary on the path is the only dictionary that can be changed.  It is called the "put" dictionary.  Even though non-put dictionaries cannot be changed by JOD it's a good idea to set them READONLY because:
+
+READONLY dictionaries can be accessed by any number of JOD tasks. READWRITE dictionaries can only be accessed by one task.  
+
+Keeping libraries READONLY prevents accidental put's as you open and close dictionaries.
+)
+NB. make bptest READONLY
+od 'bptest' [ 3 od ''
+dpset 'READONLY'
+
+NB. bpcopy is not the put dictionary
+od ;:'bpcopy bptest' [ 3 od ''
+
+did~ 0

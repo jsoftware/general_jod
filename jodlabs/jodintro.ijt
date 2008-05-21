@@ -26,7 +26,7 @@ require 'files dir task'
 
 NB. =========================================================
 Lab Section Test JOD installation and install if necessary
-This step checks the JOD setup and installs if necessary. The setup is done by starting (jconsole) process that runs the necesssary procedures.
+This step checks the JOD setup and installs if necessary. The setup is done by starting a (jconsole) process that runs the necesssary procedures.
 
 The setup process will spawn another window and wait until you "Press any key" to close it.
 )
@@ -300,10 +300,10 @@ Lab Section
 )
 NB. create some groups
 grp 'strings';'changestr'
-grp 'JODmake';nl_ajodmake_ i.4
+grp 'loctest';nl_ajodmake_ i.4
 
-NB. groups beginning with 'JOD'
-2 1 dnl 'JOD'
+NB. groups beginning with 'loc'
+2 1 dnl 'loc'
 
 NB. =========================================================
 Lab Section What are these funny argument numbers?
@@ -321,7 +321,7 @@ Option and qualifier codes select and modify options.  They are all integers. Fo
 Now look at some more (dnl) commands.
 )
 NB. (group, option 1 - match prefix) - case matters
-2 1 dnl 'J'
+2 1 dnl 'l'
 
 NB. (macro, option 2 - name contains string) - no macros yet
 4 2 dnl 'ar'
@@ -338,6 +338,9 @@ JOD provides a simple way to group words and tests.  A group is a collection of 
 NB. create a group of words with names beginning with 'ch'
 grp 'testgroup' ; }. dnl 'ch'
 
+NB. create a test
+1 put 'helloworld';'1 [ ''JOD tests are J scripts that return 1s'''
+
 NB. create a test suite - note left argument code
 3 grp 'testsuite' ; }. 1 dnl ''
 
@@ -345,44 +348,76 @@ NB. =========================================================
 Lab Section
 You can list the contents of groups or suites with (grp)
 )
-NB. list contents of JODdob group
-grp 'JODdob'
+NB. list contents of testgroup group
+grp 'testgroup'
 
 NB. contents of testsuite, note suite code left argument
 3 grp 'testsuite'
 
 NB. =========================================================
 Lab Section Making groups and suites
-One of the main advantages of storing J code in JOD vs. a plain script is that you can modify words, tests, groups, suites and documentation at will and then generate many scripts all with the most current object definitions.
+One of the main advantages of storing J code in JOD vs. a plain script is that you can maintain a SINGLE version of a word, test, group or suite and then generate many J load scripts that use dictionary objects. Database designers call this "one version of the truth."
 
-The next two commands generate all the JOD source code files.
+The following inserts a single word in (toy) groups and then generates scripts.
 )
-NB. close dictionaries
-3 od ''
+NB. left justify table verb
+ljust=:' '&$: :(] |."_1~ i."1&0@(] e. [))
 
-NB. open joddev and jod read/only
-2 od ;:'joddev jod'
+NB. store in put dictionary
+put 'ljust'
 
-NB. run buildjodsource macro
-rm 'buildjodsource'
+NB. insert in all put dictionary groups 
+(}. 2 revo '') addgrp&> <'ljust'
+
+NB. lookup (revo) with (jodhelp)
+NB. jodhelp 'revo'
+
+NB. generate all put dictionary groups 
+0 mls&> }. 2 revo''
+
+NB. if the left argument is elided the groups are made into (load) scripts
+NB. mls&> }. 2 revo''
 
 NB. =========================================================
 Lab Section Macros
-The next section displays a macro I run to format the leading comment block of JOD words.
+Tasks, like updating generated scripts, can be simplified with JOD macros.  A JOD macro is an arbitrary J script that can be fetched and executed with (rm).
 )
-NB. display macro
-4 disp 'documentjod'
+NB. macro that generates all put dictionary groups
+jodmacro=: 'NB. generate all put dictionary groups',LF,'0 mls&> }. 2 revo'''' '
+
+NB. store macro - code 21 tells JOD this is a J script
+4 put 'makeputgrps';21;jodmacro
 
 NB. =========================================================
 Lab Section
-Macros are not restricted to J scripts.  You can also store HTML, LaTeX, XML and plain TEXT scripts in the JOD dictionaries.  Only J scripts can be run however.
+Running JOD macro is a simple matter of opening the appropriate dictionaries and using (rm) - run macro.
 )
-NB. make toy the put dictionary again
-od ;:'toy main joddev jod' [ 3 od ''
+NB. fetch and execute 
+rm 'makeputgrps'
 
+NB. fetch and execute silently - will only display explicity code output
+NB. 1 rm 'makeputgrps'
+
+NB. =========================================================
+Lab Section
+Macros are not restricted to J scripts.  You can also store HTML, LaTeX, XML and plain TEXT scripts in JOD dictionaries.  Only J scripts can be run however.
+)
 NB. store LaTeX (22) and HTML (23) texts
 4 put 'latex';22;'... LaTeX code ...'
+
 4 put 'html';23;' ... HTML code ...'
+
+NB. store XML and arbitrary TEXT (bytes).
+4 put 'xml';XML_ajod_;'<test>this is lame xml</test>'
+
+NB. TEXT is uninterpreted bytes and can store binaries - not recommended for large files
+4 put 'PDF';25;read_ajod_ jpath '~addons\general\jod\joddoc\pdfdoc\jod.pdf'
+
+NB. byte size of macro
+4 15 get 'PDF'
+
+NB. macro text types are contants in the main JOD class
+JSCRIPT_ajod_, LATEX_ajod_, HTML_ajod_, XML_ajod_, TEXT_ajod_, UTF8_ajod_
 
 NB. =========================================================
 Lab Section Global references
