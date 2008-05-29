@@ -16,32 +16,17 @@ The basic idea behind JOD is that J programming is best viewed as organizing a c
 
 NB. =========================================================
 Lab Section
-JOD is a J addon.  It is installed in the (~addons\general\jod) branch of the current J system folder by the package manager or by unzipping the distribution zip (jod.zip).  The next lab step initializes the JOD system. 
-
-NOTE: setup will run only if the file 
-(~addons\general\jod\install.ed)  does not exist.
+JOD is a J addon.  It is installed in the (~addons\general\jod) branch of the current J system folder by the package manager or by unzipping the distribution zip (jod.zip).  The next lab step initializes the JOD system.
 )
 NB. used by this lab
 require 'files dir task'
 
 NB. =========================================================
-Lab Section Test JOD installation and install if necessary
-This step checks the JOD setup and installs if necessary. The setup is done by starting a (jconsole) process that runs the necesssary procedures.
-
-The setup process will spawn another window and wait until you "Press any key" to close it.
+Lab Section Start JOD
+This step starts the JOD system.
 )
-NB. run setup in another process
-fork jpath '~addons\general\jod\jodbak\installjod.bat'
-
-NB. =========================================================
-Lab Section
-Start JOD.  Once installed JOD operates like a standard J load script.  You can (load) and (require) it.
-)
-NB. insure scripts is updated in this process
-((0!:0) :: _1:) <jpath '~system\extras\config\scripts.ijs'
-
-NB. start JOD - will fail if the setup is invalid
-require 'jod'
+NB. start jod - creates master file if necessary
+require 'general/jod'
 
 NB. =========================================================
 Lab Section Create (lab) and (labdev) dictionaries
@@ -49,7 +34,7 @@ JOD is installed without any dictionaries.   To use JOD you must create some dic
 
 Before creating (lab) and (labdev) remove any current (lab) and (labdev) dictionaries.
 
-WARNING: if these dictionaries matter to you DO NOT EXECUTE THE NEXT LAB STEP.
+WARNING: IF THE TEMPORARY LAB DICTIONARIES CONTAIN INFOMARTION YOU CARE ABOUT DO NOT EXECUTE THE NEXT LAB STEP!
 )
 
 NB. =========================================================
@@ -60,8 +45,8 @@ NB. unregister any lab dictionaries - ignore errors
 3 regd&> ;:'labdev lab'
 
 NB. remove dictionary directories and all contents - ignore errors
-shell 'rd "',(jpath '~temp'),'\joddicts\labdev" /s /q'
-shell 'rd "',(jpath '~temp'),'\joddicts\lab" /s /q'
+shell 'rd /s /q "',(jpath '~user'),'\joddicts\labdev"'
+shell 'rd /s /q "',(jpath '~user'),'\joddicts\lab"'
 
 NB. =========================================================
 Lab Section Create (lab) and (labdev) dictionaries
@@ -81,7 +66,7 @@ NB. =========================================================
 Lab Section Opening a closing dictionaries.
 The JOD command for opening and closing dictionaries is (od) or (open dictionary). JOD commands are short and easy to type.
 
-(od) can open dictionaries read/write and read/only. As you might expect read/only dictionaries cannot be changed by JOD commands.
+(od) can open dictionaries READWRITE and READONLY. As you might expect READONLY dictionaries cannot be changed by JOD commands.
 )
 NB. open read/write
 od 'labdev'
@@ -185,7 +170,7 @@ NB. close open dictionaries
 
 NB. clear out old (toy)'s - ignore errors
 3 regd 'toy'
-shell 'rd "',(jpath '~temp'),'\joddicts\toy" /s /q'
+shell 'rd /s /q "',(jpath '~user'),'\joddicts\toy"'
 
 NB. create (toy)
 newd 'toy'

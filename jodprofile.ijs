@@ -28,9 +28,6 @@ NB. set white space preservation on
 NB. do not reset if you are running more than one JOD instance
 dpset 'RESETME'
 
-NB. make JOD tools available
-load 'jodtools'
-
 NB. \joddictionaries directory drives - varies from machine to machine
 NB. NIMP support \\unic directories
 JODDICDRV_z_=: 'c:'

@@ -12,21 +12,17 @@ JOD and the J project manager are two complimentary software tools that can be e
 
 This lab assumes:
 
-(1) JOD has been setup. 
+(1) The jodsource addon has been installed.
 
-(2) The jodsource addon has been installed.
+(2) A ~JODPROJECT folder pointing to (joddev)'s root directory has been configured.
 
-(3) A ~JODPROJECT folder pointing to (joddev)'s root directory has been configured.
+(3) A ~JODTEST folder pointing to a test directory has been configured.
 
-(4) A ~JODTEST folder pointing to test directory has been configured.
-
-To setup JOD run the lab "JOD Introduction" or execute (~addons\general\jod\jodbak\installjod.bat)
-
-To install the jodsource addon use the J Package Manager and then run the lab "JOD Source Code Dump Scripts."
+To install the jodsource addon use the J Package Manager and then run the lab "JOD Source Code Dump Scripts."  MAKE SURE YOU MOVE AND RENAME THE LOAD DICTIONARIES IN THE LAST STEP OF THIS LAB.
 
 Use J's configure tool to set ~JODPROJECT and ~JODTEST.
 )
-require 'jod'
+require 'general/jod'
 
 NB. =========================================================
 Lab Section Pre and Post Processor Scripts

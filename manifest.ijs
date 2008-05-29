@@ -1,28 +1,24 @@
 NB. manifest for JOD
 CAPTION=:'JOD J Object Dictionary'
-VERSION=:'0.3.5'
+VERSION=:'0.3.7'
 PLATFORMS=:'win'      
 LABCATEGORY=:'General'
 FILES=: 0 : 0
-installjod.ijs
+jod.ijs
 jodparms.ijs
 jodprofile.ijs
 manifest.ijs
-resetjod.ijs
-jodbak/installjod.bat
-jodbak/installjodbak.ijs
-jodbak/jodbak.ijs
 jodbak/jodparmsbak.ijs
 jodbak/jodprofilebak.ijs
-jodbak/resetjod.bat
-jodbak/resetjodbak.ijs
 joddoc/htmldoc/jodindex.html
 joddoc/pdfdoc/jod.pdf
-jodexts/jodtoolsbak.ijs
+jodexts/jodtools.ijs
 jodlabs/joddump.ijt
 jodlabs/jodintro.ijt
 jodlabs/jodprjm.ijt
+jodlabs/jodbest.ijt
 jodlabs/labexample001.ijs
+jodlabs/labdump.ijs
 )
 RELEASE=:'j601 j602'
 DESCRIPTION=: 0 : 0
