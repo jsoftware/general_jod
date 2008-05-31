@@ -1,9 +1,9 @@
-LABTITLE=: 'JOD and the J Project Manager'
+LABTITLE=: 'JOD (4) and the J Project Manager'
 LABAUTHOR=: 0 : 0
 John D. Baker
 bakerjd99@gmail.com
 )
-LABCOMMENTS=: 'This lab shows how JOD and the J Project Manager can be used together.'
+LABCOMMENTS=: 'This lab shows how JOD and the J Project Manager can be used together May 2008'
 LABFOCUS=: 0
 
 NB. =========================================================
@@ -64,7 +64,7 @@ The J Project Manager stores all project related information in a *.ijp project 
 )
 NB. run a JOD tautology test script to extract necesary project files.
 
-1 rtt 'setup_jodproject'  NB. result should be 1
+rtt 'setup_jodproject'  NB. results should all 1's
 
 NB. =========================================================
 Lab Section Navigate to ~JODPROJECT\script directory
@@ -97,7 +97,7 @@ An example test script has been generated from JOD and referenced.  Before runni
 Test dictionary creation requires a configured ~JODTEST directory.
 )
 NB. create test dictionaries - many JOD test scripts refer to these dictionary names
-1 rtt 'createtestdictionaries'
+rtt 'createtestdictionaries'
 
 NB. =========================================================
 Lab Section

@@ -1,9 +1,9 @@
-LABTITLE=: 'JOD Best Practices'
+LABTITLE=: 'JOD (3) Best Practices'
 LABAUTHOR=: 0 : 0
 John D, Baker 
 bakerjd99@gmail.com
 )
-LABCOMMENTS=: 'Best practices for JOD.'
+LABCOMMENTS=: 'Best practices for JOD May 2008'
 LABFOCUS=: 1
 
 NB. =========================================================
@@ -127,7 +127,7 @@ NB. generate re-register script
 rereg=: showpass_ajod_ ;{: 5 od ''
 
 NB. save it in the master root
-rereg write_ajod_ 'c:\jodroot\602\jodregister.ijs'
+rereg write_ajod_ 'c:\jodlabs\602\jodregister.ijs'
 
 NB. =========================================================
 Lab Section Set library dictionary to readonly

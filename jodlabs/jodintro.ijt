@@ -1,9 +1,9 @@
-LABTITLE=: 'JOD Introduction'
+LABTITLE=: 'JOD (1) Introduction'
 LABAUTHOR=: 0 : 0
 John D. Baker
-bakerjd99@hotmail.com
+bakerjd99@gmail.com
 )
-LABCOMMENTS=: 'This lab introduces the JOD system - revised for J 5.0x July 2002'
+LABCOMMENTS=: 'This lab introduces the JOD system - revised for J 6.0x May 2008'
 LABERRORS=: 1
 LABFOCUS=: 0
 
@@ -29,27 +29,32 @@ NB. start jod - creates master file if necessary
 require 'general/jod'
 
 NB. =========================================================
-Lab Section Create (lab) and (labdev) dictionaries
-JOD is installed without any dictionaries.   To use JOD you must create some dictionaries.  This lab uses two example dictionaries (lab) and (labdev).  JOD dictionaries are created with the (newd) "new dictionary" verb.  The next two steps create the (lab) and (labdev) dictionaries in the default location (~user\joddicts).
+Lab Section Remove old lab dictionaries
+JOD is installed without any dictionaries.   To use JOD you must create some dictionaries.  This lab uses four example dictionaries (lab), (labdev), (toy) and (playpen).  JOD dictionaries are created with the (newd) "new dictionary" verb. 
 
-Before creating (lab) and (labdev) remove any current (lab) and (labdev) dictionaries.
+Before creating lab dictionaries remove any prior lab dictionaries.
 
-WARNING: IF THE TEMPORARY LAB DICTIONARIES CONTAIN INFOMARTION YOU CARE ABOUT DO NOT EXECUTE THE NEXT LAB STEP!
+WARNING: IF THE TEMPORARY LAB DICTIONARIES CONTAIN INFORMARTION YOU CARE ABOUT DO NOT EXECUTE THE NEXT LAB STEP!
 )
 
 NB. =========================================================
-Lab Section Remove old (lab) and (labdev) dictionaries
-Remove any current lab dictionaries.
+Lab Section
+Remove any prior lab dictionaries.
 )
+NB. close any dictionaries
+3 od ''
+
 NB. unregister any lab dictionaries - ignore errors
-3 regd&> ;:'labdev lab'
+3 regd&> ;:'labdev lab toy playpen'
 
 NB. remove dictionary directories and all contents - ignore errors
 shell 'rd /s /q "',(jpath '~user'),'\joddicts\labdev"'
 shell 'rd /s /q "',(jpath '~user'),'\joddicts\lab"'
+shell 'rd /s /q "',(jpath '~user'),'\joddicts\toy"'
+shell 'rd /s /q "',(jpath '~user'),'\joddicts\playpen"'
 
 NB. =========================================================
-Lab Section Create (lab) and (labdev) dictionaries
+Lab Section
 This step creates the (lab) and (labdev) dictionaries.
 )
 NB. close any open dictionaries
@@ -156,25 +161,17 @@ did 0
 NB. =========================================================
 Lab Section Creating new dictionaries.
 Before modifying the contents of any dictionary let's create a new "toy" dictionary and make it the put dictionary.
-
-Before creating (toy) remove any old (toy)'s.  IF YOU CARE ABOUT THE DATA IN (toy)
-DO NOT EXECUTE THE NEXT LAB STEP!
-)
-
-NB. =========================================================
-Lab Section
-Remove any old (toy)'s and recreate.
 )
 NB. close open dictionaries
 3 od ''
 
-NB. clear out old (toy)'s - ignore errors
-3 regd 'toy'
-shell 'rd /s /q "',(jpath '~user'),'\joddicts\toy"'
-
 NB. create (toy)
 newd 'toy'
 
+NB. =========================================================
+Lab Section
+Make (toy) a put dictionary.
+)
 NB. open toy, labdev and lab - toy is the put dictionary
 od ;:'toy labdev lab'
 
@@ -405,60 +402,111 @@ NB. macro text types are contants in the main JOD class
 JSCRIPT_ajod_, LATEX_ajod_, HTML_ajod_, XML_ajod_, TEXT_ajod_, UTF8_ajod_
 
 NB. =========================================================
+Lab Section Loading dictionary dump script
+To demonstrate other JOD features we need some words in our dictionary.  The next step loads (labdump.ijs).
+)
+
+NB. =========================================================
+Lab Section
+Load lab dictionary dump script.
+)
+NB. insure correct path
+od ;:'toy labdev lab' [ 3 od ''
+
+NB. load dump script
+0!:0 <jpath '~addons\general\jod\jodlabs\labdump.ijs'
+
+NB. =========================================================
+Lab Section
+Dump scripts do not store word references.  They must be generated.
+)
+NB. update word references - show first 5 messages
+5 {. 0 globs&> }. revo''
+
+NB. =========================================================
 Lab Section Global references
 JOD has facilities for carrying out static name analysis on J words and tests.
 
 The (globs) and (uses) verbs analyze and store name references.
 )
 NB. analyze names
-get 'docct'
+get 'dstat'
 
 NB. classify name use in base locale word
-11 globs 'docct'
+11 globs 'dstat'
 
 NB. =========================================================
 Lab Section
 You can update global word references.
 )
-NB. store (docct) in "toy"
-put 'docct'
-
 NB. 0 is the word code - stores global references
-0 globs 'docct'
+0 globs 'dstat'
 
 NB. =========================================================
 Lab Section
 (uses) retrieves stored references.
 )
-NB. global references stored for (docct)
-uses 'docct'
+NB. global references for (dstat)
+uses 'dstat'
 
 NB. =========================================================
 Lab Section
-(uses) becomes very "useful" when all words have stored references.  The next command may take sometime
-(less than a minute) to run.
+(uses) becomes very "useful" when all words have stored references.
 )
 NB. insure toy is the put dictionary
-od ;:'toy main joddev jod' [ 3 od ''
-
-NB. update all JODmake global references - show last 10 rows
-_10 {. s=: s ,. 0 globs&> s=: }. grp'JODmake'
+od ;:'toy labdev lab' [ 3 od ''
 
 NB. =========================================================
 Lab Section
 (uses) can return many reference lists at once. The same path search mechanism is used for retrieving references.
 )
-NB. global references of words beginning with 'ch'
-uses }. dnl'ch'
+NB. global references of words beginning with 'm'
+NB. uses }. dnl 'm'
+
+NB. global references of words ending with 's'
+uses }. 0 3 dnl's'
 
 NB. =========================================================
 Lab Section The uses union
 Option 31 of (uses) returns the uses-union of a word.  The uses-union is basically a unique list all the words on the call tree of a word.
-
-Note that locale names are separated from normal names in (uses) result.  Locale references are treated like black boxes.
 )
 NB. uses union of two words
-31 uses ;:'doc wrdglobals'
+31 uses ;:'calmoons sunriseset0'
+
+NB. =========================================================
+Lab Section Generating load scripts
+JOD can generate J load scripts from dictionary groups.  The generated scripts are written to the put dictionary's script subdirectory.
+)
+NB. generate load script
+mls 'sunmoon'   NB. sun/moon rise set
+
+NB. =========================================================
+Lab Section
+mls appends generated scripts to J's scripts.ijs file so they can be loaded independently of JOD.
+)
+NB. load generated script
+load 'sunmoon'
+
+calmoons 2008  NB. full (1)  and new (0) moons in 2008
+
+NB. =========================================================
+Lab Section Generating scripts on demand
+JOD can also generate and load scripts without creating load scripts.
+)
+NB. load basic statistics group
+lg 'bstats'
+
+NB. =========================================================
+Lab Section
+(getrx) loads all the words called by a given word.
+)
+NB. load all words need to run (dstat)
+getrx 'dstat'
+
+
+NB. load into arbitrary locales
+NB. 'statloc' getrx 'dstat'
+NB. '99' getrx 'dstat'
 
 NB. =========================================================
 Lab Section Backing up and restoring dictionaries
@@ -483,12 +531,35 @@ NB. restore last backup
 restd 'toy'
 
 NB. =========================================================
+Lab Section Making a script dump
+(packd) creates binary backups.  You can also backup dictionaries as dump scripts.  Dump scripts are single J scripts that can be used to backup, copy and merge dictionaries.
+)
+NB. dump all the words on the path as a single dump script.
+toydump=: showpass_ajod_ make ''
+
+NB. =========================================================
+Lab Section
+When we load (toydump) into a new dictionary observe how the path is changed. The dictionaries have been merged.
+)
+NB. new dictionary
+newd 'playpen' [ 3 od ''
+
+NB. open
+od 'playpen'
+
+NB. load (toydump)
+0!:0 < ;{: toydump
+
+NB. dictionary information
+did~ 0
+
+NB. =========================================================
 Lab Section Final words
-You now have some idea of what JOD is all about. To learn more read the *.PDF files, especially JOD.PDF, examine the source code files generated in this lab and play with the system. The macros and tests in the (joddev) and (jod) dictionaries contain many uses of JOD commands. If you have any problems, questions or complaints please email me at bakerjd99@gmail.com
+You now have some idea of what JOD is all about. To learn more read JOD's documentation and run the other JOD labs. If you have any problems, questions or complaints please email me at bakerjd99@gmail.com
 
 John D. Baker
 bakerjd99@gmail.com
-Irvine CA 2007
+May 2008
 )
 NB. close any open dictionaries
 3 od ''

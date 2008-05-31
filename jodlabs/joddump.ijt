@@ -1,9 +1,9 @@
-LABTITLE=: 'JOD Source Code Dump Scripts'
+LABTITLE=: 'JOD (2) Source Code Dump Scripts'
 LABAUTHOR=: 0 : 0
 John D. Baker
 bakerjd99@gmail.com
 )
-LABCOMMENTS=: 'This lab demonstrates how to load dump JOD scripts.'
+LABCOMMENTS=: 'This lab demonstrates how to load dump JOD scripts May 2008'
 LABFOCUS=: 1
 
 NB. =========================================================
@@ -196,23 +196,29 @@ NB. close dictionaries
 
 NB. =========================================================
 Lab Section Rename JOD load dictionaries.
-The JOD source code dictionaries are named (joddev) (jod) and (utils).  Many test and build scripts within these dictionaries make use of these names.  To dive into JOD code it's a good idea to move and rename the load dictionaries. Uncomment and run the following lines to move and rename the load dictionaries. 
+The JOD source code dictionaries are named (joddev) (jod) and (utils).  Many test and build scripts in these dictionaries make use of these names.  To dive into JOD code it's a good idea to copy and rename the load dictionaries. Uncomment and run the following lines to copy and rename the load dictionaries. 
 
 WARNING: UNCOMMENT ONLY IF YOU DO NOT ALREADY HAVE (joddev) (jod) AND (utils) DICTIONARIES.
 )
 NB. unregister
 NB. 3 regd&> ;:'utilsload jodload joddevload'
 
-NB. move dictionaries
+NB. copy dictionaries and overwrite - /e option copies required empty subdirectories 
+NB. shell 'xcopy "',(jpath '~JODSOURCE\utilsload'),'" "',(jpath '~JODSOURCE\utils\'),'" /e /y'
+NB. shell 'xcopy "',(jpath '~JODSOURCE\jodload'),'" "',(jpath '~JODSOURCE\jod\'),'" /e /y'
+NB. shell 'xcopy "',(jpath '~JODSOURCE\joddevload'),'" "',(jpath '~JODSOURCE\joddev\'),'" /e /y'
 
 NB. re-register with new names
+NB. regd 'utils';(jpath '~JODSOURCE\utils');'general utilities'
+NB. regd 'jod';(jpath '~JODSOURCE\jod');'jod source code'
+NB. regd 'joddev';(jpath '~JODSOURCE\joddev');'jod development'
 
 NB. =========================================================
 Lab Section Summary
-This lab showed how to load dump scripts.  JOD source dictionaries where loaded.  To use the JOD source dictionaries make sure they are named (joddev), (jod) and (utils).
+This lab showed how to load dump scripts.  JOD source code dictionaries were loaded.  To use the JOD source dictionaries make sure they are named (joddev), (jod) and (utils).
 
 John D. Baker
-November 2007
+May 2008
 bakerjd99@gmail.com
 )
 
