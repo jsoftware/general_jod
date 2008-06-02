@@ -201,9 +201,14 @@ The JOD source code dictionaries are named (joddev) (jod) and (utils).  Many tes
 WARNING: UNCOMMENT ONLY IF YOU DO NOT ALREADY HAVE (joddev) (jod) AND (utils) DICTIONARIES.
 )
 NB. unregister
-NB. 3 regd&> ;:'utilsload jodload joddevload'
+NB. 3 regd&> ;:'utilsload jodload joddevload utils jod joddev'
 
-NB. copy dictionaries and overwrite - /e option copies required empty subdirectories 
+NB. clear any jod source dictionaries
+NB. shell 'rd /s /q "',(jpath '~JODSOURCE\utils'),'"'
+NB. shell 'rd /s /q "',(jpath '~JODSOURCE\jod'),'"'
+NB. shell 'rd /s /q "',(jpath '~JODSOURCE\joddev'),'"'
+
+NB. copy dictionaries - /e option copies required empty subdirectories 
 NB. shell 'xcopy "',(jpath '~JODSOURCE\utilsload'),'" "',(jpath '~JODSOURCE\utils\'),'" /e /y'
 NB. shell 'xcopy "',(jpath '~JODSOURCE\jodload'),'" "',(jpath '~JODSOURCE\jod\'),'" /e /y'
 NB. shell 'xcopy "',(jpath '~JODSOURCE\joddevload'),'" "',(jpath '~JODSOURCE\joddev\'),'" /e /y'
