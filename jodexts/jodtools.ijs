@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.3.8  Build Number: 137  Date: 31 May 2008 10:14:51
+NB. Version: 0.4.0  Build Number: 150  Date: 30 Jun 2008 10:27:54
 
 NB.*jodtools c-- JOD tools class - extends JOD utility class.
 NB.
@@ -48,8 +48,8 @@ JODLOADEND=:'NB.</JOD_Load_Scripts>'
 NB. comment tag marking start of scripts
 JODLOADSTART=:'NB.<JOD_Load_Scripts>'
 
-NB. JODTOOLS version, build count and make date
-JODTOOLSVMD=:'0.3.8';137;'31 May 2008 10:14:51'
+
+JODTOOLSVMD=:'0.4.0';150;'30 Jun 2008 10:27:54'
 
 NB. line feed character
 LF=:10{a.
@@ -84,35 +84,59 @@ end.
 
 addloadscript=:4 : 0
 
-NB.*addloadscript v-- inserts (mls) generated scripts into scripts.ijs.
+NB.*addloadscript  v--  inserts  (mls)  generated   scripts  into
+NB. startup.ijs.
+NB.
+NB. Changed: 08jun12 this verb was modifying the scripts.ijs file
+NB. in the  J system tree. This file is now frequently updated by
+NB. JAL so startup.ijs is now modified.
 NB.
 NB. dyad:  baPublic addloadscript (clGroup ; clPathGroup)
 
 if. 1=x do.
-  NB. get scripts.ijs (J 5.02 or later)
+
+  NB. get scripts.ijs (J 6.02 or later)
   NB. J path utility !(*)=. jpath
-  scripts=. read cfg=. jpath'~system\extras\config\scripts.ijs'
   tags=. JODLOADSTART;JODLOADEND
-  'p c'=. tags betweenidx scripts
+  if. fex<cfg=. jpath '~config\startup.ijs' do.
+    scripts=. read cfg
+    'p c'=. tags betweenidx scripts
+  else.
+    NB. no startup.ijs
+    p=. scripts=. ''
+  end.
+
   if. 1=#p do.
     if. badrc ld=. (;p{c) addloadscript1 y do. ld return. else. ld=.>1{ld end.
-    (toHOST ;(<ld) p} c) write cfg
+    mlscfg=. toHOST ;(<ld) p} c
   elseif. 0=#p do.
     NB. no JOD load scripts append current
-    ld=. (0{tags),(<LF,'buildpublic 0 : 0',LF),(0{y),(<'  '),(1{y),(<LF,')',LF),1{tags
-    (toHOST scripts , (2#LF), ;ld) write cfg
+    ld=. (0{tags),(<LF,'buildpublic_j_ 0 : 0',LF),(0{y),(<'  '),(1{y),(<LF,')',LF),1{tags
+    mlscfg=. toHOST scripts , (2#LF), 'NB. WARNING: JOD managed section do not edit!' , LF , ;ld
   elseif.do.
-    (jderr 'tag error in scripts.ijs file ->'),<cfg return.
+    (jderr 'tag error in startup.ijs file ->'),<cfg return.
   end.
-  NB. run scripts.ijs to make changes active
-  curr=. 18!:5''
-  try. 0!:0 <cfg 
-  catchd.
-    18!:4 curr
-    jderr 'failure executing scripts.ijs' return.
+
+  NB. create/update startup.ijs
+  if. _1 -: mlscfg (write :: _1:) cfg do.
+    (jderr 'cannot write/create startup.ijs file ->'),<cfg return.
   end.
-  18!:4 curr
-  ok 'load script saved ->';(1{y) ,&.> <IJS
+
+  NB. directly update PUBLIC_j_ if present
+  y=.  y ,&.> '';IJS
+  if. wex <'PUBLIC_j_' do.
+    p=. (0 {"1 PUBLIC_j_) i. 0{y
+    if. p<#PUBLIC_j_ do.
+      NB. update entry
+      PUBLIC_j_=: y p} PUBLIC_j_
+    else.
+      NB. new entry - sort PUBLIC
+      PUBLIC_j_=: PUBLIC_j_ , y
+      PUBLIC_j_=: (/:0 {"1 PUBLIC_j_){PUBLIC_j_
+    end.
+  end.
+
+  ok 'load script saved ->';1{y
 elseif. 0=x do.
   ok 'file saved ->';(1{y) ,&.> <IJS
 elseif.do.
@@ -123,7 +147,7 @@ end.
 
 addloadscript1=:4 : 0
 
-NB.*addloadscript1 v-- appends or replaces a script in the load script section of scripts.ijs
+NB.*addloadscript1 v-- appends or replaces a script in the load script section of startup.ijs
 NB.
 NB. dyad:  clJODLoadScripts addloadscript1 (clGroup ; clPath)
 
@@ -153,7 +177,7 @@ if. 1 >: +/msk do.
   NB. return modified 
   ok }. ; LF ,&.> ldl
 else.
-  (jderr 'load script is not unique - edit scripts.ijs ->'),0{y
+  (jderr 'load script is not unique - edit startup.ijs ->'),0{y
 end.
 )
 
