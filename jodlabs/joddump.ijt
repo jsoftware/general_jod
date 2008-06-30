@@ -175,6 +175,9 @@ JODDEV=: zread 'joddev.ijs';jpath '~addons\general\jodsource\jodsource.zip'
 NB. load (joddevload)
 0!:100 JODDEV
 
+NB. insure at least one group exists - defines put dictionary path
+grp 'jodon';}. grp 'jodon'
+
 NB. cross reference
 5 {. 0 globs&> }. revo '' 
 
