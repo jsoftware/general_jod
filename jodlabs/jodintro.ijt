@@ -482,7 +482,9 @@ mls 'sunmoon'   NB. sun/moon rise set
 
 NB. =========================================================
 Lab Section
-mls appends generated scripts to J's scripts.ijs file so they can be loaded independently of JOD.
+mls appends generated scripts to the current user's startup.ijs file so they can be loaded independently of JOD.
+
+Note: mls scripts are added to PUBLIC_j_ for the current user.
 )
 NB. load generated script
 load 'sunmoon'
@@ -559,7 +561,7 @@ You now have some idea of what JOD is all about. To learn more read JOD's docume
 
 John D. Baker
 bakerjd99@gmail.com
-May 2008
+July 2008
 )
 NB. close any open dictionaries
 3 od ''
