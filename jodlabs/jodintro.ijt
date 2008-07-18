@@ -94,7 +94,7 @@ od 3 3$'boo'
 
 NB. =========================================================
 Lab Section Online JOD documentation
-JOD has extensive online (html) and offline (pdf) documentation.  The online documents are the most current and can be accessed with the (jodhelp) verb.
+JOD has extensive online (html) and offline (pdf) documentation.  The online documents can be accessed with the (jodhelp) verb.
 
 (jodhelp) spawns a browser task. Browser selection is controlled by the (setwwwbrowser) verb in the jod utility class (jodutil). This class is loaded into locale (ajodutil). In the default setup JOD prefers FireFox but will fall back on Internet Explorer if FireFox is not found.  If no browser is found check the strings (WWw0) and (WWw1) in (ajodutil).
 
@@ -121,6 +121,21 @@ NB. jodhelp 'put'
 
 NB. display JOD online help index.
 jodhelp ''
+
+NB. =========================================================
+Lab Section PDF JOD documentation
+JOD documentation is also available in PDF form.  The PDF documentation is the most comphrehensive.  It can be accessed with (jodhelp).
+)
+NB. location of main JOD PDF document
+jpath '~addons\general\jod\joddoc\pdfdoc'
+
+NB. open PDF reader - if the PDFREADER is not found edit
+NB. PDFREADER in ~addons\general\jod\jod.ijs
+
+'PDF' jodhelp ''
+
+NB. handy idiom
+NB. jodhelp~ 'PDF'
 
 NB. =========================================================
 Lab Section Dictionary paths

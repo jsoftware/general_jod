@@ -198,6 +198,16 @@ NB. close dictionaries
 3 od ''
 
 NB. =========================================================
+Lab Section Scriptdoc commented jod scripts
+The fully commented JOD source code is scriptdoc compatible and can be explored with this standard J tool.
+)
+NB. load scriptdoc
+require 'scriptdoc'
+
+NB. browse comments in JOD class source
+scriptdoc jpath '~JODSOURCE\joddevload\script\jod.ijs'
+
+NB. =========================================================
 Lab Section Rename JOD load dictionaries.
 The JOD source code dictionaries are named (joddev) (jod) and (utils).  Many test and build scripts in these dictionaries make use of these names.  To dive into JOD code it's a good idea to copy and rename the load dictionaries. Uncomment and run the following lines to copy and rename the load dictionaries. 
 

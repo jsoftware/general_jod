@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.4.0  Build Number: 242  Date: 30 Jun 2008 10:27:51
+NB. Version: 0.5.0  Build Number: 252  Date: 18 Jul 2008 14:44:35
 (9!:41) 0
 jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -121,7 +121,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.4.0';242;'30 Jun 2008 10:27:51'
+JODVMD=:'0.5.0';252;'18 Jul 2008 14:44:35'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -2680,6 +2680,7 @@ NAMEALPHA=:'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
 OK0250=:' documented in ->'
 OK0251=:'edit locale cleared'
 OK0252=:'edit locale ->'
+PDFREADER=:'C:\Program Files\Adobe\Reader 8.0\Reader\acrord32.exe'
 SCRIPTDOCCHAR=:'*'
 WWW0=:'c:\Program Files\Mozilla Firefox\firefox.exe'
 WWW1=:'C:\Program Files\Internet Explorer\IEXPLORE.EXE'
@@ -2896,7 +2897,16 @@ fork;1 0 2{' ';dblquote WWWBROWSER;0{1{JODHELP
 ok'starting browser on help index'
 end.
 :
+if.x-:'PDF'do.
+if.fex<PDFREADER do.
+fork;1 0 2{' ';dblquote PDFREADER;jpath'~addons\general\jod\joddoc\pdfdoc\jod.pdf'
+ok'starting PDF reader'
+else.
+(jderr'PDF reader not found'),<PDFREADER
+end.
+else.
 /:~0{JODHELP
+end.
 )
 ljust=:' '&$: :(]|."_1~i."1&0@(]e.[))
 obtext=:4 :0

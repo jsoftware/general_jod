@@ -303,8 +303,11 @@ JOD documentation is available in two forms.  There is an online PDF document th
 NB. open JOD online help - require internet connection
 NB. jodhelp 'AContents'
 
+NB. location of jod.pdf 
+jpath '~addons\general\jod\joddoc\pdfdoc\jod.pdf'
+
 NB. opens jod.pdf if a pdf reader is available on your system
-NB.  shell '"',jpath '~addons\general\jod\joddoc\pdfdoc\jod.pdf"'
+'PDF' jodhelp ''
 
 NB. =========================================================
 Lab Section Summary and final remarks.
