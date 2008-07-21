@@ -1,6 +1,6 @@
 NB. manifest for JOD
 CAPTION=:'JOD J Object Dictionary'
-VERSION=:'0.5.0'
+VERSION=:'0.5.1'
 PLATFORMS=:'win'      
 LABCATEGORY=:'General'
 FILES=: 0 : 0
@@ -10,6 +10,7 @@ jodprofile.ijs
 manifest.ijs
 jodbak/jodparmsbak.ijs
 jodbak/jodprofilebak.ijs
+jodbak/joduserconfigbak.ijs
 joddoc/htmldoc/jodindex.html
 joddoc/pdfdoc/jod.pdf
 jodexts/jodtools.ijs

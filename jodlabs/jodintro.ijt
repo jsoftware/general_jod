@@ -98,6 +98,12 @@ JOD has extensive online (html) and offline (pdf) documentation.  The online doc
 
 (jodhelp) spawns a browser task. Browser selection is controlled by the (setwwwbrowser) verb in the jod utility class (jodutil). This class is loaded into locale (ajodutil). In the default setup JOD prefers FireFox but will fall back on Internet Explorer if FireFox is not found.  If no browser is found check the strings (WWw0) and (WWw1) in (ajodutil).
 
+NOTE: you can change preferred browser settings and other JOD class nouns by defining a joduserconfig.ijs script. See the example script
+
+jpath '~addons\general\jod\jodbak\joduserconfigbak.ijs'
+
+for details.
+
 The next step spawns a browser and looks for JOD online help.  Of course you must be on the internet for this to work!
 )
 NB. help for JOD z interface words can be obtained with (jodhelp)
@@ -124,13 +130,13 @@ jodhelp ''
 
 NB. =========================================================
 Lab Section PDF JOD documentation
-JOD documentation is also available in PDF form.  The PDF documentation is the most comphrehensive.  It can be accessed with (jodhelp).
+JOD documentation is also available in PDF form.  The PDF documentation is the most comphrehensive.  It can also be accessed with (jodhelp).
 )
 NB. location of main JOD PDF document
 jpath '~addons\general\jod\joddoc\pdfdoc'
 
-NB. open PDF reader - if the PDFREADER is not found edit
-NB. PDFREADER in ~addons\general\jod\jod.ijs
+NB. open PDF reader - if the PDFREADER is not found see:
+NB. jpath '~addons\general\jod\jodbak\joduserconfigbak.ijs'
 
 'PDF' jodhelp ''
 

@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.5.0  Build Number: 252  Date: 18 Jul 2008 14:44:35
+NB. Version: 0.5.1  Build Number: 257  Date: 21 Jul 2008 13:01:29
 (9!:41) 0
 jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -69,6 +69,7 @@ PATHDEL=:'\'
 PATHCHRS=:' :.-',PATHDEL
 JMASTER=:jodsystempath'jmaster'
 JODPROF=:jodsystempath'jodprofile.ijs'
+JODUSER=:jodsystempath'joduserconfig.ijs'
 ALPHA=:'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 CNMFDLOG=:10
 CNMFMARK=:0
@@ -108,6 +109,7 @@ ERR022=:'JOD z interface clashes with current z locale names. JOD load aborted'
 ERR023=:'white space preservation is off - turn on to put'
 ERR024=:'dependent section unbalanced'
 ERR025=:'only one balanced dependent section allowed'
+ERR026=:'error in joduserconfig.ijs - last J error ->'
 EXPLAIN=:8
 FREESPACE=:1048576
 IJF=:'.ijf'
@@ -121,7 +123,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.5.0';252;'18 Jul 2008 14:44:35'
+JODVMD=:'0.5.1';257;'21 Jul 2008 13:01:29'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -241,6 +243,7 @@ end.
 createjod=:3 :0
 if.-.wex<'JMASTER'do.JMASTER=:jodsystempath'jmaster'end.
 if.-.wex<'JODPROF'do.JODPROF=:jodsystempath'jodprofile.ijs'end.
+if.-.wex<'JODUSER'do.JODUSER=:jodsystempath'joduserconfig.ijs'end.
 JVERSION_ajod_=:(jvn ::_9:)''
 e=.(IzJODinterface,IzJODutinterface_ajodutil_),&.>locsfx'z'
 if.1 e.d=.0<:nc e do.
@@ -252,6 +255,9 @@ return.
 end.
 if.-.fex<JMASTER,IJF do.
 if.badrc a=.createmast JMASTER do.a return.end.
+end.
+if.fex<JODUSER do.
+if.(_9-:((0!:0) ::_9:) <JODUSER) {0 1 do.(jderr ERR026) ,<13!:12''return.end.
 end.
 if.badjr a=.jread JMASTER;CNMFPARMS do.jderr ERR006 return.end.
 MASTERPARMS_ajod_=:>a
@@ -452,6 +458,7 @@ gdeps=:3 :0
 GROUP gdeps y
 :
 if.badil x do.jderr ERR001
+elseif.badcl y do.jderr ERR002
 elseif.x=.{.x
 -.x e.GROUP,SUITE do.jderr ERR001
 elseif.badrc d=.(x,1)obtext__UT y do.d
