@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.5.1  Build Number: 257  Date: 21 Jul 2008 13:01:29
+NB. Version: 0.5.1  Build Number: 259  Date: 22 Jul 2008 09:02:58
 (9!:41) 0
 jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -123,7 +123,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.5.1';257;'21 Jul 2008 13:01:29'
+JODVMD=:'0.5.1';259;'22 Jul 2008 09:02:58'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -2889,27 +2889,29 @@ catch.jderr ERR0254
 end.
 )
 jodhelp=:3 :0
-if.badcl y do.jderr'invalid b name'
-elseif.-.fex<WWWBROWSER do.(jderr'www browser not found ->'),<WWWBROWSER 
+if.#BROWSER_j_ do.d=.BROWSER_j_ else.d=.WWWBROWSER end.
+if.badcl y do.jderr'invalid c name'
+elseif.-.fex<d do.(jderr'browser not found ->'),<d 
 elseif.#y do.
-b=.<alltrim y
-if.({:$JODHELP)=a=.(0{JODHELP)i.b do.
-(jderr'no help for ->'),b
+c=.<alltrim y
+if.({:$JODHELP)=b=.(0{JODHELP)i.c do.
+(jderr'no help for ->'),c
 else.
-fork;1 0 2{' ';dblquote WWWBROWSER;a{1{JODHELP
-(ok'starting browser help for ->'),b
+fork;1 0 2{' ';dblquote d;b{1{JODHELP
+(ok'starting browser help for ->'),c
 end.
 elseif.do.
-fork;1 0 2{' ';dblquote WWWBROWSER;0{1{JODHELP
+fork;1 0 2{' ';dblquote d;0{1{JODHELP
 ok'starting browser on help index'
 end.
 :
 if.x-:'PDF'do.
-if.fex<PDFREADER do.
-fork;1 0 2{' ';dblquote PDFREADER;jpath'~addons\general\jod\joddoc\pdfdoc\jod.pdf'
+if.#PDFREADER_j_ do.a=.PDFREADER_j_ else.a=.PDFREADER end.
+if.fex<a do.
+fork;1 0 2{' ';dblquote a;jpath'~addons\general\jod\joddoc\pdfdoc\jod.pdf'
 ok'starting PDF reader'
 else.
-(jderr'PDF reader not found'),<PDFREADER
+(jderr'PDF reader not found'),<a
 end.
 else.
 /:~0{JODHELP
