@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.5.1  Build Number: 259  Date: 22 Jul 2008 09:02:58
+NB. Version: 0.6.0  Build Number: 275  Date:  8 Aug 2008 09:35:56
 (9!:41) 0
 jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -123,7 +123,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.5.1';259;'22 Jul 2008 09:02:58'
+JODVMD=:'0.6.0';275;' 8 Aug 2008 09:35:56'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -450,6 +450,7 @@ b=.>1 {"1 y
 a=.I.(,:'(+integer)')({."1)@E.b
 y=.(".&.>(<a;2){y)(<a;2)}y
 )
+empdnl=:(,<0$0)-:]
 fex=:*./@:(1:@(1!:4) ::0:) 
 firstone=:]>[:}:0:,]
 fod=:]#~1 0"_$~#
@@ -2682,11 +2683,19 @@ ERR0253=:'invalid locale name'
 ERR0254=:'unable to get TEMP\*.ijs text'
 ERR0255=:'unable to open TEMP\*ijs for editing'
 ERR0256=:'J error in script ->'
+ERR0257=:'invalid help word name'
+ERR0258=:'browser not found ->'
+ERR0259=:'no help for ->'
+ERR0260=:'PDF reader not found'
 IzJODutinterface=:<;._1 ' compj de disp doc ed et gt jodhelp revo rm rtt'
 NAMEALPHA=:'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
 OK0250=:' documented in ->'
 OK0251=:'edit locale cleared'
 OK0252=:'edit locale ->'
+OK0253=:'starting browser help for ->'
+OK0254=:'starting browser on help index'
+OK0255=:'starting PDF reader'
+PDF=:'PDF'
 PDFREADER=:'C:\Program Files\Adobe\Reader 8.0\Reader\acrord32.exe'
 SCRIPTDOCCHAR=:'*'
 WWW0=:'c:\Program Files\Mozilla Firefox\firefox.exe'
@@ -2890,28 +2899,28 @@ end.
 )
 jodhelp=:3 :0
 if.#BROWSER_j_ do.d=.BROWSER_j_ else.d=.WWWBROWSER end.
-if.badcl y do.jderr'invalid c name'
-elseif.-.fex<d do.(jderr'browser not found ->'),<d 
+if.badcl y do.jderr ERR0257
+elseif.-.fex<d do.(jderr ERR0258),<d 
 elseif.#y do.
 c=.<alltrim y
 if.({:$JODHELP)=b=.(0{JODHELP)i.c do.
-(jderr'no help for ->'),c
+(jderr ERR0259),c
 else.
 fork;1 0 2{' ';dblquote d;b{1{JODHELP
-(ok'starting browser help for ->'),c
+(ok OK0253),c
 end.
 elseif.do.
 fork;1 0 2{' ';dblquote d;0{1{JODHELP
-ok'starting browser on help index'
+ok OK0254
 end.
 :
-if.x-:'PDF'do.
+if.x-:PDF do.
 if.#PDFREADER_j_ do.a=.PDFREADER_j_ else.a=.PDFREADER end.
 if.fex<a do.
 fork;1 0 2{' ';dblquote a;jpath'~addons\general\jod\joddoc\pdfdoc\jod.pdf'
-ok'starting PDF reader'
+ok OK0255
 else.
-(jderr'PDF reader not found'),<a
+(jderr ERR0260),<a
 end.
 else.
 /:~0{JODHELP
