@@ -1,0 +1,6 @@
+general/jod - change history
+
+== 0.7.0 ==
+ * this history log introducted
+ * references added to jod.pdf 
+ * new jod hardcopy www.lulu.com edition
