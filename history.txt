@@ -4,3 +4,7 @@ general/jod - change history
  * this history log introducted
  * references added to jod.pdf 
  * new jod hardcopy www.lulu.com edition
+
+== 0.7.1 ==
+ * removed some large EPS files from dictionary to reduce download size
+ * replaced JOD directory diagram in jod.pdf - reduces size of jod.pdf
