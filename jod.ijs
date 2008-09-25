@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.7.1  Build Number: 285  Date: 24 Sep 2008 16:49:06
+NB. Version: 0.7.2  Build Number: 290  Date: 25 Sep 2008 14:41:06
 (9!:41) 0
 jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -123,7 +123,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.7.1';285;'24 Sep 2008 16:49:06'
+JODVMD=:'0.7.2';290;'25 Sep 2008 14:41:06'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -2687,6 +2687,7 @@ ERR0257=:'invalid help word name'
 ERR0258=:'browser not found ->'
 ERR0259=:'no help for ->'
 ERR0260=:'PDF reader not found'
+ERR0261=:'macro is not a J script - not formatted'
 IzJODutinterface=:<;._1 ' compj de disp doc ed et gt jodhelp revo rm rtt'
 NAMEALPHA=:'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
 OK0250=:' documented in ->'
@@ -2833,9 +2834,19 @@ a;d
 )
 doctext=:4 :0
 if.badcl y do.jderr ERR001
-elseif.-.(<x)e.{OBJECTNC;DOCUMENT do.jderr ERR001
 elseif.badrc a=.checkput__ST y do.a
 elseif.badrc a=.checknames__ST y do.a
+elseif.((1 =#x )*.({.x )e.TEST,MACRO)+.x e.(GROUP,SUITE),.1 do.
+if.badrc a=.x obtext y do.a return.else.a=.>{:a end.
+DL=.{:{.DPATH__ST
+a=.ctl(DOCUMENTWIDTH__DL;0;0;'NB.')docct2];._1 LF,a-.CR
+if.x-:MACRO do.
+if.badrc b=.(MACRO,INCLASS)get y do.b return.end.
+if.JSCRIPT=>{:b do.x put y;JSCRIPT;a else.jderr ERR0261 end.
+else.
+x put y;a
+end.
+elseif.-.(<x)e.{OBJECTNC;DOCUMENT do.jderr ERR001
 elseif.y=.}.a
 DL=.{:{.DPATH__ST
 badrc a=.((x=.{.x);<DL)inputdict__ST y do.a
