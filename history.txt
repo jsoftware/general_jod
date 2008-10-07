@@ -1,5 +1,9 @@
 general/jod - change history
 
+== 0.7.3 ==
+ * forced path comparisons to lower case in JOD Lab #4 and test 'setup_jodproject'
+ * fixed a few typos in jod.pdf
+
 == 0.7.2 ==
  * completed dyadic case of doc
  * updated jod.pdf to describe changes
@@ -9,6 +13,6 @@ general/jod - change history
  * replaced JOD directory diagram in jod.pdf - reduces size of jod.pdf
 
 == 0.7.0 ==
- * this history log introducted
+ * this history log introduced
  * references added to jod.pdf 
  * new jod hardcopy www.lulu.com edition

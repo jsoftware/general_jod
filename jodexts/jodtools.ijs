@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.7.2  Build Number: 211  Date: 25 Sep 2008 14:41:09
+NB. Version: 0.7.3  Build Number: 214  Date:  7 Oct 2008 10:03:54
 (9!:41)0
 coclass'ajodtools'
 coinsert'ajodutil'
@@ -13,10 +13,10 @@ ERR00403=:'invalid make load script option (0 or 1)'
 ERR00404=:'J script error in group ->'
 ERR00405=:'words refer to objects/locales ->'
 GROUPSUITES=:<;._1 ' Groups Suites'
-IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp ltx mg mls mt noexp notgrp nt nw obnames pr refnames revonex swex tt usedby'
+IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp ltx mg mj mls mt noexp notgrp nt nw obnames pr refnames revonex swex tt usedby'
 JODLOADEND=:'NB.</JOD_Load_Scripts>'
 JODLOADSTART=:'NB.<JOD_Load_Scripts>'
-JODTOOLSVMD=:'0.7.2';211;'25 Sep 2008 14:41:09'
+JODTOOLSVMD=:'0.7.3';214;' 7 Oct 2008 10:03:54'
 LF=:10{a.
 OK00400=:'load script saved ->'
 OK00401=:'file saved ->'
@@ -240,6 +240,7 @@ end.
 )
 ltx=:];22"_;gt
 mg=:2 _1&make
+mj=:];21"_;gt
 mls=:3 :0
 1 mls y
 :
@@ -264,7 +265,7 @@ else.
 v
 end.
 )
-mt=:];21"_;gt
+mt=:];25"_;gt
 noexp=:3 :0
 0 noexp y
 :
@@ -323,7 +324,6 @@ y=.y$~$c
 y#~y+./ .~:' '
 )
 pr=:0&globs,:~put
-pt=:];25"_;gt
 refnames=:[:/:~[:~.[:;1:{"1[:>{:
 revonex=:3 :0
 /:~0 revonex y

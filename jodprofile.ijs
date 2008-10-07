@@ -78,13 +78,8 @@ NB. regenerate put dictionary word cross references
 reref_z_=: 3 : '(n,.s) #~ -.;0{"1 s=.0 globs&>n=.}.revo'''' [ y'
 
 NB. handy cl doc helpers
-NB. NIMP extend (doc) to handle these cases
 docscr_z_=: 3 : 'ctl_ajod_ (61;0;0;''NB.'') docct2__UT__JODobj ];._1 LF,y-.CR'
 doctxt_z_=: 3 : 'ctl_ajod_ (61;0;0;'''') docct2__UT__JODobj ];._1 LF,y-.CR'
-
-NB. document group and suite headers
-docgh_z_=: 4 : 'x put y;docscr (x,1) disp y'
-docg_z_=: 2&docgh
 
 NB. display noun on screen and return noun value
 showpass_z_=:] [ 1!:2&2

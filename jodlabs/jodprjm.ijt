@@ -56,7 +56,7 @@ NB. If these paths do not match use J's configuration tool to set
 NB. ~JODPROJECT to joddev's \script directory
 
 NB.  project                              joddev \script 
-(jpath '~JODPROJECT\script\') -: ".'SCR_',(;{:{.DPATH__ST__JODobj),'_'
+(tolower jpath '~JODPROJECT\script\') -: tolower ".'SCR_',(;{:{.DPATH__ST__JODobj),'_'
 
 NB. =========================================================
 Lab Section Generate Project Manager Files
