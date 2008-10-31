@@ -1,5 +1,14 @@
 general/jod - change history
 
+== 0.8.0 ==
+ * added new jodparms.ijs parameter ASCII85 that controls whether
+   dump files use ascii85 for text objects.  Default is 0.
+   The ascii85 representation generally produces smaller 
+   dump files but is slower than the default method.
+ * jodsource uses ascii85 for JOD development dictionaries to 
+   reduce the size of the downloads.
+ * minor fixes in jod.pdf
+
 == 0.7.3 ==
  * forced path comparisons to lower case in JOD Lab #4 and test 'setup_jodproject'
  * fixed a few typos in jod.pdf

@@ -1,6 +1,6 @@
 NB. manifest for JOD
 CAPTION=:'JOD J Object Dictionary'
-VERSION=:'0.7.3'
+VERSION=:'0.8.0'
 PLATFORMS=:'win'      
 LABCATEGORY=:'General'
 FILES=: 0 : 0

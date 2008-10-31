@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.7.3  Build Number: 291  Date:  7 Oct 2008 10:03:52
+NB. Version: 0.8.0  Build Number: 319  Date: 31 Oct 2008 12:28:12
 (9!:41) 0
 jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -123,7 +123,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.7.3';291;' 7 Oct 2008 10:03:52'
+JODVMD=:'0.8.0';319;'31 Oct 2008 12:28:12'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -2247,6 +2247,7 @@ SOSWITCH=:'cocurrent SO__JODobj',DUMPTAG
 DUMPMSG0=:'NB. JOD dictionary dump: '
 DUMPMSG1=:'Names & DidNums on current path'
 DUMPMSG2=:'''NB. end-of-JOD-dump-file regenerate cross references with:  0 globs&> }. revo '''''''' '''
+DUMPMSG3=:'NB. Generated with JOD version'
 ERR0150=:'confused declarations ->'
 ERR0151=:'word syntax'
 ERR0152=:'no definition ->'
@@ -2267,11 +2268,44 @@ OK0150=:'file saved ->'
 OK0151=:'object(s) on path dumped ->'
 PORTCHARS=:,:'+++++++++|-'
 SOPASS=:'showpass '
+btclfrcl=:3 :0
+b=.".(d=.y i.' '){.y 
+y=.(>:d)}.y
+f=.2{.c=.".b{.y
+c=.2}.c
+g=.b}.y
+if.#g do.
+h=.0<c
+a=.0#~#g
+e=.}:0,+/\h#c
+a=.1 e}a
+f$h#^:_1 a<;.1 g
+else.
+f$<''
+end.
+)
 clearso=:3 :0
 if.#s=.nl__SO i.4 do.(4 !:55)s,&.>locsfx SO end.
 )
+clfrbtcl=:3 :0
+c=.$y
+a=.,#&>y
+b=.":c,a
+(":$b),' ',b,;y
+)
 createmk=:3 :0
 'JOD ST MK UT SO'=:y
+)
+dec85=:3 :0
+b=.fromascii85 y
+b=.btclfrcl b
+assert.({:$b)e.2 3
+if.3={:$b do.
+a=.<a:;1
+c=.".&.>a{b
+b=.c a}b
+end.
+5!:5<'b'
 )
 dumpdoc=:4 :0
 'a b c'=.x
@@ -2308,6 +2342,7 @@ dumpheader=:3 :0
 if._1-:''(write ::_1:)y do.(jderr ERR0156),<y return.end.
 9!:7,PORTCHARS[a=.,9!:6''
 b=.DUMPMSG0,tstamp''
+b=.b,LF,DUMPMSG3,;(<'; '),&.>":&.>JODVMD
 b=.b,LF,DUMPPREAMBLE
 b=.b,LF,ctl'NB. ',"1 ' ',DUMPMSG1,":0 1{"1 DPATH__ST
 b=.b,LF,LF
@@ -2411,12 +2446,33 @@ end.
 )
 fap=:1!:3 ::(_1:)
 fmtdumptext=:4 :0
-if.#a=.y #~0<#&>{:"1 y do.
-a=.5!:5<'a'
-x wraplinear a
+if.#b=.y #~0<#&>{:"1 y do.
+a=.0
+if.0=nc<'ASCII85'do.a=.1=ASCII85
+elseif.
+do=.{:{.DPATH__ST
+0=nc<'ASCII85__do'do.a=.1=ASCII85__do
+end.
+if.a do.b=.clfrbtcl":&.>b else.b=.5!:5<'b'end.
+(x,<a)wraplinear b
 else.
 ''
 end.
+)
+fromascii85=:3 :0
+r=.,y
+r=.a.i.r
+r=.(r>32)#r
+r=.(2*(a.i.'<~')-:2{.r)}.r
+r=.(-2*(a.i.'~>')-:_2{.r)}.r
+m=.r=a.i.'z'
+r=.r-33
+r=.0(I.m)}r
+r=.(1+4*m)#r
+b=.5|#r
+r=.r,84#~b{0 4 3 2 1
+r=.a.{~,(4#256)#:85#._5[\r
+r}.~-b{0 0 3 2 1
 )
 halfbits=:]*.1 0"_$~#
 htclip=:[(]}.~[:>:]i.[)]}.~[:-[:>:[i.~[:|.]
@@ -2564,6 +2620,21 @@ sonl=:3 :0
 nl__SO y
 )
 tabit=:]`,:@.(1&>:@(#@$))^:2
+toascii85=:3 :0
+r=.,y
+a=.#r
+assert.4<:a
+r=.256#._4[\a.i.r
+m=.0(_1)}r=0
+n=.5*I.m
+r=.a.{~33+,(5#85)#:r
+r=.'z'n}r
+m=.1 n}5#-.m
+r=.m#r
+r=.(-(4|a){0 3 2 1)}.r
+r=.}:,(_75[\r),.LF
+('~>',LF),~(r i:' '){.r 
+)
 uqtsingle=:3 :0
 if.sexpin y do.
 a=.''''htclip alltrim,y
@@ -2574,12 +2645,16 @@ y
 end.
 )
 wraplinear=:4 :0
-'e f'=.x
-b=.e,'=:'''''
-d=.e,'=:',(":#y),'{.',e
-c=.e,'=:',e,','
-a=.ctl c,"1 quote"1 (-f)]\y
-b,LF,a,LF,d
+'f g a'=.3{.x,<0
+if.a do.
+f,'=:dec85__MK__JODobj 0 : 0',LF,')',~toascii85 y
+else.
+c=.f,'=:'''''
+e=.f,'=:',(":#y),'{.',f
+d=.f,'=:',f,','
+b=.ctl d,"1 quote"1 (-g)]\y
+c,LF,b,LF,e
+end.
 )
 wrdglobals=:4 :0
 a=.jcr ::0:y
@@ -3042,9 +3117,7 @@ elseif.do.
 (jderr'www browser not found ->'),WWW0;WWW1
 end.
 )
-textform2=:3 :0
-63 textform2 y
-:
+textform2=:63&$: :(4 :0)
 i=.0
 v=.reb,y,"1' '
 j=.#v
