@@ -1,5 +1,23 @@
 general/jod - change history
 
+== 0.9.0 ==
+ * modified to run under J 7.01 JHS and JGTK. This version
+   also runs on J 6.0x systems.
+ * replaced JOD's (z) locale interface with an (ijod) interface.
+   JOD now defines only three words: (jodon), (jodoff) and 
+   (jodsystempath) in the (z) locale.  All other interface
+   words are defined in (ijod) which is placed on the
+   base locale's search path
+ * path and file displays converted to (jpathsep) conventions.
+ * jod.pdf removed from the core JOD addon package.  jod.pdf
+   was by far the largest part of the core install package. jod.pdf
+   is now browsed on-line by (jodhelp). You can download jod.pdf
+   and place it in ~addons/general/jod/joddoc/pdfdoc/ to enable
+   local PDF reading.
+ * online JOD documentation updated to reflect changes.
+ * UTF8 macro script code changed from 26 to 28 (remember 28 for UTF8).
+ * BYTE macro script code added with value 26.  
+ 
 == 0.8.0 ==
  * added new jodparms.ijs parameter ASCII85 that controls whether
    dump files use ascii85 for text objects.  Default is 0.

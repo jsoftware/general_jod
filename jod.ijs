@@ -1,9 +1,9 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.8.0  Build Number: 319  Date: 31 Oct 2008 12:28:12
+NB. Version: 0.9.0  Build Number: 55  Date: 18 Feb 2011 18:03:29
 (9!:41) 0
-jodsf_z_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
+jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
-(jpath'~addons\general\jod\'),y
+(jpath'~addons/general/jod/'),y
 )
 coclass'ajod'
 JMASTER=:jodsystempath'jmaster'
@@ -11,9 +11,11 @@ JODPROF=:jodsystempath'jodprofile.ijs'
 cocurrent'z'
 jodoff=:3 :0
 try.
-a=.<'JODobj_z_'
+a=.<'JODobj_ijod_'
 if.0 =(4!:0 )a do.(4!:55)a [(18!:55)destroyjod__JODobj 0 end.
 (18!:55)w#~'ajod'&-:@:(4&{.)&>w=.18!:1]0
+((18!:2<'base')-.<'ijod')18!:2<'base'
+(18!:55)<'ijod'
 _1=(4!:0)a
 catchd.
 0
@@ -23,29 +25,35 @@ jodon=:3 :0
 e=.9!:14''
 e=.,(e i.'/'){.e 
 if.#e do.e=.0 ".e #~e e.'0123456789'else.e=.0 end.
-if.e<601 do.
 h=.][1!:2&2
+if.e<:601 do.
 f=.'JOD requires J 6.01 or later.'
-f=.f,LF,'J 6.0x is freely available at www.jsoftware.com'
-0[h f,LF,'Download and install J 6.0x and then reinstall JOD.'
+f=.f,LF,'J is freely available at www.jsoftware.com'
+0[h f,LF,'Download and install J 6.0x/7.0x and then reinstall JOD.'
 return.
 end.
 g=.(4!:0)@<
 a=.(4!:55)@<
-d=.g'JODobj_z_'
+if.0 e.(4!:0 );:'load conew coclass coerase coinsert copath'do.
+f=.'JOD depends on core J load and class utilities.'
+0[h f=.f,LF,'Load J with a standard profile to use JOD.'
+return.
+end.
+d=.g'JODobj_ijod_'
 b=.(<'ajod')e.18!:1]0
 if.(0=d)*.b do.1
 elseif.(_1=d)*.b do.
-JODobj_z_=:conew'ajod'
-if.c=.createjod__JODobj JODobj_z_ do.1 else.0[a'JODobj_z_'end.
+JODobj_ijod_=:conew'ajod'
+if.c=.createjod__JODobj JODobj_ijod_ do.1 else.0[a'JODobj_ijod_'end.
 elseif.-.b do.
-a'JODobj_z_'
-load'jod'
-0=g'JODobj_z_'
+a'JODobj_ijod_'
+load'general/jod'
+0=g'JODobj_ijod_'
 elseif.do.0
 end.
 )
 coclass'ajod'
+coinsert'ijod'
 require'jfiles regex task'
 LF=:10{a.
 CR=:13{a.
@@ -56,8 +64,9 @@ LATEX=:22
 HTML=:23
 XML=:24
 TEXT=:25
-UTF8=:26
-MACROTYPE=:JSCRIPT,LATEX,HTML,XML,TEXT,UTF8
+BYTE=:26
+UTF8=:28
+MACROTYPE=:JSCRIPT,LATEX,HTML,XML,TEXT,BYTE,UTF8
 WORD=:0
 TEST=:1
 GROUP=:2
@@ -65,8 +74,9 @@ SUITE=:3
 MACRO=:4
 OBJECTNC=:WORD,TEST,GROUP,SUITE,MACRO
 badobj=:[:-.[:*./[:,]e.OBJECTNC"_
-PATHDEL=:'\'
+PATHDEL=:IFWIN{'/\'
 PATHCHRS=:' :.-',PATHDEL
+hostsep=:(IFWIN{'/\')&(((IFWIN{'\/')I.@:=])})
 JMASTER=:jodsystempath'jmaster'
 JODPROF=:jodsystempath'jodprofile.ijs'
 JODUSER=:jodsystempath'joduserconfig.ijs'
@@ -110,6 +120,7 @@ ERR023=:'white space preservation is off - turn on to put'
 ERR024=:'dependent section unbalanced'
 ERR025=:'only one balanced dependent section allowed'
 ERR026=:'error in joduserconfig.ijs - last J error ->'
+ERR027=:'unable to set master parameters ->'
 EXPLAIN=:8
 FREESPACE=:1048576
 IJF=:'.ijf'
@@ -123,7 +134,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.8.0';319;'31 Oct 2008 12:28:12'
+JODVMD=:'0.9.0';55;'18 Feb 2011 18:03:29'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -141,6 +152,7 @@ OK008=:'put dictionary read/write status restored ->'
 OK009=:'put dictionary references deleted ->'
 PARMDIRS=:4 5 6 7 8 9
 PARMFILE=:'jodparms.ijs'
+PATHSHOWDEL=:'/'
 PATOPS=:1 2 3 _1 _2 _3
 PUTBLACK=:0
 REFERENCE=:11
@@ -245,14 +257,6 @@ if.-.wex<'JMASTER'do.JMASTER=:jodsystempath'jmaster'end.
 if.-.wex<'JODPROF'do.JODPROF=:jodsystempath'jodprofile.ijs'end.
 if.-.wex<'JODUSER'do.JODUSER=:jodsystempath'joduserconfig.ijs'end.
 JVERSION_ajod_=:(jvn ::_9:)''
-e=.(IzJODinterface,IzJODutinterface_ajodutil_),&.>locsfx'z'
-if.1 e.d=.0<:nc e do.
-c=.][1!:2&2
-0[c ERR022,LF,LF,'z clashes:',LF,ctl list>d#e
-coerase y
-0[coerase d#~'ajod'&-:@:(4&{.)&>d=.18!:1]0
-return.
-end.
 if.-.fex<JMASTER,IJF do.
 if.badrc a=.createmast JMASTER do.a return.end.
 end.
@@ -268,16 +272,17 @@ ST=:conew'ajodstore'
 MK=:conew'ajodmake'
 UT=:conew'ajodutil'
 SO=:cocreate''
+('ijod';'z')copath;SO
 b=.JOD;ST;MK;UT;<SO
 createst__ST b
 createmk__MK b
 createut__UT b
 ".&.>y defzface IzJODinterface
-makedir<jpath'~temp\'
+makedir<jpath'~temp/'
 if.fex<JODPROF do.(_9-:((0!:0) ::_9:) <JODPROF ) {1 0 else.1 end.
 )
 createmast=:3 :0
-b=.y
+b=.hostsep y
 f=.PATHDEL,~(justdrv,':'"_,justpath)b
 if.badappend jcreate b do.
 jderr ERR011
@@ -290,8 +295,13 @@ a=.a,(<d;c,didnum 0)jappend b
 a=.a,(4 0$'')jappend b
 a=.a,(4 0$'')jappend b
 a=.a,(3#<'')jappend b
+try.
 0!:0<f,PARMFILE
 e=.<dptable MASTERPARMS
+catchd.
+jclose_jfiles_ b
+(jderr ERR027),<f,PARMFILE return.
+end.
 a=.a,e jappend b
 a=.a,e jappend b
 a=.a,e jappend b
@@ -316,12 +326,12 @@ y=.y$~$c
 if.x do.y#~y+./ .~:' 'end.
 )
 defzface=:4 :0
-if.3=(4!:0)<'jodsf_z_'do.
+if.3=(4!:0)<'jodsf_ijod_'do.
 a=.(y,&.>locsfx x),&.><' :: jodsf'
 else.
 a=.y,&.>locsfx x
 end.
-(y,&.><'_z_=:'),&.>a
+(y,&.><'_ijod_=:'),&.>a
 )
 del=:3 :0
 WORD del y
@@ -607,6 +617,7 @@ y=.y#~y*./@:e.&><ALPHA,'_'
 y=.y#~-.({.&>y)e.'_0123456789'
 if.#y do.JNAME rxall;y ,&.>' 'else.''end.
 )
+jpathsep=:'/'&(('\'I.@:=])})
 jread=:jread_jfiles_ ::(_2:)
 jreplace=:jreplace_jfiles_ ::(_2:)
 justdrv=:[:}:]#~[:+./\.':'&=
@@ -684,13 +695,13 @@ if.badrc d=.checkopen__ST 0 do.d return.end.
 if.isempty y do.y=.{."1 DPATH__ST else.y=.boxopen,y end.
 if.*./y e.a do.b closedict__ST y else.jderr c end.
 case.4 do.
-b=.0 2{>b
+b=.jpathsep&.>0 2{>b
 ok<(/:0{b){|:b
 case.5 do.
 b=.quote&.>0 2{>b
 b=.ctl;"1(<'regd '),"1|:1 0 2{(<';'),b
 b=.'3 regd&> }. od'''' [ 3 od ''''',LF,b
-ok'NB. JOD registrations: ',(tstamp''),LF,b
+ok'NB. JOD registrations: ',(tstamp''),LF,jpathsep b
 case.do.jderr ERR001
 end.
 )
@@ -784,7 +795,7 @@ if.badreps((<e),<b)jreplace JMASTER;CNMFTAB,CNMFTABBCK do.
 jdmasterr ERR017 return.
 end.
 if.badrc c=.markmast~0 do.c return.end.
-(ok OK001),y;,f
+(ok OK001),y;jpathsep f
 else.
 jderr ERR005
 end.
@@ -897,7 +908,7 @@ ERR061=:'invalid dictionary name;path[;documentation]'
 ERR062=:'invalid characters in name'
 ERR063=:'invalid characters in path'
 ERR064=:'target drive is required'
-ERR065=:'not enough space on drive '
+ERR065=:'not enough space on drive ->'
 ERR066=:'dictionary name in use'
 ERR067=:'unable to create subdirectories'
 ERR068=:'unable to setup dictionary file(s)'
@@ -1161,7 +1172,7 @@ end.
 f=.<"0(~.;g)-.;1{i=.>i
 d=.(0{i),":&.>f
 a=.(1{i),f
-g=.;&.>PATHDEL,L:0((<;a)i.&.>g){&.><d
+g=.;&.>PATHSHOWDEL,L:0((<;a)i.&.>g){&.><d
 ok<b,.PATHTIT;g
 end.
 )
@@ -1490,17 +1501,21 @@ elseif.(3<#y )+.2>#y do.jderr l
 elseif.+./badcl&>y do.jderr l
 elseif.do.
 'o s f'=.3{.y,<''
-o=.alltrim o[s=.alltrim s
+o=.alltrim o[s=.hostsep alltrim s
 if.0&e.(#o),#s do.jderr l return.end.
 if.0&e.o e.' ',ALPHA do.
 jderr ERR062 return.
 elseif.0&e.s e.PATHCHRS,ALPHA do.
 jderr ERR063 return.
 end.
+if.(2#PATHDEL)-:2{.s do.
+s=.s,(PATHDEL={:s)}.PATHDEL
+else.
 if.isempty t=.justdrv s do.jderr ERR064 return.end.
 if.x=1 do.
-a=.freedisk t,':\'
-if.a<FREESPACE do.jderr ERR065,t return.end.
+a=.freedisk t=.t,':',PATHDEL
+if.a<FREESPACE do.(jderr ERR065),<t return.end.
+end.
 end.
 if.badjr w=.jread k;CNMFTAB,CNMFPARMS,CNMFDLOG do.
 jderr ERR006 return.
@@ -1553,7 +1568,7 @@ end.
 w=.(p;j;d,e)jreplace k;CNMFTAB,CNMFTABBCK,CNMFDLOG
 if.0&><./w do.jdmasterr ERR069 return.end.
 if.badrc l=.markmast~0 do.l return.end.
-ok q;o;s
+ok q;o;jpathsep s
 end.
 )
 nlctn=:([:I.[:+./"1([:,:])E.[:>[){[
@@ -1957,6 +1972,7 @@ RW=:(-.LIBSTATUS)*1=c
 (DFILES)=:f=.b,&.>JDFILES
 (DFPTRS)=:f
 SYS=:((justdrv WF),':',justpath WF),PATHDEL
+SYS=:(':'={.SYS)}.SYS
 if.badjr d=.jread UF;CNRPATH do.0 else.1[RPATH=:>d end.
 )
 dfclose=:3 :0
@@ -2232,7 +2248,9 @@ e=.e,g
 end.
 if.badreps e jreplace f;1{0{CNREF do.jderr ERR056 else.OK end.
 )
-volfree=:[:freedisk justdrv,':\'"_
+volfree=:3 :0
+if.(2#PATHDEL )-:2{.y do.freedisk y else.freedisk (justdrv y ),':',PATHDEL end.
+)
 coclass'ajodmake'
 coinsert'ajod'
 DUMPPREAMBLE=:0 :0 
@@ -2491,6 +2509,7 @@ if.isempty y do.b=.DMP__DL,DNAME__DL,IJS
 elseif.badcl y do.jderr ERR0158 return.
 elseif.do.b=.y
 end.
+b=.jpathsep b
 if.badrc c=.dumpheader b do.c
 elseif.badrc c=.a dumpwords b do.c
 elseif.badrc c=.(a,TEST)dumptm b do.c
@@ -2663,7 +2682,7 @@ if.a -:0 do.(jderr ERR0152),<y else.x namecats a end.
 writeijs=:4 :0
 'b a'=.x
 DL=.{:{.DPATH__ST
-c=.dfp__DL b
+c=.jpathsep dfp__DL b
 m=.(toHOST y)(write ::_1:)c=.c,a,IJS
 if.m-:_1 do.(jderr ERR0153),<c else.(ok OK0150),<c end.
 )
@@ -2763,6 +2782,7 @@ ERR0258=:'browser not found ->'
 ERR0259=:'no help for ->'
 ERR0260=:'PDF reader not found'
 ERR0261=:'macro is not a J script - not formatted'
+ERR0262=:'not supported on current J system'
 IzJODutinterface=:<;._1 ' compj de disp doc ed et gt jodhelp revo rm rtt'
 NAMEALPHA=:'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_'
 OK0250=:' documented in ->'
@@ -2771,11 +2791,13 @@ OK0252=:'edit locale ->'
 OK0253=:'starting browser help for ->'
 OK0254=:'starting browser on help index'
 OK0255=:'starting PDF reader'
+OK0256=:'jod.pdf not installed - starting browser for web version'
 PDF=:'PDF'
 PDFREADER=:'C:\Program Files\Adobe\Reader 8.0\Reader\acrord32.exe'
+PDFURL=:'https://docs.google.com/viewer?a=v&pid=explorer&chrome=true&srcid=0B3hRbt360vl5Y2I0MDdlZGYtNTNiZi00YWU5LTlhYTctMGQzOTZjYjQ4OGVl&hl=en'
 SCRIPTDOCCHAR=:'*'
-WWW0=:'c:\Program Files\Mozilla Firefox\firefox.exe'
-WWW1=:'C:\Program Files\Internet Explorer\IEXPLORE.EXE'
+WWW0=:'C:\Program Files\Internet Explorer\IEXPLORE.EXE'
+WWW1=:'c:\Program Files\Mozilla Firefox\firefox.exe'
 blkaft=:3 :0
 r=.0#~#y
 t=.y
@@ -2962,8 +2984,8 @@ b=.'18!:4 <''',EDLOCALE,''' [ CRLOC_ajodutil_=: 18!:5 '''' '
 c=.'18!:4 CRLOC_ajodutil_'
 d=.b,LF,LF,d,LF,LF,c
 end.
-if.(x-:0)*.wex<'DOCUMENTCOMMAND'do.
-d=.d,LF,LF,('/{~N~}/',a)changestr DOCUMENTCOMMAND
+if.(x-:0)*.wex<'DOCUMENTCOMMAND_ijod_'do.
+d=.d,LF,LF,('/{~N~}/',a)changestr DOCUMENTCOMMAND_ijod_
 end.
 a et d
 )
@@ -2972,7 +2994,14 @@ et=:3 :0
 :
 try.
 (toHOST y)write a=.jpath'~temp\',x,IJS
+if.0 e.wex;:'IFJHS IFJ6 IFGTK'do.
 smopen_jijs_ a
+else.
+if.IFJHS do.open_jhs_ a
+elseif.IFGTK do.open_jgtk_ a
+elseif.do.jderr ERR0262
+end.
+end.
 catch.jderr ERR0255
 end.
 )
@@ -2984,29 +3013,36 @@ catch.jderr ERR0254
 end.
 )
 jodhelp=:3 :0
-if.#BROWSER_j_ do.d=.BROWSER_j_ else.d=.WWWBROWSER end.
+e=.wwwbrowser 0
 if.badcl y do.jderr ERR0257
-elseif.-.fex<d do.(jderr ERR0258),<d 
+elseif.-.fex<e do.(jderr ERR0258),<e 
 elseif.#y do.
-c=.<alltrim y
-if.({:$JODHELP)=b=.(0{JODHELP)i.c do.
-(jderr ERR0259),c
+d=.<alltrim y
+if.({:$JODHELP)=c=.(0{JODHELP)i.d do.
+(jderr ERR0259),d
 else.
-fork;1 0 2{' ';dblquote d;b{1{JODHELP
-(ok OK0253),c
+fork;1 0 2{' ';dblquote e;c{1{JODHELP
+(ok OK0253),d
 end.
 elseif.do.
-fork;1 0 2{' ';dblquote d;0{1{JODHELP
+fork;1 0 2{' ';dblquote e;0{1{JODHELP
 ok OK0254
 end.
 :
 if.x-:PDF do.
-if.#PDFREADER_j_ do.a=.PDFREADER_j_ else.a=.PDFREADER end.
+a=.jpath'~addons\general\jod\joddoc\pdfdoc\jod.pdf'
 if.fex<a do.
-fork;1 0 2{' ';dblquote a;jpath'~addons\general\jod\joddoc\pdfdoc\jod.pdf'
+b=.pdfreader 0
+if.fex<b do.
+fork;1 0 2{' ';dblquote b;a
 ok OK0255
 else.
-(jderr ERR0260),<a
+(jderr ERR0260),<b
+end.
+else.
+e=.wwwbrowser 0
+fork;1 0 2{' ';dblquote e;PDFURL
+ok OK0256
 end.
 else.
 /:~0{JODHELP
@@ -3043,6 +3079,14 @@ jderr ERR001 return.
 end.
 end.
 ok a;b
+)
+pdfreader=:3 :0
+a=.''
+if.wex<'PDFReader_j_'do.if.#PDFReader_j_ do.a=.PDFReader_j_ end.
+elseif.wex<'PDFREADER_j_'do.if.#PDFREADER_j_ do.a=.PDFREADER_j_ end.
+elseif.wex<'PDFREADER__JODtools'do.a=.PDFREADER__JODtools
+end.
+a
 )
 reb=:3 :0
 ' 'reb y
@@ -3114,6 +3158,7 @@ setwwwbrowser=:3 :0
 if.fex<WWW0 do.WWWBROWSER=:WWW0 
 elseif.fex<WWW1 do.WWWBROWSER=:WWW1 
 elseif.do.
+WWWBROWSER=:''
 (jderr'www browser not found ->'),WWW0;WWW1
 end.
 )
@@ -3142,8 +3187,17 @@ e=.>:x
 r=.>.(#v)%e
 (r,x){.(r,e)$(e*r){.v
 )
+wwwbrowser=:3 :0
+a=.''
+if.wex<'Browser_j_'do.if.#Browser_j_ do.a=.Browser_j_ end.
+elseif.wex<'BROWSER_j_'do.if.#BROWSER_j_ do.a=.BROWSER_j_ end.
+elseif.wex<'WWWBROWSER__UT__JODobj'do.a=.WWWBROWSER__UT__JODobj
+end.
+a
+)
 cocurrent'base'
+coinsert'ijod'
 jodon 0
 (9!:41)1
 cocurrent'base'
-0!:0<jodsystempath'jodexts\jodtools.ijs'
+0!:0<jodsystempath'jodexts/jodtools.ijs'

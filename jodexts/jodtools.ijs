@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.8.0  Build Number: 229  Date: 31 Oct 2008 12:28:14
+NB. Version: 0.9.0  Build Number: 21  Date: 18 Feb 2011 18:03:31
 (9!:41)0
 coclass'ajodtools'
 coinsert'ajodutil'
@@ -16,7 +16,7 @@ GROUPSUITES=:<;._1 ' Groups Suites'
 IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp ltx mg mj mls mt noexp notgrp nt nw obnames pr refnames revonex swex tt usedby'
 JODLOADEND=:'NB.</JOD_Load_Scripts>'
 JODLOADSTART=:'NB.<JOD_Load_Scripts>'
-JODTOOLSVMD=:'0.8.0';229;'31 Oct 2008 12:28:14'
+JODTOOLSVMD=:'0.9.0';21;'18 Feb 2011 18:03:31'
 LF=:10{a.
 OK00400=:'load script saved ->'
 OK00401=:'file saved ->'
@@ -40,9 +40,10 @@ elseif.do.d
 end.
 )
 addloadscript=:4 :0
+y=.jpathsep&.>y
 if.1=x do.
 f=.JODLOADSTART;JODLOADEND
-if.fex<a=.jpath'~config\startup.ijs'do.
+if.fex<a=.jpath'~config/startup.ijs'do.
 e=.read a
 'p c'=.f betweenidx e
 else.
@@ -61,14 +62,8 @@ if._1-:d(write ::_1:)a do.
 (jderr ERR00402),<a return.
 end.
 y=.y,&.>'';IJS
-if.wex<'PUBLIC_j_'do.
-p=.(0{"1 PUBLIC_j_)i.0{y
-if.p<#PUBLIC_j_ do.
-PUBLIC_j_=:y p}PUBLIC_j_
-else.
-PUBLIC_j_=:PUBLIC_j_,y
-PUBLIC_j_=:(/:0{"1 PUBLIC_j_){PUBLIC_j_
-end.
+if.wex<'Public_j_'do.Public_j_ =:Public_j_ updatepublic y
+elseif.wex<'PUBLIC_j_'do.PUBLIC_j_ =:PUBLIC_j_ updatepublic y
 end.
 ok OK00400;1{y
 elseif.0=x do.
@@ -114,23 +109,14 @@ else.
 end.
 )
 createjodtools=:3 :0
-b=.0{y[jod=.1{y
+a=.0{y[jod=.1{y
 ST=:ST__jod
 MK=:MK__jod
 UT=:UT__jod
 SO=:SO__jod
-JODEXT__jod=:JODEXT__jod,b
+JODEXT__jod=:JODEXT__jod,a
 IZJODALL__jod=:IZJODALL__jod,IzJODtools,<'JODtools'
-d=.IzJODtools,&.>locsfx'z'
-if.1 e.c=.0<:nc d do.
-a=.'(ajodtools) z interface clashes with current z locale names.'
-a=.a,LF,'Current z names retained - (ajodtools) interface not defined.'
-a=.a,LF,LF,'Access JOD tools via JODtools object, e.g.  swex__JODtools'
-a=.a,LF,'Warning: JODtools_z_ now points to this object.'
-a,LF,LF,'z clashes:',LF,ctl list>c#d
-else.
-(i.0 0)"_".&.>b defzface IzJODtools
-end.
+(i.0 0)"_".&.>a defzface IzJODtools
 )
 dayage=:3 :0
 0 dayage y
@@ -289,12 +275,12 @@ case.do.jderr ERR001
 end.
 )
 nt=:3 :0
-a=.y-.' '
+b=.y-.' '
 'r s'=.2{.t=.1 get TESTSTUB
 if.r do.
-b=.tstamp''
-c=.('/{~T~}/',a,'/{~created~}/',b,'/{~errortime~}/',b)changestr>1{,s
-a et c
+'a d'=.yyyymondd 0
+c=.('/{~T~}/',b,'/{~created~}/',a,'/{~errortime~}/',a,' ',d)changestr>1{,s
+b et c
 else.
 t
 end.
@@ -355,6 +341,15 @@ n=.n+<.0.41+0 30.6#.(12|m-3),"0 d
 0>.r$n-657378
 )
 tt=:];gt
+updatepublic=:4 :0
+p=.(0{"1 x)i.0{y
+if.p<#x do.
+x=.y p}x
+else.
+x=.x,y
+x=.(/:0{"1 x){x
+end.
+)
 usedby=:4 :0
 if.badrc c=.uses y do.c
 else.
@@ -364,6 +359,15 @@ a=.>:+./'_'&e.&>b
 ok/:~({."1 c)#~;(a{"1 c)+./@e.&.><b
 end.
 )
+yyyymondd=:3 :0
+c=.'r<0>2.0'
+e=._3[\'   janfebmaraprmayjunjulaugsepoctnovdec'
+'h d b'=.3{.f=.6!:0''
+a=.(":h),(d{e),,c(8!:2)b
+g=.}.;':',&.>c(8!:0)_3{.f
+a;g
+)
 (9!:41)1
-JODtools_z_=:conew'ajodtools'
+cocurrent'base'
+JODtools_ijod_=:conew'ajodtools'
 (1!:2&2)createjodtools__JODtools JODtools,JODobj
