@@ -1,5 +1,8 @@
 general/jod - change history
 
+== 0.9.1 ==
+ * minor fix of edit verb (et) to run on both 7.0x and 6.0x J systems.
+
 == 0.9.0 ==
  * modified to run under J 7.01 JHS and JGTK. This version
    also runs on J 6.0x systems.
