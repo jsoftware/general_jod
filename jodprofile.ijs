@@ -31,10 +31,6 @@ dpset 'RESETME'
 NB. JOD interface locale 
 coclass 'ijod'
 
-NB. \jod directory drives - varies from machine to machine
-JODDICDRV=: 'c:'
-JODSECDRV=: 'e:'
-
 NB. following are handy (ijod) locale shortcuts:
 
 NB. project shortcuts - use explicit 

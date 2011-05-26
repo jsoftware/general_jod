@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.1  Build Number: 56  Date: 7 May 2011 13:53:49
+NB. Version: 0.9.2  Build Number: 24  Date: 25 May 2011 10:42:22
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -77,6 +77,7 @@ badobj=:[:-.[:*./[:,]e.OBJECTNC"_
 PATHDEL=:IFWIN{'/\'
 PATHCHRS=:' :.-',PATHDEL
 hostsep=:(IFWIN{'/\')&(((IFWIN{'\/')I.@:=])})
+justpath=:[:}:]#~([:-.[:+./\.':'&=)*.[:+./\.PATHDEL&=
 JMASTER=:jodsystempath'jmaster'
 JODPROF=:jodsystempath'jodprofile.ijs'
 JODUSER=:jodsystempath'joduserconfig.ijs'
@@ -134,7 +135,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.9.1';56;'7 May 2011 13:53:49'
+JODVMD=:'0.9.2';24;'25 May 2011 10:42:22'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -283,7 +284,11 @@ if.fex<JODPROF do.(_9-:((0!:0) ::_9:) <JODPROF ) {1 0 else.1 end.
 )
 createmast=:3 :0
 b=.hostsep y
+if.IFWIN do.
 f=.PATHDEL,~(justdrv,':'"_,justpath)b
+else.
+f=.PATHDEL,~justpath b
+end.
 if.badappend jcreate b do.
 jderr ERR011
 return.
@@ -372,13 +377,7 @@ if.badrc a=.checkopen__ST 0 do.a else.ok{."1 DPATH__ST end.
 0 didstats__ST 0 
 )
 didnum=:3 :0
-a=.genguid<16#' '
-if.0~:>{.a do.jderr ERR021
-else.
-a=.,(a.i.>{:a){truth 8
-b=.I.a
-+/(2x^b)b}a
-end.
+guidsx i.0
 )
 dnl=:3 :0
 WORD dnl y
@@ -490,7 +489,6 @@ jderr ERR025
 end.
 end.
 )
-genguid=:'ole32.dll CoCreateGuid i *c'&cd
 get=:3 :0
 WORD get y
 :
@@ -602,6 +600,23 @@ a gslistnl__ST rv y
 end.
 end.
 )
+guids=:3 :0
+if.IFWIN do.
+a=.'ole32 CoCreateGuid i *c'
+else.
+if._1=nc<'LIBUUID'do.
+if.UNAME-:'Linux'do.
+LIBUUID_z_=:'libuuid.so.1'
+else.
+LIBUUID_z_=:'"',(find_dll'System'),'"'
+end.
+end.
+a=.LIBUUID,' uuid_generate n *c'
+end.
+>{:"1 a 15!:0"1 0<"1 (y,16)$' '
+)
+guidsx=:256#.[:x:a.i.guids
+host=:[:2!:0'('"_,],' || true)'"_
 isempty=:0:e.$
 islocref=:('_'"_ ={:)+.[:+./'__'"_ E.]
 jappend=:jappend_jfiles_ ::(_2:)
@@ -621,7 +636,6 @@ jpathsep=:'/'&(('\'I.@:=])})
 jread=:jread_jfiles_ ::(_2:)
 jreplace=:jreplace_jfiles_ ::(_2:)
 justdrv=:[:}:]#~[:+./\.':'&=
-justpath=:[:}:]#~([:-.[:+./\.':'&=)*.[:+./\.'\'&=
 jvn=:3 :0
 a=.9!:14''
 a=.(a e.'0123456789/')#a 
@@ -664,7 +678,7 @@ if.badcl y do.
 1 newregdict__ST y
 else.
 a=.y-.y-.ALPHA
-1 newregdict__ST y;(jpath'~user\'),JJODDIR,(255<.#a){.a
+1 newregdict__ST y;hostsep(jpath'~user\'),JJODDIR,(255<.#a){.a
 end.
 )
 now=:6!:0
@@ -825,7 +839,6 @@ b=.~.y,readobid a=.obidfile 0
 second=:1&{
 tc=:3!:0
 trimnl=:-.&' '&.>
-truth=:#:@i.@(2&^)
 tstamp=:3 :0
 b=.<.y,(0=#y)#6!:0''
 'b m d h n s'=.6{.b
@@ -908,7 +921,7 @@ ERR061=:'invalid dictionary name;path[;documentation]'
 ERR062=:'invalid characters in name'
 ERR063=:'invalid characters in path'
 ERR064=:'target drive is required'
-ERR065=:'not enough space on drive ->'
+ERR065=:'not enough space on drive/volume ->'
 ERR066=:'dictionary name in use'
 ERR067=:'unable to create subdirectories'
 ERR068=:'unable to setup dictionary file(s)'
@@ -938,6 +951,7 @@ ERR092=:'duplicate dictionary id number'
 ERR093=:'directory damaged'
 ERR094=:'exceeds locale symbol table size - no words defined'
 ERR095=:'dictionary file attributes do not allow read/write ->'
+ERR096=:'linux/unix dictionary paths must be / rooted ->'
 OFFSET=:39
 OK050=:'dictionary created ->'
 OK051=:' word(s) put in ->'
@@ -1212,6 +1226,18 @@ end.
 end.
 )
 freedisk=:3 :0
+if.IFWIN do.freediskwin y
+else.
+<./freedisklinux 0
+end.
+)
+freedisklinux=:3 :0
+a=.host'df -l'
+a=.}.<;._2 a
+a=.a#~-.'none'&-:&>4{.&.>a
+1000*3{"1]_1&".&>a
+)
+freediskwin=:3 :0
 s=.'kernel32 GetDiskFreeSpaceA i *c *i *i *i *i'cd y;(,0);(,0);(,0);(,0)
 */;2 3 4{s
 )
@@ -1408,7 +1434,13 @@ end.
 if.badreps g do.jderr e else.OK end.
 )
 islib=:'*'"_=[:{.[:>{.
-iswriteable=:'w-'"_-:"1[:]1 3"_{"1[:;"1[:]_2:{."1[:>[:,&(1!:0)&.>]
+iswriteable=:3 :0
+if.IFWIN do.iswriteablewin y else.iswriteablelinux y end.
+)
+iswriteablelinux=:3 :0
+(#,y)#1
+)
+iswriteablewin=:'w-'"_-:"1[:]1 3"_{"1[:;"1[:]_2:{."1[:>[:,&(1!:0)&.>]
 jdatcreate=:4 :0
 a=.(alltrim y),x-.' '
 b=.ERR052
@@ -1494,81 +1526,88 @@ f=.f,<i.0
 f,<|:0 2{"1 b
 )
 newregdict=:4 :0
-k=.JMASTER
-l=.ERR061
-if.(badbu y )+.1~:#$y do.jderr l
-elseif.(3<#y )+.2>#y do.jderr l
-elseif.+./badcl&>y do.jderr l
+l=.JMASTER
+o=.ERR061
+if.(badbu y )+.1~:#$y do.jderr o
+elseif.(3<#y )+.2>#y do.jderr o
+elseif.+./badcl&>y do.jderr o
 elseif.do.
-'o s f'=.3{.y,<''
-o=.alltrim o[s=.hostsep alltrim s
-if.0&e.(#o),#s do.jderr l return.end.
-if.0&e.o e.' ',ALPHA do.
+'p t g'=.3{.y,<''
+p=.alltrim p[t=.hostsep alltrim t
+if.0&e.(#p),#t do.jderr o return.end.
+if.0&e.p e.' ',ALPHA do.
 jderr ERR062 return.
-elseif.0&e.s e.PATHCHRS,ALPHA do.
+elseif.0&e.t e.PATHCHRS,ALPHA do.
 jderr ERR063 return.
 end.
-if.(2#PATHDEL)-:2{.s do.
-s=.s,(PATHDEL={:s)}.PATHDEL
+d=.''
+if.IFWIN do.
+if.(2#PATHDEL)-:2{.t do.
+t=.t,(PATHDEL={:t)}.PATHDEL
 else.
-if.isempty t=.justdrv s do.jderr ERR064 return.end.
-if.x=1 do.
-a=.freedisk t=.t,':',PATHDEL
-if.a<FREESPACE do.(jderr ERR065),<t return.end.
+if.isempty w=.justdrv t do.jderr ERR064 return.end.
+d=.w,':',PATHDEL
 end.
+else.
+if.PATHDEL~:{.t do.(jderr ERR096),<t return.end.
+d=.t
 end.
-if.badjr w=.jread k;CNMFTAB,CNMFPARMS,CNMFDLOG do.
+if.(x=1)*.0<#d do.
+a=.freedisk d
+if.a<FREESPACE do.(jderr ERR065),<d return.end.
+end.
+if.badjr z=.jread l;CNMFTAB,CNMFPARMS,CNMFDLOG do.
 jderr ERR006 return.
 end.
-if.badrc l=.markmast 1 do.l return.end.
-'j g d'=.w
-if.(<o)e.0{j do.jdmasterr ERR066 return.end.
+if.badrc o=.markmast 1 do.o return.end.
+'k h e'=.z
+if.(<p)e.0{k do.jdmasterr ERR066 return.end.
 if.x=1 do.
-if.badrc s=.mainddir s do.s [markmast~0 return.end.
-s=.{:s
-if.0 &e.w=.makedir"0 s,&.>JDSDIRS do.
+if.badrc t=.mainddir t do.t [markmast~0 return.end.
+t=.{:t
+if.0 &e.z=.makedir"0 t,&.>JDSDIRS do.
 jdmasterr ERR067 return.
 end.
-s=.>s
-e=.didnum 0
-w=.newdparms JDSDIRS;g;o;e;s
-w=.<(f;w)jwordscreate s,>0{JDFILES
-w=.w,(}.JDFILES)jdatcreate&.><s
-if.0&e.;{.&>w do.
+t=.>t
+f=.didnum 0
+z=.newdparms JDSDIRS;h;p;f;t
+z=.<(g;z)jwordscreate t,>0{JDFILES
+z=.z,(}.JDFILES)jdatcreate&.><t
+if.0&e.;{.&>z do.
 jdmasterr ERR068 return.
 end.
-p=.j,.o;e;s;0
-q=.OK050
+q=.k,.p;f;t;0
+r=.OK050
 else.
-s=.(-PATHDEL={:s)}.s,PATHDEL
-i=.JDFILES,&.><IJF
-if.1 e.w=.-.fex"1 c=.<@:;"1 (<s),"0/i do.
-(jdmasterr ERR073),<o return.
+t=.(-PATHDEL={:t)}.t,PATHDEL
+j=.JDFILES,&.><IJF
+if.1 e.z=.-.fex"1 c=.<@:;"1 (<t),"0/j do.
+(jdmasterr ERR073),<p return.
 end.
-if.badjr b=.jread(h=.s,>{.JDFILES);CNPARMS,CNDICDOC do.
+if.badjr b=.jread(i=.t,>{.JDFILES);CNPARMS,CNDICDOC do.
 jdmasterr ERR088 return.
 end.
-'g r'=.b
-e=.1{::g
-if.e e.;1{j do.jdmasterr ERR092 return.end.
-if.-.islib g do.
+'h s'=.b
+f=.1{::h
+if.f e.;1{k do.jdmasterr ERR092 return.end.
+if.-.islib h do.
 if.0 e.iswriteable c do.
 jdmasterr ERR095 return.
 end.
-g=.((<s),&.>JDSDIRS,&.>PATHDEL)PARMDIRS}g
-g=.(<o)0}g
-f=.(*#f){r;f
-if.badreps(g;f)jreplace h;CNPARMS,CNDICDOC do.
+h=.((<t),&.>JDSDIRS,&.>PATHDEL)PARMDIRS}h
+h=.(<p)0}h
+g=.(*#g){s;g
+if.badreps(h;g)jreplace i;CNPARMS,CNDICDOC do.
 jdmasterr ERR056
 end.
 end.
-p=.j,.o;e;s;0
-q=.OK058
+q=.k,.p;f;t;0
+r=.OK058
 end.
-w=.(p;j;d,e)jreplace k;CNMFTAB,CNMFTABBCK,CNMFDLOG
-if.0&><./w do.jdmasterr ERR069 return.end.
-if.badrc l=.markmast~0 do.l return.end.
-ok q;o;jpathsep s
+z=.(q;k;e,f)jreplace l;CNMFTAB,CNMFTABBCK,CNMFDLOG
+if.0&><./z do.jdmasterr ERR069 return.end.
+if.badrc o=.markmast~0 do.o return.end.
+ok r;p;jpathsep t
 end.
 )
 nlctn=:([:I.[:+./"1([:,:])E.[:>[){[
@@ -1936,6 +1975,7 @@ ERR206=:'no backups to restore'
 ERR207=:'missing backup files - restore aborted'
 ERR208=:'unable to copy files: DLL error ->'
 ERR209=:'backup dictionary id number invalid - restore aborted'
+ERR210=:'unable to copy/move/rename files - shell messages ->'
 HEADNMS=:<;._1 ' Words Tests Groups* Suites* Macros'
 OK200=:'dictionary packed ->'
 OK201=:'dictionary restored ->'
@@ -1957,8 +1997,15 @@ if.badappend a=.b jappend d do.jderr ERR058 else.OK end.
 )
 copyfile=:'kernel32 CopyFileA i *c *c i'&cd
 copyfiles=:4 :0
+if.IFWIN do.
 a=.copyfile"1 x,.y,.<0
 if.*./0<;{."1 a do.OK else.(jderr ERR208),(15!:11)''end.
+else.
+if.isempty a=.host"1>(<'cp '),&.>x,&.>' ',&.>y do.OK
+else.
+(jderr ERR210),<,a
+end.
+end.
 )
 createdl=:3 :0
 'e b c a'=.y
@@ -2117,13 +2164,20 @@ a=.+/;2{"1]1!:0<SYS,'*',IJF
 if.a<volfree BAK do.OK else.jderr ERR204 end.
 )
 renamefiles=:4 :0
+if.IFWIN do.
 a=.movefile"1 x,.y
 if.*./0<;{."1 a do.OK else.(jderr ERR205),(15!:11)''end.
+else.
+if.isempty a=.host"1>(<'mv '),&.>x,&.>' ',&.>y do.OK
+else.
+(jderr ERR210),<,a
+end.
+end.
 )
 restdict=:4 :0
 if.(,DNAME)-:,y do.
 dropall 0
-f=.(justdrvpath SYS),PATHDEL
+f=.((justpath`justdrvpath@.IFWIN)SYS),PATHDEL
 c=.JDFILES,&.><IJF
 a=.PATHDEL,~f,>5{JDSDIRS
 i=.(<f),&.>c
@@ -2249,7 +2303,11 @@ end.
 if.badreps e jreplace f;1{0{CNREF do.jderr ERR056 else.OK end.
 )
 volfree=:3 :0
-if.(2#PATHDEL )-:2{.y do.freedisk y else.freedisk (justdrv y ),':',PATHDEL end.
+if.IFWIN do.
+if.(2#PATHDEL )-:2{.y do.freediskwin y else.freediskwin (justdrv y ),':',PATHDEL end.
+else.
+<./freedisklinux 0
+end.
 )
 coclass'ajodmake'
 coinsert'ajod'
@@ -2770,6 +2828,7 @@ URLPFX=:'http://docs.google.com/View?docID='
 JODHELP=:|:alltrim&.>(';'&beforestr;';'&afterstr)&><;._2 JODHELP-.CR
 JODHELP=:((<URLPFX),&.>1{JODHELP)(1)}JODHELP
 JODHELP=:(/:0{JODHELP){"1 JODHELP
+qt=:]`dblquote@.IFWIN
 ERR0250=:' is a noun no internal document'
 ERR0251=:'not loaded - load'
 ERR0252=:'not J script(s) ->'
@@ -2797,6 +2856,7 @@ PDFREADER=:'C:\Program Files\Adobe\Reader 8.0\Reader\acrord32.exe'
 PDFURL=:'https://docs.google.com/viewer?a=v&pid=explorer&chrome=true&srcid=0B3hRbt360vl5Y2I0MDdlZGYtNTNiZi00YWU5LTlhYTctMGQzOTZjYjQ4OGVl&hl=en'
 SCRIPTDOCCHAR=:'*'
 WWW0=:'C:\Program Files\Internet Explorer\IEXPLORE.EXE'
+WWW0linux=:'chromium-browser'
 WWW1=:'c:\Program Files\Mozilla Firefox\firefox.exe'
 blkaft=:3 :0
 r=.0#~#y
@@ -3013,20 +3073,21 @@ try.read jpath'~temp\',y,IJS
 catch.jderr ERR0254
 end.
 )
+jodfork=:[:fork[:;1 0 2{' ';qt
 jodhelp=:3 :0
 e=.wwwbrowser 0
 if.badcl y do.jderr ERR0257
-elseif.-.fex<e do.(jderr ERR0258),<e 
+elseif.IFWIN*.-.fex<e do.(jderr ERR0258),<e 
 elseif.#y do.
 d=.<alltrim y
 if.({:$JODHELP)=c=.(0{JODHELP)i.d do.
 (jderr ERR0259),d
 else.
-fork;1 0 2{' ';dblquote e;c{1{JODHELP
+jodfork e;c{1{JODHELP
 (ok OK0253),d
 end.
 elseif.do.
-fork;1 0 2{' ';dblquote e;0{1{JODHELP
+jodfork e;0{1{JODHELP
 ok OK0254
 end.
 :
@@ -3035,14 +3096,14 @@ a=.jpath'~addons\general\jod\joddoc\pdfdoc\jod.pdf'
 if.fex<a do.
 b=.pdfreader 0
 if.fex<b do.
-fork;1 0 2{' ';dblquote b;a
+jodfork b;a
 ok OK0255
 else.
 (jderr ERR0260),<b
 end.
 else.
 e=.wwwbrowser 0
-fork;1 0 2{' ';dblquote e;PDFURL
+jodfork e;PDFURL
 ok OK0256
 end.
 else.
@@ -3082,10 +3143,9 @@ end.
 ok a;b
 )
 pdfreader=:3 :0
-a=.''
-if.wex<'PDFReader_j_'do.if.#PDFReader_j_ do.a=.PDFReader_j_ end.
-elseif.wex<'PDFREADER_j_'do.if.#PDFREADER_j_ do.a=.PDFREADER_j_ end.
-elseif.wex<'PDFREADER__JODtools'do.a=.PDFREADER__JODtools
+if.wex<'PDFREADER__JODtools'do.a=.PDFREADER__JODtools else.a=.''end.
+if.wex<'PDFReader_j_'do.if.0<#PDFReader_j_ do.a=.PDFReader_j_ end.
+elseif.wex<'PDFREADER_j_'do.if.0<#PDFREADER_j_ do.a=.PDFREADER_j_ end.
 end.
 a
 )
@@ -3156,11 +3216,13 @@ end.
 18!:4 a
 )
 setwwwbrowser=:3 :0
-if.fex<WWW0 do.WWWBROWSER=:WWW0 
-elseif.fex<WWW1 do.WWWBROWSER=:WWW1 
-elseif.do.
-WWWBROWSER=:''
-(jderr'www browser not found ->'),WWW0;WWW1
+if.IFWIN do.
+if.fex<WWW0 do.WWW0 
+elseif.fex<WWW1 do.WWW1 
+elseif.do.''
+end.
+else.
+WWW0linux
 end.
 )
 textform2=:63&$: :(4 :0)
@@ -3189,16 +3251,15 @@ r=.>.(#v)%e
 (r,x){.(r,e)$(e*r){.v
 )
 wwwbrowser=:3 :0
-a=.''
-if.wex<'Browser_j_'do.if.#Browser_j_ do.a=.Browser_j_ end.
-elseif.wex<'BROWSER_j_'do.if.#BROWSER_j_ do.a=.BROWSER_j_ end.
-elseif.wex<'WWWBROWSER__UT__JODobj'do.a=.WWWBROWSER__UT__JODobj
+if.wex<'WWWBROWSER__UT__JODobj'do.a=.WWWBROWSER__UT__JODobj else.a=.''end.
+if.wex<'Browser_j_'do.if.0<#Browser_j_ do.a=.Browser_j_ end.
+elseif.wex<'BROWSER_j_'do.if.0<#BROWSER_j_ do.a=.BROWSER_j_ end.
 end.
 a
 )
 cocurrent'base'
 coinsert'ijod'
 jodon 0
-(9!:41)1
 cocurrent'base'
 0!:0<jodsystempath'jodexts/jodtools.ijs'
+(9!:41)1

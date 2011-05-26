@@ -1,5 +1,17 @@
 general/jod - change history
 
+== 0.9.2 ==
+ * first Linux compatible version of JOD. The Linux version
+   requires J 7.01 or beyond see: 
+
+   ~addons/general/jod/joddoc/linuxnotes.txt
+   
+ * additional information about is available on my blog at:
+ 
+   http://bakerjd99.wordpress.com/2011/05/25/jod-comes-to-linux/
+
+ * this version also runs on windows J 6.0x and J 7.0x systems.
+
 == 0.9.1 ==
  * minor fix of edit verb (et) to run on both 7.0x and 6.0x J systems.
 
