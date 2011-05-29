@@ -5,13 +5,25 @@ general/jod - change history
    requires J 7.01 or beyond see: 
 
    ~addons/general/jod/joddoc/linuxnotes.txt
-   
- * additional information about is available on my blog at:
+
+ * online documentation, availabe via the verb (jodhelp),
+   has been converted to the new Google Document format. 
+   The conversion process broke all the internal hyperlinks
+   I am slowly fixing them. The offline PDF document (jod.pdf)
+
+   http://www.box.net/shared/gajfu50gc0
+
+   does not show Linux specific examples but is still
+   an accurate description of what JOD is all about.
+
+ * additional information about JOD will be made
+   available on my blog after a round of beta testing 
+   in the wild.
  
-   http://bakerjd99.wordpress.com/2011/05/25/jod-comes-to-linux/
+   http://bakerjd99.wordpress.com
 
- * this version also runs on windows J 6.0x and J 7.0x systems.
-
+ * this version of JOD runs on windows J 6.0x and J 7.0x systems.
+  
 == 0.9.1 ==
  * minor fix of edit verb (et) to run on both 7.0x and 6.0x J systems.
 
