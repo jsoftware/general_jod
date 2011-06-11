@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.2  Build Number: 32  Date: 29 May 2011 12:17:09
+NB. Version: 0.9.3  Build Number: 11  Date: 11 Jun 2011 13:52:57
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -135,7 +135,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.9.2';32;'29 May 2011 12:17:09'
+JODVMD=:'0.9.3';11;'11 Jun 2011 13:52:57'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -2771,50 +2771,54 @@ ok({.m )}.m jscript y
 coclass'ajodutil'
 coinsert'ajod'
 JODHELP=:0 :0 
-AContents;1Fa_bGrcqohMbFvyhpWGaSosUNGsQIGLUUfCL7RT-T5A/edit?hl=en_US#
-Classes;1-qn-7m6emKq_okbpuDitSggnwVgHzaLM09yuFUxDvh0/edit?hl=en_US#
-Codes;1H7QFnQsvjrcAXyet4zO2G6OleeQKvzhHOvsd3L7GoYM/edit?hl=en_US#
-Jodindex;1si5rIsHqTpkKrqOa3UrXmjbyQnVzxDFHFadTFWmbl-Y/edit?hl=en_US#
-Release;1bIymHOnZBjq0eziprPFMMmHRTnHqQjd_l6S3yvR9rXk/edit?hl=en_US#
-addgrp;1oY4CGkRDqDVZLnyiNGP8V6-1tHZrwb5O1yqSU8-oc4U/edit?hl=en_US#
-compj;19sPXwuKlwJgZyqMyVcJ2BBbLv4RhS3e_NTE-0wnJzRA/edit?hl=en_US#
-del;1stQuIYZGQHfDyPzAvdWHijCGeR6SnQqrADT3Fvo7Z3o/edit?hl=en_US#
-delgrp;13dEwVb9zRUZATHxWawMfHBnsMbnKqH2229loJCYP0uM/edit?hl=en_US#
-did;14r0pL_0CIUE8ziEtZnBrUhatFFdaiUymMzXWaOzFcMo/edit?hl=en_US#
-disp;1bohRA9MmQuPMC3fYoSBqY7YYA1ciNp9ybvvzRmjdUgE/edit?hl=en_US#
-dnl;1Yh-dQfw6rHSNhP3SMZUdgmqS7_eyJ7VBaGE9viD1M8M/edit?hl=en_US#
-doc;1g3WxH1rzZqT0JAuUDdI4pRsDM0Sc-vu-ymbbnUo-y5M/edit?hl=en_US#
-dpset;1CgY731WF0e1sJv3VMkJNsUKEfp0xTLvVHNz9qNwK4j8/edit?hl=en_US#
-ed;1sDZfurkEHBuZNnFUlw42cRve58l4kA6SnCXlosbdYV4/edit?hl=en_US#
-et;18LHTrWHDXq4gHVDJl2l230cNZkfrgQzEEO-ccUyHRWc/edit?hl=en_US#
-get;1xD5ne5fTfk3dhKxnOsqCCDHVVhTOlIfoMpbT1rwWK-c/edit?hl=en_US#
-getrx;16zWu_JnkkD8dFr7Mlusfyw7Pcd5PpUICYalxrv7UGjI/edit?hl=en_US#
-globs;1NBHA088fOlcFCnQznI-tEIyOKquCmyWotlQty33UujY/edit?hl=en_US#
-grp;1UmKtzamT1MVqMbMS8ljnfzNlUKiq0nyPFO7M7VzarJ0/edit?hl=en_US#
-gt;1cSj4ehid8SrQXxY68wjGy5IfYJndVxoeqEmOsaiYLQU/edit?hl=en_US#
-hlpnl;1SKXCIIt6dyLt1UJcn_GCeuA4ULSYQGmqp05FttV8OCE/edit?hl=en_US#
-jodage;1WFDlQSKR2VODN_jEV6VuCLhog-Vugr5_1fPKCZ2Gx60/edit?hl=en_US#
-jodhelp;1CI3jVrIMS2gNCOXC3pJeAH14v48txgUhjioVqnB6_Vs/edit?hl=en_US#
-lg;1E-sctBrEfS7PCTO4H96U46OSrE3gApSZSLosUsxivAc/edit?hl=en_US#
-locgrp;1N_j1zoevfoikDz-i5fcOLKRrrCOrC63LHQZ4iAIdrHc/edit?hl=en_US#
-make;1E2UIY53ThRhVGMWducPY4YLmwoJjagf990Rq_ay6_sA/edit?hl=en_US#
-mls;1ZoXDD3MEl0gvowrEZNCW1KQke8CKMsYn6iqnlWmuC1s/edit?hl=en_US#
-newd;1-Dmb9Dwu8E4bz4E92YyaYrmAclNNIKvVT01Y2jozHwQ/edit?hl=en_US#
-notgrp;1mUDI95N33F6cU1iawFnn7AhLfnqLaR1RQDO95VCeiQU/edit?hl=en_US#
-nt;1JVyPX_F0vfemT27GrN-U99GyLB7NeygRzRKkBbC6tpc/edit?hl=en_US#
-nw;19CRbyMyY0LylVNYBU_di8L1elIywFYi2KVQeTozAhNg/edit?hl=en_US#
-od;1ohZQguGU1_6cR1EQk-LW-DIsP6Hd9jMnLhTxeCYFuo0/edit?hl=en_US#
-packd;1bSb_OFm5xDgwaH2JVGoareWrUY1P-N1NSacZAwQKG_0/edit?hl=en_US#
-pr;1nYPp-LzkBNimmK15wCrmypsXAjArUH0AzLxYleDEt20/edit?hl=en_US#
-put;18V2_4jJ4zjQApI9jWen_iyRiCMsqYwE-azh2HweYK1s/edit?hl=en_US#
-regd;1ouLaRmMomqHxyB-EMX8NMaa28-XGlx2ERNz80itND2w/edit?hl=en_US#
-restd;11dIcWAGvQJDT8GbzIsyWk9l1HNhVudzIfDBsWb3zMQM/edit?hl=en_US#
-revo;1e1t-Df7qrQWJ6q3nMRSnTGorRR4q_EHwtxPBWmR0mL8/edit?hl=en_US#
-revonex;1aLI1LgQmrFkfRS6CLXI3gwXZIhMlBzopnnB6KNqHf5o/edit?hl=en_US#
-rm;1LaKcUExxPvycvd6m-g5H8LeQjv-teirt9zEtONiw1y8/edit?hl=en_US#
-rtt;1brW2aAnLIXRtRigOZu3nx4BAOwy9eM-iU4go0mZ6aVU/edit?hl=en_US#
-usedby;1YdCNk-bKVl--sjWfHXCBExgPfOvQBikVtSu-wjRD77Q/edit?hl=en_US#
-uses;1BOqiuA3ngVYLsjgclYPM4lmpe5PtOya9afEveoHF9_U/edit?hl=en_US#
+AContents;1pR1kc27OwTEGZ4BavhYT4RVvAtlEEUzueT9T-URY9t0
+AJodIndex;1kXc_yzzuHkjnfIp_qU3IIP4lfj06KFgoKbTZEQlyiFA
+BestPractices;1lZ3qI9-AmH8CtuU7m80E5sheQkG73vsLFud1uuytUgc
+Classes;1ko9FlV9fJNH_QCyhUN5XjtjGdX4bmeli-gVXtwgewTs
+Codes;1G3t0L7XRmowiU4wQEL9IvOGPqQ1Kf7h6QXxKIhLxal4
+DependentSection;1tn9qV8Hu-rk_rj70NkwGNmCFHa-VfRAnB3GYzqzpLrw
+Directories;1JMDQaCHiRdmgCOb-4EhOweObiB--34fTYbB4RL65Hi8
+Introduction;11QiWE8qJ0AojDAv2_jiOcPz5kDtI88jUR3vmNqw-pLQ
+ReleaseNotes;1aBdt8rwdOq_CQ52qRQ-js1MwiaovC2pxlQq-Z9VosOg
+addgrp;1e9mEbLASGXvzYNGJcHXI3vzv7Dph9f_HjmNLqg9reWY
+compj;1AieHkq0jGLTJT2UrcwtdAoOZv5Uj8T_0jjOomYLhYSE
+del;1DP-nLxYfs5_QhlhmD9JtpeDQ98fteWp-tSIHMUGtYdg
+delgrp;1pBBfh5UdSq4RZFjagbma7_uZfRnY66Ghn6Ezvvvq5ZY
+did;1y-3Gaov9tW8d-E1uhTNYmFhyJEmmC_N3q4G0t8L7gJM
+disp;1_oZe7JxNR4qK3LwLeDrwarsxvpFkpsUdcViY5KpYAVg
+dnl;1rmg4ErbOxDa3CFJtwUgfWusWKvlzO6ooNhlcd1VxVKg
+doc;1zcZvo1-4f7LLPXrTrJFAYkr6JTtOtGFIsJolylDz234
+dpset;1zEDu9VLz2VY_5wR7hVYbQqrwfUIWw4WK00zmKOKGCJg
+ed;1PdqC8IHhJJrUI59koofhSxgcCDXknI8yFlRHPSTdY4Q
+et;1IYmf8C5eJElstSsdXyui8N0KRKb9yNQTFBU0TgVVWlc
+get;1Vk-PQrdPEISp0SL4eDaGDgg5HpATarPPvXHryC12I8M
+getrx;1gUR9LLIVCPW9hfAXIltyiBuZf1kBURedrRVqmvWXJvQ
+globs;1s4_Af0kZnrfcCBgRDMK2MPMSTGwZb0ZDaFEMi_qXjn8
+grp;1bBeyMbSH_BFBurvnlVnWTf0JLY30LrFTbzgtOGvMyrk
+gt;134EaK4pSHXccvjZTjPS79zsnkXH3im83KJv3ggeUqIs
+hlpnl;1ZjmYZXo_Pruz0KsRENiN-qSryd6medadAbxSmdIu9kA
+jodage;1h5LfaqgO4lrB2RzLWjdaBbNAjfLlAu-eh-LNM9sJPfI
+jodhelp;1p9dyoymZ-q9YEkqS8sZa-VwV2FPxTf8KdlUvqSIkR8w
+lg;1-4OmVkDmg0pijMXXoheS6uUryN5G9OAHDztpgH7vrcM
+locgrp;1BVhp_XrtoU4DEo5rK0sgoBIKoE8XdzL3hPaOOfAFhIE
+make;1mfvL980DNpfoej1KCzgp30CFvRccEHvMqL2nE1oLjWc
+mls;1aREjTasgLz7n9-bPaOQLHG2-Jy1-3YaxKyZIoc3BioU
+newd;12AckZFKDNa0lDAj626Ix2HW8emGldx04YDDJdFxS_eY
+notgrp;1uWBqdrMQK4pa0yUiWN7JD6etgjAZpmXzBU2XLP8WBGQ
+nt;11cOKzEkGwwfmK7CGWsO1znzA_vxxDh-k35qoUNbYkso
+nw;18hgq69AK7m3bik7UTwk82A5Ind2qAD5ZFHjBwAQ2kIw
+od;1sMmIe7ViflORenJaolLE1qj7BB54s7z9Mi9ulV7N7g4
+packd;1dU2chbJBQ5mRTT8GvT6VVPs3FjoD5JxJiUhSxMjXmWc
+pr;1mxDtNJGKztFsQ4RlQb96nGyIaHd15PX-RJYSooJaNbA
+put;1uhZaiNyIHMVqVaa-peCj_sN6JjnuxVdmnODm9uoE66Y
+regd;1OC4UNVCeRpJcLThP5pkYp8Kkxpdi4zz77ZdFgZb1A-g
+restd;1vlRYJrrrxbw4TGNsvHpd8pPVfiYYKn2VDy5DqYU77_s
+revo;1rNe_RB7AXdr2OMNVLtKFCqKwE02jkOH1aiPu7xSl1lA
+revonex;1xEGQPwmyROge9myNW8iC8uCbFYP2kOhd1EwFfqgI5mE
+rm;1PImOwL_PNvyHEkYW205--ukAg-tv9tceMEEZAbgqnbY
+rtt;1WT7bciC3XQRPPrHwy8nQRwNYyV2TSzAXd8j5BZP3nmY
+usedby;1LYQVi-T2sIoCR0BQHiu6y6Cvb_KgZoALXNuAXccspr8
+uses;1NUFFk3ya9iWlT0N6-Ly-vd69MO2Njfqoyul4eBfMW9E
 )
 ASSUMESMARK=:'assumes:'
 AUTHORMARK=:'author:'
@@ -2826,8 +2830,9 @@ ROOTWORDSMARK=:'rootwords:'
 DOCUMENTMARKS=:ASSUMESMARK;AUTHORMARK;CREATEDMARK;DYADMARK;MONADMARK;VERBATIMMARK;ROOTWORDSMARK
 URLPFX=:'https://docs.google.com/document/d/'
 URLSUX=:'/edit?hl=en_US#'
-JODHELP=:|:alltrim&.>(';'&beforestr;';'&afterstr)&><;._2 JODHELP-.CR
+JODHELP=:|:alltrim&.>(';'&beforestr;';'&afterstr)&>(alltrim&.><;._2 JODHELP-.CR),&.><URLSUX
 JODHELP=:((<URLPFX),&.>1{JODHELP)(1)}JODHELP
+JODHELP=:('AJodPage';'http://bakerjd99.wordpress.com/the-jod-page/'),.JODHELP
 JODHELP=:(/:0{JODHELP){"1 JODHELP
 qt=:]`dblquote@.IFWIN
 ERR0250=:' is a noun no internal document'
