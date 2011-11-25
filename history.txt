@@ -1,6 +1,13 @@
 general/jod - change history
 
-== 0.9.3 == {RSN}
+== 0.9.4 == Nov 25, 2011
+ * update jodindex.html to reference current online documentation
+ * fixed a (make) bug - make could fail when words with the
+   the same name and different name classes were present on
+   the path.
+ * updating and extending JOD tests.
+   
+== 0.9.3 == Jun 11, 2011
  * online documentation revised and extended. The online documents
    are hosted by Google Documents and can be read on the web or
    downloaded in a variety of formats: PDF, ODT, Word, HTML. The

@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.3  Build Number: 11  Date: 11 Jun 2011 13:52:57
+NB. Version: 0.9.4  Build Number: 13  Date: 25 Nov 2011 12:18:18
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -135,7 +135,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.9.3';11;'11 Jun 2011 13:52:57'
+JODVMD=:'0.9.4';13;'25 Nov 2011 12:18:18'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -2465,47 +2465,59 @@ b=.b,SOPASS,DUMPMSG2,a
 if._1-:(toHOST b)fap<y do.(jderr ERR0155),<y else.OK end.
 )
 dumpwords=:4 :0
+if.badrc d=.did 0 do.d return.
+else.
+if.2=#d do.
 if.badrc d=.(WORD,1,WORD)dnl''do.d return.else.d=.}.d end.
-f=.LF,LF,SOPASS,SOPUT,LF,SOCLEAR
-g=.LF,SOSWITCH,LF
+else.
+if.badrc d=.0 _1 0 dnl''do.d return.end.
+if.badrc e=.0 _1 dnl''do.e return.end.
+e=.}.e
+d=.}.d
+e=.e-.&.>d
+d=./:~~.;d-.&.>~.@:;&.><"1,\e
+end.
+end.
+g=.LF,LF,SOPASS,SOPUT,LF,SOCLEAR
+h=.LF,SOSWITCH,LF
 c=.WORD,0
-e=.<y
-h=.2
-k=.WORD,INCLASS
+f=.<y
+i=.2
+l=.WORD,INCLASS
 if.-.a:e.d do.
-if.badrc k=.(WORD,INCLASS)invfetch__ST d do.k return.
-else.k=.(-x)<\rv k
+if.badrc l=.(WORD,INCLASS)invfetch__ST d do.l return.
+else.l=.(-x)<\rv l
 end.
 b=.(-x)<\d
 for_blk.b do.
-if.badrc i=.c getobjects__ST>blk do.i return.else.i=.rv i end.
-if.1 e.a=.-.(>blk_index{k)=;1 {"1 i do.
-(jderr ERR0157),a#0{"1 i return.
+if.badrc j=.c getobjects__ST>blk do.j return.else.j=.rv j end.
+if.1 e.a=.-.(>blk_index{l)=;1 {"1 j do.
+(jderr ERR0157),a#0{"1 j return.
 end.
-if.badrc i=.0 nounlrep i do.i return.else.i=.rv i end.
-i=.h jscript jscriptdefs i
-i=.toHOST g,i,f
-if._1-:i fap e do.(jderr ERR0155),e return.end.
+if.badrc j=.0 nounlrep j do.j return.else.j=.rv j end.
+j=.i jscript jscriptdefs j
+j=.toHOST h,j,g
+if._1-:j fap f do.(jderr ERR0155),f return.end.
 end.
 end.
-if.badrc b=.dnl''do.b return.else.j=.(b=.}.b )-.d end.
+if.badrc b=.dnl''do.b return.else.k=.(b=.}.b )-.d end.
 d=.0
-if.#j do.
-if.badrc k=.(WORD,INCLASS)invfetch__ST j do.k return.
-else.k=.(-x)<\rv k
+if.#k do.
+if.badrc l=.(WORD,INCLASS)invfetch__ST k do.l return.
+else.l=.(-x)<\rv l
 end.
-j=.(-x)<\j
-for_blk.j do.
-if.badrc i=.c getobjects__ST>blk do.i return.else.i=.rv i end.
-if.1 e.a=.-.(>blk_index{k)=;1 {"1 i do.
-(jderr ERR0157),a#0{"1 i return.
+k=.(-x)<\k
+for_blk.k do.
+if.badrc j=.c getobjects__ST>blk do.j return.else.j=.rv j end.
+if.1 e.a=.-.(>blk_index{l)=;1 {"1 j do.
+(jderr ERR0157),a#0{"1 j return.
 end.
-i=.h jscript jscriptdefs i
-i=.toHOST g,i,f
-if._1-:i fap e do.(jderr ERR0155),e return.end.
+j=.i jscript jscriptdefs j
+j=.toHOST h,j,g
+if._1-:j fap f do.(jderr ERR0155),f return.end.
 end.
 end.
-if.-.a:e.b do.(x;WORD;e)dumpdoc b else.OK end.
+if.-.a:e.b do.(x;WORD;f)dumpdoc b else.OK end.
 )
 extscopes=:3 :0
 c=.(}.@:}:)&.>u#~''''={.&>u=.y#~1|.y=<'=.'
