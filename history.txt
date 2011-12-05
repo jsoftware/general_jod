@@ -1,5 +1,12 @@
 general/jod - change history
 
+== 0.9.5 == Dec 4, 2011
+ * fixed a (make) bug in (dumpwords) a path of all
+   empty dictionaries failed to make.
+ * fixed an (mls) bug that produced incorrect
+   JOD startup.ijs entries on Linux.
+ * more test cases added.
+
 == 0.9.4 == Nov 25, 2011
  * update jodindex.html to reference current online documentation
  * fixed a (make) bug - make could fail when words with the
@@ -19,7 +26,7 @@ general/jod - change history
 
    ~addons/general/jod/joddoc/linuxnotes.txt
 
- * online documentation, availabe via the verb (jodhelp),
+ * online documentation, available via the verb (jodhelp),
    has been converted to the new Google Document format. 
    The conversion process broke all the internal hyperlinks
    I am slowly fixing them. The offline PDF document (jod.pdf)
