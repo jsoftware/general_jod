@@ -1,5 +1,14 @@
 general/jod - change history
 
+== 0.9.6 == Dec 12, 2011
+ * (jodhelp) pointed to new online version of (jod.pdf)
+   EPS, TEX and HTML document files removed from main jod dictionary
+   to reduce the size of jodsource.zip. These files
+   are available in the online JOD svn repository. See The JOD Page.
+ * (compj) can now be limited to only white space removal by 
+   inserting the comment tag (-.)=: anywhere in the text of
+   an explicit word.
+   
 == 0.9.5 == Dec 4, 2011
  * fixed a (make) bug in (dumpwords) a path of all
    empty dictionaries failed to make.
