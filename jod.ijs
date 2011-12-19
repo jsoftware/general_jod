@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.6  Build Number: 8  Date: 12 Dec 2011 15:08:08
+NB. Version: 0.9.65  Build Number: 7  Date: 19 Dec 2011 15:36:43
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -72,6 +72,7 @@ TEST=:1
 GROUP=:2
 SUITE=:3
 MACRO=:4
+DICTIONARY=:5
 OBJECTNC=:WORD,TEST,GROUP,SUITE,MACRO
 badobj=:[:-.[:*./[:,]e.OBJECTNC"_
 PATHDEL=:IFWIN{'/\'
@@ -135,7 +136,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.9.6';8;'12 Dec 2011 15:08:08'
+JODVMD=:'0.9.65';7;'19 Dec 2011 15:36:43'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -541,6 +542,11 @@ case.DOCUMENT do.MACRO getdocument__ST y
 case.INCLASS;INCREATE;INPUT;INSIZE do.(2{.x)invfetch__ST y
 case.do.jderr b
 end.
+case.DICTIONARY do.
+select.second x
+case.DEFAULT do.getdicdoc__ST 0
+case.do.jderr b
+end.
 case.do.jderr b
 end.
 )
@@ -782,6 +788,11 @@ case.EXPLAIN do.(MACRO;<DL)putexplain__ST y
 case.DOCUMENT do.(MACRO;1;<DL)puttexts__ST y
 case.do.jderr b
 end.
+case.DICTIONARY do.
+select.second x
+case.DEFAULT do.putdicdoc__ST y
+case.do.jderr b
+end.
 case.do.jderr b
 end.
 )
@@ -952,6 +963,7 @@ ERR093=:'directory damaged'
 ERR094=:'exceeds locale symbol table size - no words defined'
 ERR095=:'dictionary file attributes do not allow read/write ->'
 ERR096=:'linux/unix dictionary paths must be / rooted ->'
+ERR097=:'invalid dictionary document must be character list'
 OFFSET=:39
 OK050=:'dictionary created ->'
 OK051=:' word(s) put in ->'
@@ -964,6 +976,7 @@ OK058=:'dictionary registered ->'
 OK059=:'put in ->'
 OK060=:' word(s) defined'
 OK061=:'(s) deleted from ->'
+OK062=:'dictionary document updated ->'
 PATHTIT=:'Path*'
 READSTATS=:<;._1 ' ro rw'
 allnlctn=:[/:~@:nlctn&.>[:<]
@@ -1242,6 +1255,13 @@ s=.'kernel32 GetDiskFreeSpaceA i *c *i *i *i *i'cd y;(,0);(,0);(,0);(,0)
 */;2 3 4{s
 )
 fullmonty=:[:".&.>([:<[),&.>[:locsfx]
+getdicdoc=:3 :0
+DL=.{:{.DPATH
+if.badjr a=.jread WP__DL;CNDICDOC do.jderr ERR088
+else.
+ok,>a
+end.
+)
 getdocument=:4 :0
 if.badrc a=.(x,1 )getobjects y do.a else.ok<0 3{"1 rv a end.
 )
@@ -1681,6 +1701,16 @@ pathref=:3 :0
 a=.{:"1 DPATH
 if.badrc uv=.y loadallrefs a do.uv return.end.
 ok(>dnrn__uv y)fullmonty a[uv=.{.a
+)
+putdicdoc=:3 :0
+if.badcl y do.jderr ERR097
+else.
+DL=.{:{.DPATH
+if.badreps(<y)jreplace WP__DL;CNDICDOC do.jderr ERR056
+else.
+ok OK062;DNAME__DL
+end.
+end.
 )
 putexplain=:4 :0
 if.badrc y=.checknttab y do.y return.else.y=.rv y end.

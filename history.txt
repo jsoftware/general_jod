@@ -1,5 +1,10 @@
 general/jod - change history
 
+== 0.9.65 == Dec 19, 2011
+ * (get,put) now fetch and set put dictionary documentation.
+   5 get '' 
+   5 put 'document this dictionary' 
+
 == 0.9.6 == Dec 12, 2011
  * (jodhelp) pointed to new online version of (jod.pdf)
    EPS, TEX and HTML document files removed from main jod dictionary
@@ -121,7 +126,7 @@ general/jod - change history
  * bug fixes in labs - all labs can be run
 
 == 0.3.6 == May 29, 2008
- * first release of fully "addon-ized" JOD - version prior
+ * first release of fully "addon-ized" JOD - versions prior
    to this release had to be manually installed by 
    ad-hoc scripts. Now the JAL system handles JOD installs.
  
