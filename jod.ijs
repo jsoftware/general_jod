@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.65  Build Number: 7  Date: 19 Dec 2011 15:36:43
+NB. Version: 0.9.7  Build Number: 11  Date: 16 Jan 2012 15:57:50
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -131,12 +131,12 @@ INCLASS=:12
 INCREATE=:13
 INPUT=:14
 INSIZE=:15
-IzJODinterface=:<;._1 ' del did dnl dpset gdeps get globs grp make newd od packd put regd restd uses'
+IzJODinterface=:<;._1 ' bnl del did dnl dpset gdeps get globs grp make newd od packd put regd restd uses'
 JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.9.65';7;'19 Dec 2011 15:36:43'
+JODVMD=:'0.9.7';11;'16 Jan 2012 15:57:50'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -180,6 +180,13 @@ badreps=:0:><./
 badsts=:0:
 badunique=:#~:[:#~.
 beforestr=:]{.~1&(i.~)@([E.])
+bnl=:3 :0
+WORD bnl y
+:
+if.badrc a=.x nlargs y do.a return.end.
+x=.x,(<:#x)}.1,DEFAULT
+if.({.x )e.OBJECTNC do.x bnlsearch__ST y else.jderr ERR001 end.
+)
 boxopen=:<^:(L.=0:)
 catrefs=:3 :0
 if.(,a:)-:,y do.''
@@ -383,12 +390,9 @@ guidsx i.0
 dnl=:3 :0
 WORD dnl y
 :
-if.badcl y do.jderr ERR010 return.end.
-a=.ERR001
-if.badil x do.jderr a return.end.
-if.badrc b=.checkopen__ST 0 do.b return.end.
+if.badrc a=.x nlargs y do.a return.end.
 x=.x,(<:#x)}.1,DEFAULT
-if.({.x )e.OBJECTNC do.x dnlsearch__ST y else.jderr a end.
+if.({.x )e.OBJECTNC do.x dnlsearch__ST y else.jderr ERR001 end.
 )
 dpset=:3 :0
 if.y-:'RESETME'do.
@@ -687,6 +691,12 @@ a=.y-.y-.ALPHA
 1 newregdict__ST y;hostsep(jpath'~user\'),JJODDIR,(255<.#a){.a
 end.
 )
+nlargs=:4 :0
+if.badcl y do.jderr ERR010
+elseif.badil x do.jderr ERR001
+elseif.do.checkopen__ST 0
+end.
+)
 now=:6!:0
 nowfd=:([:0 100 100&#.3:{.])+([:24 60 60&#.3:}.])%86400"_
 obidfile=:3 :0
@@ -964,6 +974,7 @@ ERR094=:'exceeds locale symbol table size - no words defined'
 ERR095=:'dictionary file attributes do not allow read/write ->'
 ERR096=:'linux/unix dictionary paths must be / rooted ->'
 ERR097=:'invalid dictionary document must be character list'
+NDOT=:'.'
 OFFSET=:39
 OK050=:'dictionary created ->'
 OK051=:' word(s) put in ->'
@@ -1056,6 +1067,18 @@ if.badrc(WORD,z)savedir__DL y;e do.jderr j else.ok t end.
 end.
 )
 badcn=:[:-.[-:[:{.&>]
+bnlsearch=:4 :0
+DL=.{:0{DPATH
+if.(,NDOT)-:alltrim y do.
+b=.(0<#a=.bnums BAK__DL){'';NDOT
+ok b,&.>'r<0>0.d'8!:0 a
+else.
+ok'NIMP bnlsearch'
+end.
+)
+bnums=:3 :0
+\:~~.,".({.;JDFILES)&beforestr&>{."1(1!:0)<y,'*',IJF
+)
 checkopen=:3 :0
 if.#DPATH do.OK else.jderr ERR050 end.
 )
@@ -1988,6 +2011,7 @@ DTSIXCN=:<;._1' TS IX CN'
 DIRNC=:<;._1' WORDNC MACRONC'
 DIRRFN=:<;._1' WORDREF TESTREF'
 (;:'REFTS REFIX REFCN')=:<"1|:DIRRFN,&.>/DTSIXCN
+BAKPFX=:'B'
 DFILES=:<;._1 ' WF TF GF SF MF UF'
 DFPTRS=:<;._1 ' WP TP GP SP MP UP'
 DIRCN=:<;._1 ' WORDCN TESTCN GROUPCN SUITECN MACROCN'
@@ -2038,6 +2062,7 @@ end.
 end.
 )
 createdl=:3 :0
+BAKNUM=:_1
 'e b c a'=.y
 DNAME=:,>e
 DIDNUM=:>1{a
@@ -2086,6 +2111,9 @@ dnrn=:3 :0
 dropall=:3 :0
 erase DIRNC,DIRIX,DIRCN,DIRTS,REFIX,REFCN,REFTS
 )
+dropbakdir=:3 :0
+erase(<BAKPFX),&.>DIRIX,DIRCN,DIRTS
+)
 dropdir=:3 :0
 erase DIRIX,DIRCN,DIRTS
 )
@@ -2104,6 +2132,21 @@ if.badjr a=.jread WF;CNPARMS do.jderr ERR088 return.end.
 b=.(,>{.a=.>a)-.'*'
 a=.(<(y{.'*'),b)(0)}a
 if.badreps(<a)jreplace WF;CNPARMS do.jderr ERR017 else.OK end.
+)
+loadbakdir=:4 :0
+if.BAKNUM~:x do.dropbakdir 0 end.
+if.wex d=.(<BAKPFX),&.>dnix y do.0
+else.
+c=.BAK,(":x),;y{JDFILES
+if.badjr a=.jread c;CNDIR do.
+1
+else.
+b=.(<_2}.>d),&.>DTSIXCN
+(b)=:a
+BAKNUM=:x
+-.*./wex b
+end.
+end.
 )
 loaddir=:3 :0
 if.wex d=.dnix y do.0
