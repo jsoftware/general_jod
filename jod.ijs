@@ -3124,7 +3124,7 @@ try.read jpath'~temp\',y,IJS
 catch.jderr ERR0254
 end.
 )
-jodfork=:[:fork[:;1 0 2{' ';qt
+jodfork=:[:fork_jtask_[:;1 0 2{' ';qt
 jodhelp=:3 :0
 e=.wwwbrowser 0
 if.badcl y do.jderr ERR0257
