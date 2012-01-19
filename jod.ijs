@@ -618,7 +618,7 @@ if._1=nc<'LIBUUID'do.
 if.UNAME-:'Linux'do.
 LIBUUID_z_=:'libuuid.so.1'
 else.
-LIBUUID_z_=:'"',(find_dll'System'),'"'
+LIBUUID_z_=:'libSystem.B.dylib'
 end.
 end.
 a=.LIBUUID,' uuid_generate n *c'
