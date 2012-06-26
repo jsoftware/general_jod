@@ -47,6 +47,21 @@ NB. configure a ~JODSOURCE directory before proceeding to the next step.
 NB. =========================================================
 Lab Section Remove previous lab dictionaries.
 WARNING: THE NEXT STEP REMOVES DICTIONARIES CREATED BY PRIOR RUNS OF THIS LAB.  THE DICTIONARIES (utilsload, jodload, joddevload) WILL BE DELETED.  IF YOU CARE ABOUT THE CONTENTS OF THESE DICTIONARIES DO NOT EXECUTE THE NEXT LAB STEP.
+
+This step defines a verb that removes lab source dictionaries.
+)
+RemoveLabSourceDictionaries_ijod_=: 3 : 0
+if. IFWIN do.
+  NB. clear out dictionary directories
+  shell 'rd /s /q "',(jpath '~JODSOURCE\utilsload'),'"'
+  shell 'rd /s /q "',(jpath '~JODSOURCE\jodload'),'"'
+  shell 'rd /s /q "',(jpath '~JODSOURCE\joddevload'),'"'
+  smoutput 'Lab temporary source dictionaries erased'
+elseif. IFUNIX do.
+  smoutput 'NIMP: linux/mac erase manually for now.'
+elseif.do.
+  smoutput 'Erase any previous temporary lab source dictionaries manually.'
+end.
 )
 
 NB. =========================================================
@@ -57,9 +72,7 @@ NB. unregister - ignore errors
 3 regd&> ;:'utilsload jodload joddevload'
 
 NB. clear out dictionary directories
-shell 'rd /s /q "',(jpath '~JODSOURCE\utilsload'),'"'
-shell 'rd /s /q "',(jpath '~JODSOURCE\jodload'),'"'
-shell 'rd /s /q "',(jpath '~JODSOURCE\joddevload'),'"'
+RemoveLabSourceDictionaries 0
 
 NB. =========================================================
 Lab Section Create utilsload dictionary
@@ -201,7 +214,9 @@ NB. =========================================================
 Lab Section Scriptdoc commented jod scripts
 The fully commented JOD source code is scriptdoc compatible and can be explored with this standard J tool.
 )
-NB. load scriptdoc
+NB. load scriptdoc - (scriptoc) is an addon in j 7.0x
+NB. systems. Install scriptoc and dependents on 7.0x 
+NB. systems to load and run (scriptdoc).
 require 'scriptdoc'
 
 NB. browse comments in JOD class source
@@ -217,6 +232,8 @@ NB. unregister
 NB. 3 regd&> ;:'utilsload jodload joddevload utils jod joddev'
 
 NB. clear any jod source dictionaries
+NB. Note: commands are Windows oriented. For unix systems
+NB. remove and copy directories manually.
 NB. shell 'rd /s /q "',(jpath '~JODSOURCE\utils'),'"'
 NB. shell 'rd /s /q "',(jpath '~JODSOURCE\jod'),'"'
 NB. shell 'rd /s /q "',(jpath '~JODSOURCE\joddev'),'"'
@@ -236,7 +253,7 @@ Lab Section Summary
 This lab showed how to load dump scripts.  JOD source code dictionaries were loaded.  To use the JOD source dictionaries make sure they are named (joddev), (jod) and (utils).
 
 John D. Baker
-July 2008
+July 2012
 bakerjd99@gmail.com
 )
 

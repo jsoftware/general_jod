@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.70  Build Number: 12  Date: 16 Jan 2012 16:59:49
+NB. Version: 0.9.75  Build Number: 49  Date: 26 Jun 2012 08:58:52
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -34,7 +34,7 @@ return.
 end.
 g=.(4!:0)@<
 a=.(4!:55)@<
-if.0 e.(4!:0 );:'load conew coclass coerase coinsert copath'do.
+if._1 e.(4!:0);:'load conew coclass coerase coinsert copath UNAME IFWIN'do.
 f=.'JOD depends on core J load and class utilities.'
 0[h f=.f,LF,'Load J with a standard profile to use JOD.'
 return.
@@ -123,6 +123,7 @@ ERR024=:'dependent section unbalanced'
 ERR025=:'only one balanced dependent section allowed'
 ERR026=:'error in joduserconfig.ijs - last J error ->'
 ERR027=:'unable to set master parameters ->'
+ERR028=:'not supported on this environment ->'
 EXPLAIN=:8
 FREESPACE=:1048576
 IJF=:'.ijf'
@@ -136,7 +137,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.9.70';12;'16 Jan 2012 16:59:49'
+JODVMD=:'0.9.75';49;'26 Jun 2012 08:58:52'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -614,14 +615,7 @@ guids=:3 :0
 if.IFWIN do.
 a=.'ole32 CoCreateGuid i *c'
 else.
-if._1=nc<'LIBUUID'do.
-if.UNAME-:'Linux'do.
-LIBUUID_z_=:'libuuid.so.1'
-else.
-LIBUUID_z_=:'libSystem.B.dylib'
-end.
-end.
-a=.LIBUUID,' uuid_generate n *c'
+a=.((UNAME-:'Darwin'){::'libuuid.so.1';'libSystem.B.dylib'),' uuid_generate n *c'
 end.
 >{:"1 a 15!:0"1 0<"1 (y,16)$' '
 )
@@ -1263,15 +1257,21 @@ end.
 )
 freedisk=:3 :0
 if.IFWIN do.freediskwin y
-else.
-<./freedisklinux 0
+elseif.UNAME-:'Linux'do.freedisklinux y
+elseif.UNAME-:'Darwin'do.freediskmac y
+elseif.UNAME-:'iOS'do.>:FREESPACE
+elseif.UNAME-:'Android'do.>:FREESPACE
+elseif.do.>:FREESPACE
 end.
 )
 freedisklinux=:3 :0
 a=.host'df -l'
 a=.}.<;._2 a
 a=.a#~-.'none'&-:&>4{.&.>a
-1000*3{"1]_1&".&>a
+<./1000*3{"1]_1&".&>a
+)
+freediskmac=:3 :0
+>:FREESPACE
 )
 freediskwin=:3 :0
 s=.'kernel32 GetDiskFreeSpaceA i *c *i *i *i *i'cd y;(,0);(,0);(,0);(,0)
@@ -1583,10 +1583,10 @@ jderr ERR062 return.
 elseif.0&e.t e.PATHCHRS,ALPHA do.
 jderr ERR063 return.
 end.
-d=.''
 if.IFWIN do.
 if.(2#PATHDEL)-:2{.t do.
 t=.t,(PATHDEL={:t)}.PATHDEL
+d=.''
 else.
 if.isempty w=.justdrv t do.jderr ERR064 return.end.
 d=.w,':',PATHDEL
@@ -2830,18 +2830,19 @@ m=.(toHOST y)(write ::_1:)c=.c,a,IJS
 if.m-:_1 do.(jderr ERR0153),<c else.(ok OK0150),<c end.
 )
 wttext=:4 :0
-'e c'=.x
-if.WORD=e do.
+'g e c'=.3{.x,0
+if.WORD=g do.
 y=.(/:;1 {"1 y){y
-d=.((;1 {"1 y)>0)i.1 
-if.badrc b=.c nounlrep d{.y do.b return.end.
-y=.(rv b),d}.y
+f=.((;1 {"1 y)>0)i.1 
+if.badrc b=.e nounlrep f{.y do.b return.end.
+y=.(rv b),f}.y
 end.
-if.c do.
+if.c do.d=.0{"1 y end.
+if.e do.
 m=.(#y)#0
 elseif.+./m=.-.LF e.&>{:"1 y do.
 b=.m#{."1 y
-if.badrc a=.e getexplain__ST b do.a return.end.
+if.badrc a=.g getexplain__ST b do.a return.end.
 b=.0<#&>a=.{:"1 rv a
 a=.(<"0 b)#&.>(<'NB. '),&.>a,&.>LF
 y=.(a,&.>m#{."1 y)(<(I.m);0)}y
@@ -2850,8 +2851,8 @@ m=.m+2*firstone 1=m
 elseif.do.
 m=.(#y)#3
 end.
-if.WORD=e do.y=.jscriptdefs y else.y=.{:"1 y end.
-ok({.m )}.m jscript y
+if.WORD=g do.y=.jscriptdefs y else.y=.{:"1 y end.
+if.c do.ok<d,.y else.ok({.m )}.m jscript y end.
 )
 coclass'ajodutil'
 coinsert'ajod'
@@ -2925,8 +2926,8 @@ ERR0250=:' is a noun no internal document'
 ERR0251=:'not loaded - load'
 ERR0252=:'not J script(s) ->'
 ERR0253=:'invalid locale name'
-ERR0254=:'unable to get TEMP\*.ijs text'
-ERR0255=:'unable to open TEMP\*ijs for editing'
+ERR0254=:'unable to get TEMP/*.ijs text'
+ERR0255=:'unable to open TEMP/*ijs for editing'
 ERR0256=:'J error in script ->'
 ERR0257=:'invalid help word name'
 ERR0258=:'browser not found ->'
@@ -2942,13 +2943,14 @@ OK0252=:'edit locale ->'
 OK0253=:'starting browser help for ->'
 OK0254=:'starting browser on help index'
 OK0255=:'starting PDF reader'
-OK0256=:'jod.pdf not installed - starting browser for web version'
+OK0256=:'jod.pdf not installed - use JAL to install the addon general/joddocument'
 PDF=:'PDF'
 PDFREADER=:'C:\Program Files\Adobe\Reader 8.0\Reader\acrord32.exe'
-PDFURL=:'https://docs.google.com/viewer?a=v&pid=explorer&chrome=true&srcid=0B3hRbt360vl5YTQ0ZTdlNWEtMjY1NS00YTNlLTgwNmQtYjdiZWZmNzU3YjYw&hl=en_US'
+PDFREADERMAC=:'open'
 SCRIPTDOCCHAR=:'*'
 WWW0=:'C:\Program Files\Internet Explorer\IEXPLORE.EXE'
 WWW0linux=:'chromium-browser'
+WWW0mac=:'open'
 WWW1=:'c:\Program Files\Mozilla Firefox\firefox.exe'
 blkaft=:3 :0
 r=.0#~#y
@@ -3181,23 +3183,21 @@ jodfork e;c{1{JODHELP
 (ok OK0253),d
 end.
 elseif.do.
-jodfork e;0{1{JODHELP
-ok OK0254
+ok OK0254[jodfork e;0{1{JODHELP
 end.
 :
 if.x-:PDF do.
-a=.jpath'~addons\general\jod\joddoc\pdfdoc\jod.pdf'
+a=.jpath'~addons\general\joddocument\pdfdoc\jod.pdf'
 if.fex<a do.
 b=.pdfreader 0
-if.fex<b do.
-jodfork b;a
-ok OK0255
-else.
+if.UNAME-:'Darwin'do.
+ok OK0255[shell b,' ',qt a
+elseif.fex<b do.
+ok OK0255[jodfork b;a
+elseif.do.
 (jderr ERR0260),<b
 end.
 else.
-e=.wwwbrowser 0
-if.IFWIN do.jodfork e;PDFURL else.jodfork e;dblquote<PDFURL end.
 ok OK0256
 end.
 else.
@@ -3223,6 +3223,7 @@ if.badrc b=.x wttext__MK rv b do.b return.else.b=.rv b end.
 a=.>{.y
 case.do.
 if.(<x)e.{(SUITE,GROUP);1 do.
+if.badcl y do.jderr ERR0154__MK return.end.
 if.badrc c=.({.x)get y do.c return.else.'a b'=.,rv c end.
 elseif.(<x)e.{OBJECTNC;DOCUMENT do.
 if.badrc c=.x get y do.c return.
@@ -3237,8 +3238,9 @@ end.
 ok a;b
 )
 pdfreader=:3 :0
-if.wex<'PDFREADER__JODtools'do.a=.PDFREADER__JODtools else.a=.''end.
-if.wex<'PDFReader_j_'do.if.0<#PDFReader_j_ do.a=.PDFReader_j_ end.
+if.wex<'PDFREADER__UT__JODobj'do.a=.PDFREADER__UT__JODobj else.a=.''end.
+if.UNAME-:'Darwin'do.a=.PDFREADERMAC
+elseif.wex<'PDFReader_j_'do.if.0<#PDFReader_j_ do.a=.PDFReader_j_ end.
 elseif.wex<'PDFREADER_j_'do.if.0<#PDFREADER_j_ do.a=.PDFREADER_j_ end.
 end.
 a
@@ -3346,7 +3348,8 @@ r=.>.(#v)%e
 )
 wwwbrowser=:3 :0
 if.wex<'WWWBROWSER__UT__JODobj'do.a=.WWWBROWSER__UT__JODobj else.a=.''end.
-if.wex<'Browser_j_'do.if.0<#Browser_j_ do.a=.Browser_j_ end.
+if.UNAME-:'Darwin'do.a=.WWW0mac
+elseif.wex<'Browser_j_'do.if.0<#Browser_j_ do.a=.Browser_j_ end.
 elseif.wex<'BROWSER_j_'do.if.0<#BROWSER_j_ do.a=.BROWSER_j_ end.
 end.
 a

@@ -1,5 +1,24 @@
 general/jod - change history
 
+== 0.9.75 == June 26, 2012
+ * first Mac compatible version of JOD. The Mac version
+   requires J 7.01 or beyond see: 
+
+   ~addons/general/jod/joddoc/macnotes.txt
+   
+ * (jod.pdf) updated and now distributed as a
+   separate JAL addon. Install (general/joddocument)
+   to place (jod.pdf) in the directories searched
+   by (jodhelp). (jodhelp) no longer looks for an
+   online version of (jod.pdf). 
+   
+ * fixed a (disp) length error. 
+ * line ends in all script files set to line feed LF
+ * labs updated for J 7.01 and Linux/Mac versions
+ 
+ * lab (jodprjm.ijt) removed - this lab referred
+   to an old (pre 7.01) project manager. 
+  
 == 0.9.7 == Jan 16, 2011
  * (jodfork) now calls (fork_jtask_) - done to handle change
    in main J library. (task) verbs are no longer loaded to z locale

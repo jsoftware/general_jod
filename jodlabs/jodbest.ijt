@@ -19,6 +19,16 @@ WARNING: DICTIONARIES CREATED BY PRIOR RUNS OF LAB THIS WILL BE DELETED IN THE N
 
 When the Best Practices lab runs it creates a number of dictionaries in the 'c:\jodlabs' directory. The next step will remove any of these dictionaries.  IF YOU CARE ABOUT THIS DATA STOP NOW.
 )
+RemoveLabBestDictionaries_ijod_=: 3 : 0
+if. IFWIN do.
+  shell 'rd /s /q "c:\jodlabs"'
+  smoutput 'Lab temporary best practices dictionaries erased'
+elseif. IFUNIX do.
+  smoutput 'NIMP: linux/mac erase manually for now.'
+elseif.do.
+  smoutput 'Erase any previous temporary best practices dictionaries manually.'
+end.
+)
 
 NB. =========================================================
 Lab Section
@@ -30,7 +40,7 @@ NB. unregister dictionaries - IGNORE ERRORS
 3 regd&> ;:'bpcopy bptest' [ 3 od ''
 
 NB. delete dictionary files
-shell 'rd /s /q "c:\jodlabs"'
+RemoveLabBestDictionaries 0
 
 NB. =========================================================
 Lab Section JOD does not belong in the J tree
@@ -46,7 +56,8 @@ I would also avoid any OS managed directories like
 Create a JOD master dictionary directory root that is completely independent of J.  It's also a good idea to define a subdirectory structure that mirrors J's versions.  JOD creates binary jfiles.  These files are fairly stable but binaries can change when J changes.
 )
 NB. create a master JOD directory root outside of J's directories.
-newd 'bptest';'c:\jodlabs\602\bptest';'best practices test dictionary'
+NB. This creation depend on a configured directory (~JODSOURCE).
+newd 'bptest';(jpath '~JODSOURCE\bptest');'best practices test dictionary'
 
 NB. This is an example - use another root for your dictionaries.
 
@@ -108,7 +119,7 @@ Lab Section
 Copy a dictionary.
 )
 NB. copy/merge bptest dictionary
-newd 'bpcopy';'c:\jodlabs\602\bpcopy'
+newd 'bpcopy';jpath '~JODSOURCE\bpcopy'
 od 'bpcopy' [ 3 od ''
 0!:0 {:bptestdump
 
@@ -127,7 +138,7 @@ NB. generate re-register script
 rereg=: showpass_ajod_ ;{: 5 od ''
 
 NB. save it in the master root
-rereg write_ajod_ 'c:\jodlabs\602\jodregister.ijs'
+rereg write_ajod_ jpath '~JODSOURCE\jodregister.ijs'
 
 NB. =========================================================
 Lab Section Set library dictionary to readonly
@@ -167,7 +178,7 @@ Lab Section Document dictionary objects
 
 Documentation is a long standing sore point for programmers.  Most of them hate it. Some claim it's unnecessary and even distracting.  Others put in half baked efforts. In my opinion this "isn't even wrong!"  Good documentation elevates code. In Knuth's opinion it separates "literate programming" from the alternative - "illiterate programming."   
 
-JOD provides a number of easy ways to document code. You can enter a single sentence of a large dissertation.  I would recommend the former.  See JOD documentation for more documentation options.
+JOD provides a number of easy ways to document code. You can enter a single sentence or a large dissertation.  I would recommend the former.  See JOD documentation for more documentation options.
 )
 NB. for new words try a single line of documentation.
 afterlaststr=:] }.~ #@[ + 1&(i:~)@([ E. ])
@@ -204,14 +215,14 @@ There are many examples of JOD programming in JOD's source code. Install the jod
 NB. examples of using JOD words to define new facilities
 
 NB. describe a JOD group
-hg_z_=: [: hlpnl [: }. grp
+hg_ijod_=: [: hlpnl [: }. grp
 
 NB. re-reference put dictionary show any errors
-reref_z_=: 3 : '(n,.s) #~ -.;0{"1 s=.0 globs&>n=.}.revo'''' [ y'
+reref_ijod_=: 3 : '(n,.s) #~ -.;0{"1 s=.0 globs&>n=.}.revo'''' [ y'
 
 NB. show words referenced by words in a group that are not in the group
-JODGRP_z_=: 'agroup'
-nx_z_=: 3 : '(allrefs  }. gn) -. gn=. grp JODGRP'
+jodg_ijod_=: 'agroup'
+nx_ijod_=: 3 : '(allrefs  }. gn) -. gn=. grp jodg'
 
 NB. missing from (agroup)
 nx ''
@@ -223,7 +234,7 @@ Lab Section Customize JOD edit facilities
 The main JOD edit words (nw) and (ed) can be customized by defining a DOCUMENTCOMMAND script.
 )
 NB. define document command script - {~N~} is word name placeholder
-DOCUMENTCOMMAND_z_ =: 0 : 0
+DOCUMENTCOMMAND_ijod_ =: 0 : 0
 smoutput pr '{~N~}'
 )
 
@@ -240,7 +251,7 @@ Run and close the (bpword) edit window.
 
 NB. =========================================================
 Lab Section
-Edit a word in the dictionary.  JOD is always editing copies. Originals are can only be changed with explicit put operations.
+Edit a word in the dictionary.  JOD is always editing copies. Originals can only be changed with explicit put operations.
 )
 NB. load dictionary word into edit window
 ed 'sunriseset0'
@@ -262,8 +273,8 @@ NB. standard j scripts
 require 'debug task'
 
 NB. local script nouns 
-JODGRP_z_=: 'sunmoon'
-JODSUI_z_=: 'sunmoontests'
+jodg_ijod_=: 'sunmoon'
+jods_ijod_=: 'sunmoontests'
 
 NB. put/xref
 DOCUMENTCOMMAND_z_ =: 'smoutput pr ''{~N~}'''
@@ -298,13 +309,15 @@ NB. =========================================================
 Lab Section USE JOD HELP AND DOCUMENTATION
 "USE JOD HELP AND DOCUMENTATION"
 
-JOD documentation is available in two forms.  There is an online PDF document that is installed with the addon and there is online help available with the (jodhelp) verb.
+JOD documentation is available in two forms.  There is an offline PDF document available in the addon JODDOCUMENT (general/joddocumet). Install (general/joddocument) to use the offline PDF. 
+
+Online help is available with the (jodhelp) verb. Online help uses Google Documents. Some IT departments and some repressive governments block Google Documents. Get the PDF version if you run into censors.
 )
-NB. open JOD online help - require internet connection
+NB. open JOD online help - requires internet connection
 NB. jodhelp 'AContents'
 
-NB. location of jod.pdf 
-jpath '~addons\general\jod\joddoc\pdfdoc\jod.pdf'
+NB. location of jod.pdf - install addon (general/joddocument) with JAL
+jpath '~addons\general\joddocument\pdfdoc\jod.pdf'
 
 NB. opens jod.pdf if a pdf reader is available on your system
 'PDF' jodhelp ''

@@ -3,7 +3,7 @@ LABAUTHOR=: 0 : 0
 John D. Baker
 bakerjd99@gmail.com
 )
-LABCOMMENTS=: 'This lab introduces the JOD system - revised for J 6.0x May 2008'
+LABCOMMENTS=: 'This lab introduces the JOD system - revised for J 7.0x June 2012'
 LABERRORS=: 1
 LABFOCUS=: 0
 
@@ -32,9 +32,22 @@ NB. =========================================================
 Lab Section Remove old lab dictionaries
 JOD is installed without any dictionaries.   To use JOD you must create some dictionaries.  This lab uses four example dictionaries (lab), (labdev), (toy) and (playpen).  JOD dictionaries are created with the (newd) "new dictionary" verb. 
 
-Before creating lab dictionaries remove any prior lab dictionaries.
+Before creating lab dictionaries remove any prior lab dictionaries. This step defines a utility that will erase dictionaries from default locations. It is run in the next step. 
 
 WARNING: IF THE TEMPORARY LAB DICTIONARIES CONTAIN INFORMARTION YOU CARE ABOUT DO NOT EXECUTE THE NEXT LAB STEP!
+)
+RemoveLabDictionaries_ijod_=: 3 : 0
+if. IFWIN do.
+  shell 'rd /s /q "',(jpath '~user'),'\joddicts\labdev"'
+  shell 'rd /s /q "',(jpath '~user'),'\joddicts\lab"'
+  shell 'rd /s /q "',(jpath '~user'),'\joddicts\toy"'
+  shell 'rd /s /q "',(jpath '~user'),'\joddicts\playpen"'
+  smoutput 'Lab temporary dictionaries erased'
+elseif. IFUNIX do.
+  smoutput 'NIMP: linux/mac erase manually for now.'
+elseif.do.
+  smoutput 'Erase any previous temporary lab dictionaries manually.'
+end.
 )
 
 NB. =========================================================
@@ -48,10 +61,7 @@ NB. unregister any lab dictionaries - ignore errors
 3 regd&> ;:'labdev lab toy playpen'
 
 NB. remove dictionary directories and all contents - ignore errors
-shell 'rd /s /q "',(jpath '~user'),'\joddicts\labdev"'
-shell 'rd /s /q "',(jpath '~user'),'\joddicts\lab"'
-shell 'rd /s /q "',(jpath '~user'),'\joddicts\toy"'
-shell 'rd /s /q "',(jpath '~user'),'\joddicts\playpen"'
+RemoveLabDictionaries 0
 
 NB. =========================================================
 Lab Section
@@ -94,9 +104,9 @@ od 3 3$'boo'
 
 NB. =========================================================
 Lab Section Online JOD documentation
-JOD has extensive online (html) and offline (pdf) documentation.  The online documents can be accessed with the (jodhelp) verb.
+JOD has extensive online and offline (pdf) documentation.  The online documents can be accessed with the (jodhelp) verb.
 
-(jodhelp) spawns a browser task. Browser selection is controlled by the (setwwwbrowser) verb in the jod utility class (jodutil). This class is loaded into locale (ajodutil). In the default setup JOD prefers FireFox but will fall back on Internet Explorer if FireFox is not found.  If no browser is found check the strings (WWw0) and (WWw1) in (ajodutil).
+(jodhelp) spawns a browser task. Browser selection is controlled by the (setwwwbrowser) verb in the jod utility class (jodutil). The browser used depends on the host. Windows and Linux versions of JOD use J's configured browser. The Mac version uses the "open" shell command.
 
 NOTE: you can change preferred browser settings and other JOD class nouns by defining a joduserconfig.ijs script. See the example script
 
@@ -106,7 +116,7 @@ for details.
 
 The next step spawns a browser and looks for JOD online help.  Of course you must be on the internet for this to work!
 )
-NB. help for JOD z interface words can be obtained with (jodhelp)
+NB. help for JOD (ijod) locale interface words can be obtained with (jodhelp)
 
 NB. list all words for which help exists
 jodhelp~ 0
@@ -121,6 +131,8 @@ NB. jodhelp 'jodindex'
 NB. =========================================================
 Lab Section
 This step spawns a browser session.  It can take a few seconds to get to online help.
+
+WARNING: online help uses Google Documents. Google Documents may be blocked by your paranoid IT department or repressive government. If (jodhelp) does not display help within a minute or so use JAL to download (general/joddocument) which installs offline PDF help.
 )
 NB. display documentation for a particular JOD verb
 NB. jodhelp 'put'
@@ -131,9 +143,11 @@ jodhelp ''
 NB. =========================================================
 Lab Section PDF JOD documentation
 JOD documentation is also available in PDF form.  The PDF documentation is the most comphrehensive.  It can also be accessed with (jodhelp).
+
+PDF documentation is available in the addon (general/joddocument). Use JAL to install this addon.
 )
 NB. location of main JOD PDF document
-jpath '~addons\general\jod\joddoc\pdfdoc'
+jpath '~addons\general\joddocument\pdfdoc'
 
 NB. open PDF reader - if the PDFREADER is not found see:
 NB. jpath '~addons\general\jod\jodbak\joduserconfigbak.ijs'
@@ -403,7 +417,7 @@ NB. 1 rm 'makeputgrps'
 
 NB. =========================================================
 Lab Section
-Macros are not restricted to J scripts.  You can also store HTML, LaTeX, XML and plain TEXT scripts in JOD dictionaries.  Only J scripts can be run however.
+Macros are not restricted to J scripts.  You can also store HTML, LaTeX, XML, TEXT and BYTE scripts in JOD dictionaries.  Only J scripts can be run however.
 )
 NB. store LaTeX (22) and HTML (23) texts
 4 put 'latex';22;'... LaTeX code ...'
@@ -413,14 +427,14 @@ NB. store LaTeX (22) and HTML (23) texts
 NB. store XML and arbitrary TEXT (bytes).
 4 put 'xml';XML_ajod_;'<test>this is lame xml</test>'
 
-NB. TEXT is uninterpreted bytes and can store binaries - not recommended for large files
-4 put 'PDF';25;read_ajod_ jpath '~addons\general\jod\joddoc\pdfdoc\jod.pdf'
+NB. BYTE is uninterpreted bytes and can store binaries - not recommended for large files.
+4 put 'BIN';26;read_ajod_ jpath '~addons\general\jod\jmaster.ijf'
 
 NB. byte size of macro
-4 15 get 'PDF'
+4 15 get 'BIN'
 
 NB. macro text types are contants in the main JOD class
-JSCRIPT_ajod_, LATEX_ajod_, HTML_ajod_, XML_ajod_, TEXT_ajod_, UTF8_ajod_
+JSCRIPT_ajod_, LATEX_ajod_, HTML_ajod_, XML_ajod_, TEXT_ajod_, BYTE_ajod_, UTF8_ajod_
 
 NB. =========================================================
 Lab Section Loading dictionary dump script
@@ -505,7 +519,7 @@ NB. =========================================================
 Lab Section
 mls appends generated scripts to the current user's startup.ijs file so they can be loaded independently of JOD.
 
-Note: mls scripts are added to PUBLIC_j_ for the current user.
+Note: mls scripts are added to PUBLIC_j_ or Public_j_ for the current user.
 )
 NB. load generated script
 load 'sunmoon'

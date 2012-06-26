@@ -1,8 +1,7 @@
-This directory is reserved for jod.pdf
+(jod.pdf) is not downloaded with the core JOD addon. To 
+enable local (jodhelp) PDF reading use JAL to install
+the JODDOCUMENT addon (general/joddocument).
 
-jod.pdf is not downloaded with the core JOD addon. To 
-enable local (jodhelp) PDF reading download jod.pdf from:
+Intalling JODDOCUMENT places (jod.pdf) in the directory
 
-http://www.box.net/shared/gajfu50gc0
-
-and copy it to this directory.
+ ~addons/general/joddocument/pdfdoc/

@@ -1,10 +1,13 @@
-Linux Specific Notes for JOD 0.9.2 (May 2011)
+Linux Specific Notes for JOD 0.9.75 (June 2012)
 
-This is the first Linux compatible version of JOD. Before using
-JOD on linux machines please read these notes.
+Before using JOD on linux machines please read these notes.
 
-1) JOD source code is distributed in the JODSOURCE addon. Install the 
-JODSOURCE addon and run the script:
+0) JOD PDF documentation is distribution in the JODDOCUMENT addon.
+Install (general/joddocument) to place (jod.pdf) in the directories
+searched by (jodhelp).
+
+1) JOD source code is distributed in the JODSOURCE addon. Install 
+(general/jodsource) and run the script:
 
   ~addons/general/jodsource/jodsourcesetup.ijs 
 
@@ -16,6 +19,13 @@ After running (jodsourcesetup.ijs) you should see directories like: ('john' is m
   /home/john/jod/j701/utils
   
 To view verbs described in following items these dictionaries must be available.
+
+WARNING: (jodsourcesetup.ijs) uses the arc/zip addon. This addon may fail
+on 64 bit J systems.  See the JOD Page at:
+
+http://bakerjd99.wordpress.com/the-jod-page
+
+for a 64 bit system work-around.
 
 2) JOD was originally developed on Windows. The port to Linux was
 done on a 32 bit Ubuntu 11.0x system. The only Linux library call
@@ -40,6 +50,13 @@ JOD dictionaries in my $HOME (/home/john) directory.
   disp ;:'renamefiles copyfiles'
 
 4) JOD requires rooted dictionary paths, i.e., your paths must begin with a slash /.
+This rule matters most when creating and registering dictionaries. For example:
+
+  NB. create a dictionary named (test0) in specified location
+  newd 'test0';'/home/john/jod/j701/test0';'test0 notes'
+  
+  NB. register an extant dictionary named (test1)
+  regd 'test1';'/home/john/jod/j701/test1';'test1 notes'
 
 5) JOD uses J's configured web browser and pdf reader. Make sure you
 have a browser and reader setup.  
@@ -70,7 +87,6 @@ small volumes mounted JOD may refuse to create, backup or restore dictionaries.
   disp 'freedisk'
   
 Finally, If you encounter problems using JOD please email me at: bakerjd99@gmail.com
-
 
 
 

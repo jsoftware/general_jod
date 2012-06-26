@@ -1,7 +1,7 @@
 NB. manifest for JOD
 CAPTION=:'JOD J Object Dictionary'
-VERSION=:'0.9.70'
-PLATFORMS=:''      
+VERSION=:'0.9.75'
+PLATFORMS=:'win linux darwin'      
 LABCATEGORY=:'General'
 FILES=: 0 : 0
 jod.ijs
@@ -13,12 +13,12 @@ jodbak/jodparmsbak.ijs
 jodbak/jodprofilebak.ijs
 jodbak/joduserconfigbak.ijs
 joddoc/linuxnotes.txt
+joddoc/macnotes.txt
 joddoc/htmldoc/jodindex.html
 joddoc/pdfdoc/jodpdf.txt
 jodexts/jodtools.ijs
 jodlabs/joddump.ijt
 jodlabs/jodintro.ijt
-jodlabs/jodprjm.ijt
 jodlabs/jodbest.ijt
 jodlabs/labexample001.ijs
 jodlabs/labdump.ijs
