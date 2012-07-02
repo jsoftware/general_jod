@@ -1257,9 +1257,9 @@ end.
 )
 freedisk=:3 :0
 if.IFWIN do.freediskwin y
+elseif.IFIOS do.>:FREESPACE
 elseif.UNAME-:'Linux'do.freedisklinux y
 elseif.UNAME-:'Darwin'do.freediskmac y
-elseif.UNAME-:'iOS'do.>:FREESPACE
 elseif.UNAME-:'Android'do.>:FREESPACE
 elseif.do.>:FREESPACE
 end.
