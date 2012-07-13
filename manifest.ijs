@@ -1,6 +1,6 @@
 NB. manifest for JOD
 CAPTION=:'JOD J Object Dictionary'
-VERSION=:'0.9.75'
+VERSION=:'0.9.80'
 PLATFORMS=:'win linux darwin'      
 LABCATEGORY=:'General'
 FILES=: 0 : 0
@@ -24,9 +24,13 @@ jodlabs/labexample001.ijs
 jodlabs/labdump.ijs
 )
 RELEASE=:'j601 j602 j701'
+DEPENDS=: 0 : 0
+data/jfiles
+general/scriptdoc
+)
 DESCRIPTION=: 0 : 0
-JOD (J Object Dictionary) is a J programming tool. It offers
-a word oriented database for all types of J words. JOD 
+JOD (J Object Dictionary) is a J programming tool. JOD is 
+a word oriented database for all types of J objects. JOD 
 supports linked dictionary databases and provides tools for 
 documenting and testing J code. 
 

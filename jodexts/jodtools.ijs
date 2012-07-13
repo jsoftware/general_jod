@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.75  Build Number: 39  Date: 26 Jun 2012 08:58:54
+NB. Version: 0.9.80  Build Number: 35  Date: 13 Jul 2012 09:37:38
 (9!:41)0
 coclass'ajodtools'
 coinsert'ajodutil'
@@ -16,7 +16,7 @@ GROUPSUITES=:<;._1 ' Groups Suites'
 IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp ltx mg mj mls mt noexp notgrp nt nw obnames pr refnames revonex swex tt usedby'
 JODLOADEND=:'NB.</JOD_Load_Scripts>'
 JODLOADSTART=:'NB.<JOD_Load_Scripts>'
-JODTOOLSVMD=:'0.9.75';39;'26 Jun 2012 08:58:54'
+JODTOOLSVMD=:'0.9.80';35;'13 Jul 2012 09:37:38'
 LF=:10{a.
 OK00400=:'load script saved ->'
 OK00401=:'file saved ->'

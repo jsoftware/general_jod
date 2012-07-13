@@ -17,7 +17,7 @@ NB. the JOD system. If you remove any of them JOD will crash. You
 NB. can  safely add additional parameters but  you  cannot safely
 NB. remove current parameters.
 
-MASTERPARMS =: 0 : 0
+MASTERPARMS=: 0 : 0
 
 NB. The format of this parameter file is:
 NB.     jname ; (type) description ; value
@@ -32,8 +32,9 @@ PUTFACTOR  ; (+integer) words stored in one loop pass  (10<y<2048)      ; 100
 GETFACTOR  ; (+integer) words retrieved in one loop pass (10<y<2048)    ; 250
 COPYFACTOR ; (+integer) components copied in one loop pass  (1<y<240)   ; 100
 DUMPFACTOR ; (+integer) objects dumped in one loop pass (1<y<240)       ; 50
+DOCUMENTDICT ; (+integer) when 1 dictionary document is put (0 or 1)    ; 1
 DOCUMENTWIDTH ; (+integer) width of justified document text  (20<y<255) ; 61
-ASCII85    ; (+integer) when=1 use ascii85 in dumps (0 or 1)            ; 0
+ASCII85    ; (+integer) when 1 use ascii85 in dumps (0 or 1)            ; 0
 
 NB. Any added parameters are stored in the master file when
 NB. created and distributed to JOD directory objects.  

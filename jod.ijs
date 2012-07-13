@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.75  Build Number: 49  Date: 26 Jun 2012 08:58:52
+NB. Version: 0.9.80  Build Number: 57  Date: 13 Jul 2012 09:37:35
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -137,7 +137,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.9.75';49;'26 Jun 2012 08:58:52'
+JODVMD=:'0.9.80';57;'13 Jul 2012 09:37:35'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -920,6 +920,7 @@ INVSUITES=:INVGROUPS
 INVMACROS=:CNCLASS,CNPUTDATE,CNCREATION,CNSIZE,CNEXPLAIN
 INVWORDS=:INVMACROS
 INVTESTS=:CNPUTDATE,CNCREATION,CNSIZE,CNEXPLAIN
+rpdtrim=:]#~[:-.[:*./\.PATHDEL"_=]
 DOCINIT=:<;._1 '   '
 ERR050=:'no dictionaries open'
 ERR051=:'not a put dictionary ->'
@@ -968,6 +969,7 @@ ERR094=:'exceeds locale symbol table size - no words defined'
 ERR095=:'dictionary file attributes do not allow read/write ->'
 ERR096=:'linux/unix dictionary paths must be / rooted ->'
 ERR097=:'invalid dictionary document must be character list'
+ERR098=:'master/dictionary file path mismatch - name/DIDNUM ->'
 NDOT=:'.'
 OFFSET=:39
 OK050=:'dictionary created ->'
@@ -982,8 +984,10 @@ OK059=:'put in ->'
 OK060=:' word(s) defined'
 OK061=:'(s) deleted from ->'
 OK062=:'dictionary document updated ->'
+OK063=:'(DOCUMENTDICT = 0) - dictionary document not updated ->'
 PATHTIT=:'Path*'
 READSTATS=:<;._1 ' ro rw'
+afterlaststr=:]}.~#@[+1&(i:~)@([E.])
 allnlctn=:[/:~@:nlctn&.>[:<]
 allnlpfx=:[/:~@:nlpfx&.>[:<]
 allnlsfx=:[/:~@:nlsfx&.>[:<]
@@ -1257,8 +1261,8 @@ end.
 )
 freedisk=:3 :0
 if.IFWIN do.freediskwin y
-elseif.IFIOS do.>:FREESPACE
 elseif.UNAME-:'Linux'do.freedisklinux y
+elseif.IFIOS do.>:FREESPACE
 elseif.UNAME-:'Darwin'do.freediskmac y
 elseif.UNAME-:'Android'do.>:FREESPACE
 elseif.do.>:FREESPACE
@@ -1661,36 +1665,44 @@ nubnlpfx=:([:sortdnub[)nlpfx]
 nubnlsfx=:([:sortdnub[)nlsfx]
 opendict=:4 :0
 if.DPLIMIT<(#x)+#DPATH do.jderr ERR070 return.end.
-o=.x e.{."1 DPATH
-if.1 e.o do.(jderr ERR071),o #x return.end.
-'i f'=.y
-j=.(0{f)i.x
-d=.(<2;j){f
-l=.0<;(<3;j){f
-if.1 e.l do.(jderr ERR072),(1 =l )#x return.end.
+q=.x e.{."1 DPATH
+if.1 e.q do.(jderr ERR071),q #x return.end.
+'k f'=.y
+l=.(0{f)i.x
+d=.(<2;l){f
+p=.0<;(<3;l){f
+if.1 e.p do.(jderr ERR072),(1 =p )#x return.end.
 c=.JDFILES,&.><IJF
-if.1 e.o=.-.fex"1 a=.<@:;"1 d,"0/c do.
-(jderr ERR073),o#x return.
+if.1 e.q=.-.fex"1 a=.<@:;"1 d,"0/c do.
+(jderr ERR073),q#x return.
 end.
 if.badrc g=.markmast 1 do.g return.end.
 b=.DPATH
 e=.i.0
 for_dp.d do.
-if.badjr k=.jread(;dp,{.c);CNPARMS do.
+if.badjr o=.jread(;dp,{.c);CNPARMS do.
 (jdmasterr ERR074),dp_index{x return.
 end.
-if.((<1;dp_index{j){f)-:1{>k do.
-if.-.islib>k do.
+if.((<1;dp_index{l){f)-:1{>o do.
+i=.-.0{(;dp)E.;(0{PARMDIRS){>o
+if.i*.islib>o do.
+o=.>o
+j=.PATHDEL,&.>~dp,&.>PATHDEL&afterlaststr&.>rpdtrim&.>PARMDIRS{o
+o=.<j PARMDIRS}o
+else.
+if.i do.
+if.#b=.({:"1 b )-.{:"1 DPATH do.coerase"0 b end.
+(jdmasterr ERR098),0 1{>o return.
+end.
 if.0 e.iswriteable dp_index{a do.
 if.#b=.({:"1 b )-.{:"1 DPATH do.coerase"0 b end.
-(jdmasterr ERR095),dp_index{x
-return.
+(jdmasterr ERR095),dp_index{x return.
 end.
 end.
 DL=.conew'ajoddob'
 h=.dp_index{x
-if.createdl__DL h;dp;i;k do.
-b=.b,(a:,~h,1{>k),DL
+if.createdl__DL i;h;dp;k;o do.
+b=.b,(a:,~h,1{>o),DL
 e=.e,LIBSTATUS__DL
 else.
 if.#b=.({:"1 b )-.{:"1 DPATH do.coerase"0 b end.
@@ -1704,14 +1716,14 @@ return.
 end.
 end.
 DPATH=:b
-j=.(-.e)#j
-f=.(<JODOBID*1=i)(<3;j)}f
+l=.(-.e)#l
+f=.(<JODOBID*1=k)(<3;l)}f
 if.badreps(<f)jreplace JMASTER;CNMFTAB do.
 jdmasterr ERR077
 elseif.badrc g=.markmast~0 do.g
-elseif.i e.1 2 do.
-o=.(1=i){l=.'/',&.>READSTATS
-(ok OK052,(}.;e{(o,0{l)),') ->'),x
+elseif.k e.1 2 do.
+q=.(1=k){p=.'/',&.>READSTATS
+(ok OK052,(}.;e{(q,0{p)),') ->'),x
 elseif.do.jderr ERR001
 end.
 )
@@ -1729,6 +1741,12 @@ putdicdoc=:3 :0
 if.badcl y do.jderr ERR097
 else.
 DL=.{:{.DPATH
+a=.1
+if.0=nc<'DOCUMENTDICT'do.a=.1=DOCUMENTDICT
+elseif.
+0=nc<'DOCUMENTDICT__DL'do.a=.1=DOCUMENTDICT__DL
+end.
+if.-.a do.ok OK063;DNAME__DL return.end.
 if.badreps(<y)jreplace WP__DL;CNDICDOC do.jderr ERR056
 else.
 ok OK062;DNAME__DL
@@ -2063,19 +2081,20 @@ end.
 )
 createdl=:3 :0
 BAKNUM=:_1
-'e b c a'=.y
-DNAME=:,>e
+'c f b d a'=.y
+DNAME=:,>f
 DIDNUM=:>1{a
+NPPFX=:c
 ({."1 MASTERPARMS)=:{:"1 MASTERPARMS
 ({.>{:a)=:{:>{:a
 LIBSTATUS=:islib a
-RW=:(-.LIBSTATUS)*1=c
+RW=:(-.LIBSTATUS)*1=d
 (DSUBDIRS)=:PARMDIRS{a
-(DFILES)=:f=.b,&.>JDFILES
-(DFPTRS)=:f
+(DFILES)=:g=.b,&.>JDFILES
+(DFPTRS)=:g
 SYS=:((justdrv WF),':',justpath WF),PATHDEL
 SYS=:(':'={.SYS)}.SYS
-if.badjr d=.jread UF;CNRPATH do.0 else.1[RPATH=:>d end.
+if.badjr e=.jread UF;CNRPATH do.0 else.1[RPATH=:>e end.
 )
 dfclose=:3 :0
 a=.y,'P'
@@ -2128,6 +2147,7 @@ erase REFIX,REFCN,REFTS
 )
 justdrvpath=:[:}:]#~[:+./\.'\'&=
 libstatus=:3 :0
+if.NPPFX do.(jderr ERR098),DNAME;DIDNUM return.end.
 if.badjr a=.jread WF;CNPARMS do.jderr ERR088 return.end.
 b=.(,>{.a=.>a)-.'*'
 a=.(<(y{.'*'),b)(0)}a
@@ -2456,6 +2476,16 @@ b=.c a}b
 end.
 5!:5<'b'
 )
+dumpdictdoc=:3 :0
+if.badrc e=.DICTIONARY get''do.(jderr ERR0155),<y return.end.
+if.0=#e=.>1{e do.OK return.end.
+d=.DUMPTAG,LF
+b=.(2#LF),SOSWITCH,LF
+c=.SOPASS,(":DICTIONARY),' put >1{,".".''zz_'',SOLOCALE,''_'' [ cocurrent ''base'' ',d
+a=.b,WRAPTMPWID fmtdumptext,:'';e
+a=.a,LF,c,SOCLEAR,2#LF
+if._1-:(toHOST a)fap<y do.(jderr ERR0155),<y else.OK end.
+)
 dumpdoc=:4 :0
 'a b c'=.x
 if.badrc d=.((EXPLAINFAC*a);(b,EXPLAIN);c)dumptext y do.d
@@ -2533,7 +2563,8 @@ OK
 )
 dumptrailer=:3 :0
 a=.DUMPTAG,LF
-b=.'cocurrent ''base''',a
+b=.LF,'cocurrent ''base''',a
+b=.b,'0 0$(4!:55);:''sonl_z_ SOLOCALE_z_ soput_z_ soclear_z_''',a
 b=.b,SOPASS,DUMPMSG2,a
 if._1-:(toHOST b)fap<y do.(jderr ERR0155),<y else.OK end.
 )
@@ -2659,6 +2690,7 @@ elseif.badrc c=.(a,TEST)dumptm b do.c
 elseif.badrc c=.(a,MACRO)dumptm b do.c
 elseif.badrc c=.(a,GROUP)dumpgs b do.c
 elseif.badrc c=.(a,SUITE)dumpgs b do.c
+elseif.badrc c=.dumpdictdoc b do.c
 elseif.badrc c=.dumptrailer b do.c
 elseif.do.
 (ok OK0151),<b
@@ -2922,6 +2954,7 @@ JODHELP=:('AJodPage';'http://bakerjd99.wordpress.com/the-jod-page/'),.JODHELP
 JODHELP=:(/:0{JODHELP){"1 JODHELP
 qt=:]`dblquote@.IFWIN
 CWSONLY=:'(-.)=:'
+EDTEMP=:'99'
 ERR0250=:' is a noun no internal document'
 ERR0251=:'not loaded - load'
 ERR0252=:'not J script(s) ->'
@@ -3146,16 +3179,17 @@ end.
 a et d
 )
 et=:3 :0
-'99'et y
+EDTEMP et y
 :
 try.
-(toHOST y)write a=.jpath'~temp\',x,IJS
+(toHOST y)write a=.jpath'~temp/',x,IJS
 if.0 e.wex;:'IFJHS IFJ6 IFGTK'do.
 smopen_jijs_ a
 else.
 if.IFJHS do.open_jhs_ a
 elseif.IFGTK do.open_jgtk_ a
 elseif.IFJ6 do.smopen_jijs_ a
+elseif.IFIOS do.je_z_ a
 elseif.do.jderr ERR0262
 end.
 end.

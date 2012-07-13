@@ -1,5 +1,30 @@
 general/jod - change history
 
+== 0.9.80 == July 12, 2012
+ * dictionary documents set and fetched with (5 put 'doc ...')
+   and (5 get '') are now saved in dump scripts. (5 put '..') 
+   is controlled by a new parameter (jodparms.ijs) (DOCUMENTDICT)
+   that determines whether (5 put 'doc ..') stores text -
+   default (DOCUMENTDICT=1) stores text.
+
+ * vestigial z locale dump script load utilities sonl_z_,
+   SOLOCALE_z_, soput_z_ and soclear_z_ are now erased at the
+   end of dump script runs. JOD defines exactly four words
+   in the z locale: jodoff_z_, jodon_z_, jodsystempath_z_
+   and showpass_z_.
+
+ * (opendict) has been modified to test whether master
+   file paths are prefixes of stored dictionary paths. For 
+   READWRITE dictionaries the prefix must match. For READONLY
+   dictionaries the master path replaces the stored path in
+   dictionary directory objects if they differ. This allows 
+   READONLY dictionaries to be placed on locked down network 
+   drives and accessed by many users that may have different 
+   access paths.  
+   
+ * DEPENDS sections added to JOD and JODSOURCE manifest scripts.
+ * jod.pdf (general/joddocument addon) updated.
+
 == 0.9.75 == June 26, 2012
  * first Mac compatible version of JOD. The Mac version
    requires J 7.01 or beyond see: 
