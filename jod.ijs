@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.80  Build Number: 57  Date: 13 Jul 2012 09:37:35
+NB. Version: 0.9.85  Build Number: 16  Date: 13 Oct 2012 14:40:36
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -65,8 +65,9 @@ HTML=:23
 XML=:24
 TEXT=:25
 BYTE=:26
+MARKDOWN=:27
 UTF8=:28
-MACROTYPE=:JSCRIPT,LATEX,HTML,XML,TEXT,BYTE,UTF8
+MACROTYPE=:JSCRIPT,LATEX,HTML,XML,TEXT,BYTE,MARKDOWN,UTF8
 WORD=:0
 TEST=:1
 GROUP=:2
@@ -137,7 +138,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.9.80';57;'13 Jul 2012 09:37:35'
+JODVMD=:'0.9.85';16;'13 Oct 2012 14:40:36'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -205,19 +206,19 @@ a=._1[e=.#f
 while.e>a=.>:a do.
 't c'=.a{f
 if.+./b=.t E.y do.
-u=.I.b
-'l m'=.#&>a{f
-p=.u+0,+/\(<:#u)$d=.m-l
+r=.I.b
+'l q'=.#&>a{f
+p=.r+0,+/\(<:#r)$d=.q-l
 s=.*d
 if.s=_1 do.
 b=.1#~#b
-b=.((l*#u)$1 0#~m,l-m)(,u+/i.l)}b
+b=.((l*#r)$1 0#~q,l-q)(,r+/i.l)}b
 y=.b#y
-if.m=0 do.continue.end.
+if.q=0 do.continue.end.
 elseif.s=1 do.
-y=.y#~>:d u}b
+y=.y#~>:d r}b
 end.
-y=.(c$~m*#u)(,p+/i.m)}y
+y=.(c$~q*#r)(,p+/i.q)}y
 end.
 end.y
 )
@@ -2404,8 +2405,6 @@ end.
 )
 coclass'ajodmake'
 coinsert'ajod'
-DUMPPREAMBLE=:0 :0 
-)
 DUMPTAG=:' NB.{*JOD*}'
 WRAPTMPWID=:'zz';67
 SOCLEAR=:'".soclear',DUMPTAG
@@ -2522,7 +2521,6 @@ if._1-:''(write ::_1:)y do.(jderr ERR0156),<y return.end.
 9!:7,PORTCHARS[a=.,9!:6''
 b=.DUMPMSG0,tstamp''
 b=.b,LF,DUMPMSG3,;(<'; '),&.>":&.>JODVMD
-b=.b,LF,DUMPPREAMBLE
 b=.b,LF,ctl'NB. ',"1 ' ',DUMPMSG1,":0 1{"1 DPATH__ST
 b=.b,LF,LF
 9!:7 a
@@ -3008,24 +3006,24 @@ a=._1[e=.#f
 while.e>a=.>:a do.
 't c'=.a{f
 if.+./b=.t E.y do.
-u=.I.b
-'l m'=.#&>a{f
-q=.(u{' ',y)e.NAMEALPHA
-r=.((u+l){y,' ')e.NAMEALPHA
-u=.u#~-.q+.r
-if.0=#u do.continue.end.
-b=.1 u}0#~#b
-p=.u+0,+/\(<:#u)$d=.m-l
+w=.I.b
+'l o'=.#&>a{f
+q=.(w{' ',y)e.NAMEALPHA
+r=.((w+l){y,' ')e.NAMEALPHA
+w=.w#~-.q+.r
+if.0=#w do.continue.end.
+b=.1 w}0#~#b
+p=.w+0,+/\(<:#w)$d=.o-l
 s=.*d
 if.s=_1 do.
 b=.1#~#b
-b=.((l*#u)$1 0#~m,l-m)(,u+/i.l)}b
+b=.((l*#w)$1 0#~o,l-o)(,w+/i.l)}b
 y=.b#y
-if.m=0 do.continue.end.
+if.o=0 do.continue.end.
 elseif.s=1 do.
-y=.y#~>:d u}b
+y=.y#~>:d w}b
 end.
-y=.(c$~m*#u)(,p+/i.m)}y
+y=.(c$~o*#w)(,p+/i.o)}y
 end.
 end.y
 )
@@ -3247,6 +3245,9 @@ if.badrc y=.checknames__ST y do.y return.else.y=.}.y end.
 if.badrc b=.(WORD,NVTABLE)get y do.b return.end.
 if.badrc b=.WORD wttext__MK rv b do.b return.else.b=.rv b end.
 a=.>{.y
+case.DICTIONARY do.
+if.badrc b=.DICTIONARY get''do.b return.else.b=.rv b end.
+a=.(' '-.~;0{0{DPATH__ST__JODobj),'_DTXT'
 case.SUITE;GROUP do.
 if.badrc b=.(x,2)make y do.b return.else.b=.rv b end.
 a=.y-.' '
