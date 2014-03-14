@@ -5,7 +5,6 @@ bakerjd99@gmail.com
 )
 LABCOMMENTS=: 'This lab introduces the JOD system - revised for J 7.0x June 2012'
 LABERRORS=: 1
-LABFOCUS=: 0
 
 NB. =========================================================
 Lab Section What is JOD?
