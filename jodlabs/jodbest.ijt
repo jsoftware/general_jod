@@ -4,6 +4,7 @@ John D, Baker
 bakerjd99@gmail.com
 )
 LABCOMMENTS=: 'Best practices for JOD May 2008'
+LABFOCUS=: 1
 
 NB. =========================================================
 Lab Section Introduction

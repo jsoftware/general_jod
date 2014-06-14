@@ -4,6 +4,7 @@ John D. Baker
 bakerjd99@gmail.com
 )
 LABCOMMENTS=: 'This lab demonstrates how to load dump JOD scripts May 2008'
+LABFOCUS=: 1
 
 NB. =========================================================
 Lab Section Introduction
