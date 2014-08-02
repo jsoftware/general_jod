@@ -1,7 +1,7 @@
 NB. manifest for JOD
 CAPTION=:'JOD J Object Dictionary'
-VERSION=:'0.9.94'
-PLATFORMS=:'win linux darwin'      
+VERSION=:'0.9.95'
+PLATFORMS=:'win linux darwin'
 LABCATEGORY=:'General'
 FILES=: 0 : 0
 jod.ijs
@@ -23,24 +23,24 @@ jodlabs/jodbest.ijt
 jodlabs/labexample001.ijs
 jodlabs/labdump.ijs
 )
-RELEASE=:'j601 j602 j701 j801 j802'
+RELEASE=:'j601 j602 j701 j801 j802 j803'
 DEPENDS=: 0 : 0
 data/jfiles
 general/scriptdoc
 )
 DESCRIPTION=: 0 : 0
-JOD (J Object Dictionary) is a J programming tool. JOD is 
-a word oriented database for all types of J objects. JOD 
-supports linked dictionary databases and provides tools for 
-documenting and testing J code. 
+JOD (J Object Dictionary) is a J programming tool. JOD is
+a word oriented database for all types of J objects. JOD
+supports linked dictionary databases and provides tools for
+documenting and testing J code.
 
 J 7.0x/8.0x JOD systems require the following addons:
 
   data/jfiles
-  arc/zip 
+  arc/zip
 
 For more information see the JOD wiki pages (Info Button),
-run the lab "JOD lab JOD Introduction" - JOD labs are under 
+run the lab "JOD lab JOD Introduction" - JOD labs are under
 the General lab category - or visit The JOD Page at:
 
 http://bakerjd99.wordpress.com/the-jod-page/
