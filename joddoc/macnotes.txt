@@ -5,12 +5,12 @@ This is the first Mac compatible version of JOD.
 Before using JOD on Mac machines please read these notes.
 
 1. JOD PDF documentation is distributed in the 
-   [JODDOCUMENT](http://code.jsoftware.com/wiki/Addons/general/joddocument) 
+   [JODDOCUMENT](http://www.jsoftware.com/jwiki/Addons/general/joddocument) 
    addon. Install `general/joddocument` to place `jod.pdf` in the directories
    searched by `jodhelp`.
 
 2. JOD source code is distributed in the 
-   [JODSOURCE](http://code.jsoftware.com/wiki/Addons/general/jodsource) 
+   [JODSOURCE](http://www.jsoftware.com/jwiki/Addons/general/jodsource) 
    addon. Install `general/jodsource` and run the script:
 
         ~addons/general/jodsource/jodsourcesetup.ijs 
