@@ -1,6 +1,6 @@
 NB. manifest for JOD
 CAPTION=:'JOD J Object Dictionary'
-VERSION=: '0.9.991'
+VERSION=: '0.9.992'
 PLATFORMS=:'win linux darwin'      
 LABCATEGORY=:'General'
 FILES=: 0 : 0
@@ -22,7 +22,7 @@ jodlabs/jodbest.ijt
 jodlabs/labexample001.ijs
 jodlabs/labdump.ijs
 )
-RELEASE=: 'j601 j602 j701 j801 j802 j803 j804 j805 j806'
+RELEASE=: 'j601 j602 j701 j801 j802 j803 j804 j805 j806 j807'
 DEPENDS=: 0 : 0
 data/jfiles
 )
