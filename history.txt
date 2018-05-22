@@ -2,6 +2,48 @@
 general/jod - change history
 ============================
 
+### 0.9.993 - May 21, 2018 (test of Jsoftware GIT repos)
+
+ * Behaviour of `dpset 'ROOTFOLDER';'~BLOG'` changed. 
+   Prior to this release relative root folders were expanded
+   and then added to the `scripts 'v'` list. This resulted in
+   `scripts` lines like:
+        
+		TeXfrWpxml  C:/Users/john2000/jod/docs/script/TeXfrWpxml.ijs
+        
+   Now `jpath` *configured* strings are not expanded resulting in 
+   `scripts` lines like:
+        
+		TeXfrWpxml  ~BLOG/TeXfrWpxml.ijs
+		
+   This conforms to how `scripts` handles addons.
+        
+		plot   ~addons/graphics/plot/plot.ijs
+  
+ * Support for J 6.01 ended and all versions prior to J 8.07 are
+   now on life support.
+
+ * `namecats` changed to fix indirect mixed assignment error.
+ 
+        NB. (globs) was failing on verbs like this 
+        NB. - there are no mixed assignments.		
+        mixedIndirectAssignError=: 4 : 0
+        (MethodArguments)=. 0
+        (func)=: [ + 0 * ]
+        )
+		
+ * A new name analysis tag `(^:)=` has been added to `namecats` to
+   override mixed assignments. The following legitimate J pattern 
+   is used in a number of JOD words.
+   
+        NB. override mixed assignments (^:)=:
+        NB. (dn) appears to be both local and global
+        dn=. (<_2}.ix) ,&.> DTSIXCN
+        (dn)=: dat
+		
+   The previous change exposed this issue in JOD code. Override comments
+   have been added to JOD words using this pattern. 		
+          
 ### 0.9.990 - February 27, 2017
 
  * `et` adjusted to better support editing when running JOD

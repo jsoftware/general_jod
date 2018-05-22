@@ -1,5 +1,5 @@
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.990  Build Number: 12  Date: 27 Feb 2017 20:51:37
+NB. Version: 0.9.993  Build Number: 20  Date: 21 May 2018 20:26:49
 (9!:41)0
 coclass'ajodtools'
 coinsert'ajodutil'
@@ -13,13 +13,13 @@ ERR00403=:'invalid make load script option (0 or 1)'
 ERR00404=:'J script error in group ->'
 ERR00405=:'words refer to objects/locales ->'
 ERR00406=:'invalid delimiter'
-ERR00407=:'ROOTFOLDER must be a character list (jpath) expression like: ~user/jodroot'
+ERR00407=:'ROOTFOLDER must be a character list configured (jpath) expression like: ~user/jodroot'
 ERR00408=:'unable to write load script ->'
 GROUPSUITES=:<;._1 ' Groups Suites'
 IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp ltx mls noexp notgrp nt nw obnames pr refnames revonex swex usedby'
 JODLOADEND=:'NB.</JOD_Load_Scripts>'
 JODLOADSTART=:'NB.<JOD_Load_Scripts>'
-JODTOOLSVMD=:'0.9.990';12;'27 Feb 2017 20:51:37'
+JODTOOLSVMD=:'0.9.993';20;'21 May 2018 20:26:49'
 LF=:10{a.
 OK00400=:'load script saved ->'
 OK00401=:'file saved ->'
@@ -194,26 +194,26 @@ lg=:3 :0
 2 lg y
 :
 if.x-:2 do.
-o_xGj=.OK00404
-o_gMP=.2 _2 make y
+o_jdW=.OK00404
+o_bKg=.2 _2 make y
 else.
-o_xGj=.OK00405
-o_gMP=.2 mls y
+o_jdW=.OK00405
+o_bKg=.2 mls y
 end.
-'o_vfH o_bEO'=.2{.o_gMP
-if.o_vfH do.
-o_yV4=.18!:5''
+'o_cuS o_sID'=.2{.o_bKg
+if.o_cuS do.
+o_i9p=.18!:5''
 18!:4<'base'
-try.0 !:0 o_bEO
+try.0 !:0 o_sID
 catchd.
-18!:4 o_yV4
+18!:4 o_i9p
 (jderr ERR00404),y;13!:12''
 return.
 end.
-18!:4 o_yV4
-ok(y),o_xGj
+18!:4 o_i9p
+ok(y),o_jdW
 else.
-o_gMP
+o_bKg
 end.
 )
 locgrp=:3 :0
@@ -243,14 +243,20 @@ end.
 if.2-:x do.ok s
 else.
 pdo=.{:0{DPATH__ST__JODobj
-a=.SCR__pdo
+g=.a=.SCR__pdo
 if.wex<'ROOTFOLDER__pdo'do.
 if.badcl ROOTFOLDER__pdo do.jderr ERR00407 return.end.
-if.0<#g =.alltrim ROOTFOLDER__pdo do.if.-.g -:c =.jpath g do.a=.tslash2 c end.end.
+if.0<#g=.alltrim ROOTFOLDER__pdo do.
+if.'~'~:{.g do.jderr ERR00407 return.end.
+if.g -:c =.jpath g do.jderr ERR00407 return.else.a=.tslash2 c end.
+g=.tslash2 g
+else.
+g=.a
+end.
 end.
 d=.a,b,IJS__JODobj
 if._1-:(toHOST s)(write ::_1:)d do.(jderr ERR00408),<d return.end.
-x addloadscript b;a,b
+x addloadscript b;g,b
 end.
 else.
 v
