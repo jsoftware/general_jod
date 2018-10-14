@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 0.9.995  Build Number: 13  Date: 28 May 2018 09:56:56
+NB. Version: 0.9.996  Build Number: 41  Date: 14 Oct 2018 11:50:00
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
 jodsystempath_z_=:3 :0
@@ -34,7 +34,7 @@ return.
 end.
 g=.(4!:0)@<
 a=.(4!:55)@<
-if._1 e.(4!:0);:'load conew coclass coerase coinsert copath jpath UNAME IFWIN'do.
+if._1 e.(4!:0);:'load conew coclass coerase coinsert cocurrent copath jpath UNAME IFWIN'do.
 f=.'JOD depends on core J load and class utilities.'
 0[h f=.f,LF,'Load J with a standard profile to use JOD.'
 return.
@@ -67,7 +67,10 @@ TEXT=:25
 BYTE=:26
 MARKDOWN=:27
 UTF8=:28
-MACROTYPE=:JSCRIPT,LATEX,HTML,XML,TEXT,BYTE,MARKDOWN,UTF8
+PYTHON=:29
+SQL=:30
+JSON=:31
+MACROTYPE=:JSCRIPT,LATEX,HTML,XML,TEXT,BYTE,MARKDOWN,UTF8,PYTHON,SQL,JSON
 WORD=:0
 TEST=:1
 GROUP=:2
@@ -135,12 +138,12 @@ INCLASS=:12
 INCREATE=:13
 INPUT=:14
 INSIZE=:15
-IzJODinterface=:<;._1 ' bnl bget del did dnl dpset gdeps get globs grp make newd od packd put regd restd uses'
+IzJODinterface=:<;._1 ' bnl bget del did dnl dpset gdeps get globs grp make mnl newd od packd put regd restd rxs uses'
 JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'0.9.995';13;'28 May 2018 09:56:56'
+JODVMD=:'0.9.996';41;'14 Oct 2018 11:50:00'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
@@ -345,13 +348,13 @@ if.-.wex<'JODPROF'do.JODPROF=:jodsystempath'jodprofile.ijs'end.
 if.-.wex<'JODUSER'do.JODUSER=:jodsystempath'joduserconfig.ijs'end.
 JVERSION_ajod_=:(jvn ::_9:)''
 if.-.fex<JMASTER,IJF do.
-if.badrc o_nlJ=.createmast JMASTER do.o_nlJ return.end.
+if.badrc o_a4y=.createmast JMASTER do.o_a4y return.end.
 end.
 if.fex<JODUSER do.
 if.(_9-:((0!:0) ::_9:) <JODUSER) {0 1 do.(jderr ERR026) ,<13!:12''return.end.
 end.
-if.badjr o_nlJ=.jread JMASTER;CNMFPARMS do.jderr ERR006 return.end.
-MASTERPARMS_ajod_=:>o_nlJ
+if.badjr o_a4y=.jread JMASTER;CNMFPARMS do.jderr ERR006 return.end.
+MASTERPARMS_ajod_=:>o_a4y
 JODEXT=:0$a:
 IZJODALL=:IzJODinterface,<'JODobj'
 JOD=:y
@@ -360,10 +363,10 @@ MK=:conew'ajodmake'
 UT=:conew'ajodutil'
 SO=:cocreate''
 ('ijod';'z')copath;SO
-o_bla=.JOD;ST;MK;UT;<SO
-createst__ST o_bla
-createmk__MK o_bla
-createut__UT o_bla
+o_nda=.JOD;ST;MK;UT;<SO
+createst__ST o_nda
+createmk__MK o_nda
+createut__UT o_nda
 ".&.>y defzface IzJODinterface
 makedir<jpath'~temp/'
 if.fex<JODPROF do.(_9-:((0!:0) ::_9:) <JODPROF ) {1 0 else.1 end.
@@ -759,6 +762,25 @@ end.
 :
 if.badreps(mubmark 0 )jreplace JMASTER;CNMFMARK do.jderr ERR013 else.ok 0 end.
 )
+mnl=:3 :0
+WORD mnl y
+:
+if.badcl y do.jderr ERR010
+elseif.badil x do.jderr ERR001
+elseif.do.
+x=.3{.x,(<:#x)}.1,DEFAULT
+if.-.((1{x)e.PATOPS)*.(0{x)e.OBJECTNC do.jderr ERR001 return.end.
+if.WORD=0{x do.
+if.-.(2{x)e.(i.4),DEFAULT do.jderr ERR001 return.end.
+elseif.(0{x)e.TEST,GROUP,SUITE do.
+if.DEFAULT~:2{x do.jderr ERR001 return.end.
+elseif.MACRO=0{x do.
+if.-.(2{x)e.MACROTYPE,DEFAULT do.jderr ERR001 return.end.
+elseif.do.jderr ERR001 return.
+end.
+x mnlsearch__ST y
+end.
+)
 mubmark=:];[:(6!:0)0:$]
 nc=:4!:0 ::(_2:)
 newd=:3 :0
@@ -936,6 +958,11 @@ DL=.1{a
 if.badrc a=.restspace__DL 0 do.a else.(}.a )restdict__DL y end.
 )
 rv=:>@(1&{)
+rxs=:3 :0
+ok'NIMP rxs'
+:
+ok'NIMP rxs'
+)
 saveobid=:3 :0
 b=.~.y,readobid a=.obidfile 0
 ((30<.#b){.b)(writenoun ::_1:)a
@@ -1073,6 +1100,7 @@ ERR100=:'name/creation/lastput length mismatch'
 ERR101=:'invalid date(s) name/creation/lastput table'
 ERR102=:'timestamp table shape invalid'
 ERR103=:'no backup(s) to restore or search'
+ERR104=:'no registered dictionaries'
 NDOT=:'.'
 OFFSET=:39
 OK050=:'dictionary created ->'
@@ -1399,6 +1427,7 @@ case.do.jderr d
 end.
 end.
 )
+dupnames=:]#~(0{"1])e.(0{"1])#~[:-.[:~:0{"1]
 freedisk=:3 :0
 if.0=FREESPACE do.1
 elseif.IFWIN do.freediskwin y
@@ -1674,18 +1703,18 @@ OK
 )
 loadwords=:4 :0
 DL=.{:y
-if.badjr o_pxH=.jread WF__DL;x{WORDCN__DL do.
+if.badjr o_zkE=.jread WF__DL;x{WORDCN__DL do.
 jderr ERR088
 else.
-o_uVh=.0~:;1&{&>o_pxH
-o_yau=.>{.y
+o_qOe=.0~:;1&{&>o_zkE
+o_akp=.>{.y
 try.
-if.#o_mrs=.o_uVh#o_pxH do.
-0!:0;(({.&>o_mrs),&.><o_yau,'=:'),&.>({:&>o_mrs),&.><LF
+if.#o_tPn=.o_qOe#o_zkE do.
+0!:0;(({.&>o_tPn),&.><o_akp,'=:'),&.>({:&>o_tPn),&.><LF
 end.
-if.#o_pXo=.(-.o_uVh)#o_pxH do.
-o_mrs=.({.&>o_pXo),&.><o_yau
-(o_mrs)=:(3!:2)&.>{:&>o_pXo
+if.#o_ylU=.(-.o_qOe)#o_zkE do.
+o_tPn=.({.&>o_ylU),&.><o_akp
+(o_tPn)=:(3!:2)&.>{:&>o_ylU
 end.
 catch.jderr ERR091 return.end.
 OK
@@ -1707,6 +1736,30 @@ elseif.makedir"0}:b
 1=makedir{:b do.ok y
 elseif.do.
 (jderr ERR060),<y
+end.
+)
+mnlsearch=:4 :0
+if.badjr d=.>jread(JMASTER,IJF);CNMFTAB do.jderr ERR006 return.end.
+if.0 e.$d do.jderr ERR104 return.end.
+if.fex f=.(tslash2&.>2{d),&.><(;(0{x){JDFILES),IJF do.
+r=.0 2$<''[y=.,y
+g=.(<:|1{x){nlpfx`nlctn`nlsfx
+b=.((0{x)e.WORD,MACRO)*.DEFAULT~:2{x
+for_i.i.#f do.
+o=.i{f[n=.i{0{d
+if.badjr p=.>jread o;CNLIST do.jderr ERR088 return.end.
+if.b do.
+if.badjr s=.>jread o;CNCLASS do.jderr ERR088 return.end.
+p=.p#~s=2{x
+end.
+if.0=#p do.continue.end.
+r=.r,(p(g`:6)y),.n
+end.
+r=./:~r
+if.0>1{x do.ok<dupnames r else.ok<r end.
+else.
+b=.(1:@(1!:4) ::0:) f
+(jderr ERR073),f#~-.b
 end.
 )
 newdparms=:3 :0
@@ -3136,7 +3189,7 @@ ROOTWORDSMARK=:'rootwords:'
 DOCUMENTMARKS=:ASSUMESMARK;AUTHORMARK;CREATEDMARK;DYADMARK;MONADMARK;VERBATIMMARK;ROOTWORDSMARK
 qt=:]`dblquote@.IFWIN
 CWSONLY=:'(-.)=:'
-EDCONSOLE=:'"c:\Program Files (x86)\notepad++\notepad++.exe"'
+EDCONSOLE=:'"c:\Program Files\Microsoft VS Code\code.exe"'
 EDTEMP=:'99'
 ERR0250=:' is a noun no internal document'
 ERR0251=:'not loaded - load'
@@ -3394,8 +3447,7 @@ if.*/wex;:'IFJ6 IFWIN'do.
 if.IFJ6*IFWIN do.smopen_jijs_ a return.end.
 end.
 if.IFQT do.open a
-elseif.IFJHS*.wex<'wwd_qjide_'do.0 0$(1!:2&2)'$$$edit$$$',a
-elseif.IFJHS do.open_jhs_ a
+elseif.IFJHS do.edit_jhs_ a
 elseif.IFWIN*.IFJHS+:IFQT do.fork_jtask_ EDCONSOLE,' ',a
 elseif.IFIOS do.je_z_ a
 elseif.wex<'IFGTK'do.
@@ -3493,50 +3545,50 @@ end.
 rm=:3 :0
 0 rm y
 :
-if.badrc o_ddF=.MACRO get y do.o_ddF return.end.
-o_ddF=.rv o_ddF
-if.*./o_dYM=.JSCRIPT=;1 {"1 o_ddF do.
-o_g5k=.;({:"1 o_ddF),&.>LF
-o_jKe=.18!:5''
+if.badrc o_dVP=.MACRO get y do.o_dVP return.end.
+o_dVP=.rv o_dVP
+if.*./o_zv5=.JSCRIPT=;1 {"1 o_dVP do.
+o_cKK=.;({:"1 o_dVP),&.>LF
+o_wfh=.18!:5''
 try.
 18!:4<'base'
-if.x-:1 do.0!:100 o_g5k else.0!:101 o_g5k end.
-18!:4 o_jKe
+if.x-:1 do.0!:100 o_cKK else.0!:101 o_cKK end.
+18!:4 o_wfh
 catchd.
-18!:4 o_jKe
+18!:4 o_wfh
 (jderr ERR0256),<13!:12''return.
 end.
 else.
-(jderr ERR0252),(-.o_dYM)#{."1 o_ddF
+(jderr ERR0252),(-.o_zv5)#{."1 o_dVP
 end.
 )
 rtt=:3 :0
 0 rtt y
 :
 if.(3-:x )+.4-:x do.
-if.badrc o_gtr=.(SUITE,_2)make y do.o_gtr return.end.
-o_wgv=.rv o_gtr
+if.badrc o_o8v=.(SUITE,_2)make y do.o_o8v return.end.
+o_i9B=.rv o_o8v
 x=.x-3
 else.
-if.badrc o_gtr=.TEST get y do.o_gtr return.end.
-o_gtr=.rv o_gtr
-o_wgv=.;({:"1 o_gtr),&.>LF
+if.badrc o_o8v=.TEST get y do.o_o8v return.end.
+o_o8v=.rv o_o8v
+o_i9B=.;({:"1 o_o8v),&.>LF
 end.
-o_wkR=.18!:5''
+o_uP8=.18!:5''
 18!:4<'base'
 try.
-if.0-:x do.0!:2 o_wgv
-elseif.1-:x do.(][1!:2&2)0!:3 o_wgv
-elseif.2-:x do.0!:001 o_wgv
+if.0-:x do.0!:2 o_i9B
+elseif.1-:x do.(][1!:2&2)0!:3 o_i9B
+elseif.2-:x do.0!:001 o_i9B
 elseif.do.
-18!:4 o_wkR
+18!:4 o_uP8
 jderr ERR001 return.
 end.
 catchd.
-18!:4 o_wkR
+18!:4 o_uP8
 (jderr ERR0256),<13!:12''return.
 end.
-18!:4 o_wkR
+18!:4 o_uP8
 )
 textform2=:63&$: :(4 :0)
 i=.0
