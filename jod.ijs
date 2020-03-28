@@ -1,5 +1,5 @@
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 1.0.0  Build Number: 33  Date: 09 Dec 2019 11:02:40
+NB. Version: 1.0.1  Build Number: 7  Date: 28 Mar 2020 13:01:05
 load 'task'
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
@@ -144,7 +144,7 @@ JDFILES=:<;._1 ' jwords jtests jgroups jsuites jmacros juses'
 JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'1.0.0';33;'09 Dec 2019 11:02:40'
+JODVMD=:'1.0.1';7;'28 Mar 2020 13:01:05'
 JVERSION=:,6.0199999999999996
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
