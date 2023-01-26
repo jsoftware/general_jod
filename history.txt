@@ -2,6 +2,58 @@
 general/jod - change history
 ============================
 
+### 1.0.23 January 26, 2023 (Gender Fluid Edition)
+
+ * J 9.04's use of [GMP](https://gmplib.org/) for extended precision integers 
+   has introduced a binary incompatibility between J 9.04 and prior versions of J.
+   JOD stores extended precision integers in dictionary binary `jfiles`. J 9.04
+   can read older extended integers but if J 9.04 writes extended integers to `jfiles`
+   components older J's can no read longer them. This version adds checks to `put`,
+   `globs` and `dpset` to prevent the mishandling of new/old binary data in dictionaries.
+
+   WARNING: to upgrade to this version of JOD reset your JOD master file by:
+
+        load 'general/jod'
+
+        NB. backup your currently registered dictionaries and shut J down
+        (1 pick 5 od '') fwrite jpath '~addons/general/jod/jodregister.ijs'
+        
+        NB. restart J and erase the files
+        ferase jpath '~addons/general/jod/jmaster.ijf'
+        ferase jpath '~addons/general/jod/jod.ijn'
+
+        NB. reload the registered dictionaries paying attention 
+        NB. to any binary incompatibility messages
+        load 'general/jod'
+        0!:001 <jpath '~addons/general/jod/jodregister.ijs'
+
+        NB. to use old (before 9.04) dictionaries you will have to set them 
+        NB. READONLY in an older version of J and then register in J 9.04
+
+        NB. set dictionary READONLY in an older j
+        od 'olddict'
+        dpset 'READONLY'
+
+        NB. then in a new (J 9.04+) J register 
+        regd 'olddict';'c:/where/your/dict/is'
+
+   NOTE: if you are only interested in running current J9.04 and newer
+   versions of J. You can dump your dictionaries as dump scripts and reload
+   them in newly created J 9.04 dictionaries. The JOD manual explains how to do this
+   in the *Turning JOD Dump Script Tricks* appendix. 
+
+ * J 9.04's changes to the use of the regular expression library `PCRE2` forced some 
+   adjustments to `rxs`. Unicode characters are turned off with `rxutf8 0` prior
+   to `rxs` searches. The setting should be restored after `rxs` runs but I would
+   advise checking for critical code. Turning off Unicode may limit JOD's ability 
+   to deal with some documents but J's Unicode support has always partial.
+   
+ * `5 od ''` adjusted to sort registered dictionaries.
+
+ * Regex errors (errors in the regex expression) now 
+   trapped and clarified: '*wrong' rxs }. dnl ''
+   Prior JOD versions let regex errors go to the top level trap.
+
 ### 1.0.22 - December 11, 2021 (Omicron Variant Edition)
 
  *  `abv`(all backup versions) added - see `jod.pdf`
