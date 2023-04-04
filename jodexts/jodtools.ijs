@@ -1,5 +1,6 @@
+NB. sha256:fe63931badda46467b87b426e442f5347b7d28846101b1d973a52d7cb1ae12cd
 NB. System: jodtools  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 1.0.23 - dev  Build Number: 38  Date: 28 Feb 2023 10:55:31
+NB. Version: 1.0.25 - dev  Build Number: 14  Date: 04 Apr 2023 09:24:10
 (9!:41)0
 coclass'ajodtools'
 coinsert'ajodutil'
@@ -19,7 +20,7 @@ GROUPSUITES=:<;._1 ' Groups Suites'
 IzJODtools=:<;._1 ' addgrp allnames allrefs delgrp fsen getrx hlpnl jodage lg locgrp mls noexp notgrp nt nw obnames pr refnames revonex swex usedby'
 JODLOADEND=:'NB.</JOD_Load_Scripts>'
 JODLOADSTART=:'NB.<JOD_Load_Scripts>'
-JODTOOLSVMD=:'1.0.23 - dev';38;'28 Feb 2023 10:55:31'
+JODTOOLSVMD=:'1.0.25 - dev';14;'04 Apr 2023 09:24:10'
 LF=:10{a.
 OK00400=:'load script saved ->'
 OK00401=:'file saved ->'

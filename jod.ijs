@@ -1,5 +1,6 @@
+NB. sha256:2e12d4ad592461c3e8253b5061dfff0e1a7df8c2aabb415a1a1992ca7c7a18c2
 NB. System: JOD  Author: John D. Baker  Email: bakerjd99@gmail.com
-NB. Version: 1.0.24  Build Number: 9  Date: 28 Feb 2023 10:55:31
+NB. Version: 1.0.25  Build Number: 14  Date: 04 Apr 2023 09:24:10
 load 'task'
 (9!:41) 0
 jodsf_ijod_=:0"_;'JOD SYSTEM FAILURE: last J error -> '"_,[:13!:12''"_[]
@@ -74,7 +75,8 @@ UTF8=:28
 PYTHON=:29
 SQL=:30
 JSON=:31
-MACROTYPE=:JSCRIPT,LATEX,HTML,XML,TEXT,BYTE,MARKDOWN,UTF8,PYTHON,SQL,JSON
+IPYNB=:32
+MACROTYPE=:JSCRIPT,LATEX,HTML,XML,TEXT,BYTE,MARKDOWN,UTF8,PYTHON,SQL,JSON,IPYNB
 WORD=:0
 TEST=:1
 GROUP=:2
@@ -91,12 +93,14 @@ JMASTER=:jodsystempath'jmaster'
 JODPROF=:jodsystempath'jodprofile.ijs'
 JODUSER=:jodsystempath'joduserconfig.ijs'
 ALPHA=:'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+BYTESIZE=:15
 CNMFDLOG=:10
 CNMFMARK=:0
 CNMFPARMDEFS=:9
 CNMFPARMS=:7
 CNMFTAB=:2
 CNMFTABBCK=:3
+CREATION=:13
 DEFAULT=:7
 DEPENDENTSEND=:'enddependents'
 DEPENDENTSSTART=:'dependents'
@@ -150,11 +154,13 @@ JDSDIRS=:<;._1 ' script suite document dump alien backup'
 JEPOCHVER=:9.03999999999999915
 JJODDIR=:'joddicts\'
 JNAME=:'[[:alpha:]][[:alnum:]_]*'
-JODVMD=:'1.0.24';9;'28 Feb 2023 10:55:31'
+JODVMD=:'1.0.25';14;'04 Apr 2023 09:24:10'
 JVERSION=:,6.01999999999999957
+LASTPUT=:14
 MASTERPARMS=:6 3$'PUTFACTOR';'(+integer) words stored in one loop pass';100;'GETFACTOR';'(+integer) words retrieved in one loop pass (<2048)';250;'COPYFACTOR';'(+integer) components copied in one loop pass';100;'DUMPFACTOR';'(+integer) objects dumped in one loop pass (<240)';50;'DOCUMENTWIDTH';'(+integer) width of justified document text';61;'WWWBROWSER';'(character) browser command line - used for jod help';' "C:\Program Files\Internet Explorer\IEXPLORE.EXE"'
 MAXEXPLAIN=:80
 MAXNAME=:128
+NAMECLASS=:12
 NVTABLE=:10
 OK=:1;1
 OK001=:'dictionary unregistered ->'
@@ -368,6 +374,10 @@ checknttab y
 elseif.do.jderr ERR014
 end.
 )
+chkhashdmp=:3 :0
+a=.(read jpath y)-.CR
+(':'&afterstr LF&beforestr a)-:sha256 LF&afterstr a
+)
 createjod=:3 :0
 if.-.wex<'JMASTER'do.JMASTER=:jodsystempath'jmaster'end.
 if.-.wex<'JODPROF'do.JODPROF=:jodsystempath'jodprofile.ijs'end.
@@ -514,7 +524,7 @@ DL=.{:{.DPATH__ST
 if.isempty y do.
 ok<|:>{:>jread WF__DL;CNPARMS__ST
 elseif.-.badcl y do.
-if.badrc d=.binverchk DL do.d return.end.
+if.badrc e=.binverchk DL do.e return.end.
 if.'READWRITE'-:y do.
 b=.(WF__DL;TF__DL;GF__DL;SF__DL;MF__DL;UF__DL),&.><IJF
 if.0 e.iswriteable__ST b do.(jderr ERR095__ST),<DNAME__DL return.end.
@@ -556,11 +566,11 @@ if.badrc d=.checkput__ST 0 do.d return.end.
 d=.ERR019
 if.-.(1=#$y )*.2=#y do.jderr d return.end.
 if.badjr c=.jread WF__DL;CNPARMS__ST do.jderr ERR088 return.end.
-f=.>{:c=.>c
-if.({:$f)=e=.({.f)i.{.y do.jderr d return.end.
-if.(>e{{:f)badsts>{:y do.jderr d return.end.
-('__DL',~>e{{.f)=:>{:y
-c=.(}:c),<f=.({:y)(<1;e)}f
+g=.>{:c=.>c
+if.({:$g)=f=.({.g)i.{.y do.jderr d return.end.
+if.(>f{{:g)badsts>{:y do.jderr d return.end.
+('__DL',~>f{{.g)=:>{:y
+c=.(}:c),<g=.({:y)(<1;f)}g
 if.badreps(<c)jreplace WF__DL;CNPARMS__ST do.jderr ERR017 else.ok OK006;y end.
 elseif.do.jderr ERR001
 end.
@@ -686,7 +696,7 @@ elseif.do.
 select.x
 case.WORD do.
 if.badrc b=.checkput__ST 0 do.b return.else.a=.1{b end.
-if.badrc b=.binverchk a do.b return.end.
+if.badrc c=.binverchk a do.c return.end.
 if.badrc y=.checknames__ST y do.y return.else.y=.,>}.y end.
 if.badrc b=.(WORD;<a)inputdict__ST<y do.b return.end.
 if.badrc b=.WORD getobjects__ST y do.b return.else.b=.,1{::b end.
@@ -844,36 +854,39 @@ obidfile=:3 :0
 od=:3 :0
 1 od y
 :
-c=.ERR005
-if.badjr b=.jread JMASTER;CNMFTAB do.
+d=.ERR005
+if.badjr c=.jread JMASTER;CNMFTAB do.
 jderr ERR006 return.
 end.
-a=.0{>b
+a=.0{>c
 select.x
 case.1 do.
 if.isempty y do.ok/:~a
 else.
 y=.boxopen,y
-if.*./y e.a do.y opendict__ST 1;b else.jderr c end.
+if.*./y e.a do.y opendict__ST 1;c else.jderr d end.
 end.
 case.2 do.
 y=.boxopen,y
-if.*./y e.a do.y opendict__ST 2;b else.jderr c end.
+if.*./y e.a do.y opendict__ST 2;c else.jderr d end.
 case.3 do.
-if.badrc d=.checkopen__ST 0 do.d return.end.
+if.badrc e=.checkopen__ST 0 do.e return.end.
 if.isempty y do.y=.{."1 DPATH__ST else.y=.boxopen,y end.
-if.*./y e.a do.b closedict__ST y else.jderr c end.
+if.*./y e.a do.c closedict__ST y else.jderr d end.
 case.4 do.
-b=.jpathsep&.>0 2{>b
-ok<(/:0{b){|:b
+c=.jpathsep&.>0 2{>c
+ok<(/:0{c){|:c
 case.5 do.
-if.0 e.$b=.>b do.
+if.0 e.$c=.>c do.
 ok'NB. No current JOD registrations: ',tstamp''
 else.
-b=.quote&.>0 2{b{"1~/:0{b
-b=.ctl;"1(<'regd '),"1|:1 0 2{(<';'),b
-b=.'NB. require ''general/jod''',LF,'3 regd&> }. od'''' [ 3 od ''''',LF,b
-ok'NB. JOD registrations: ',(tstamp''),LF,jpathsep b
+c=.quote&.>0 2{c{"1~/:0{c
+c=.ctl;"1(<'regd '),"1|:1 0 2{(<';'),c
+c=.'NB. require ''general/jod''',LF,'0 0$3 regd&> }. od'''' [ 3 od ''''',LF,c
+b=.'NB. JOD registrations: ',tstamp''
+b=.b,LF,DUMPMSG3__MK,;(<'; '),&.>":&.>JODVMD
+b=.b,LF,DUMPMSG4__MK,":,9!:14''
+ok b,LF,jpathsep c
 end.
 case.do.jderr ERR001
 end.
@@ -896,9 +909,9 @@ end.
 if.badil x do.
 if._1&badlocn x do.jderr ERR004 return.else.x=.WORD[a=.<x -.' 'end.
 end.
-if.badrc c=.checkput__ST 0 do.c return.end.
-DL=.1{c
-if.badrc b=.binverchk DL do.b return.end.
+if.badrc d=.checkput__ST 0 do.d return.end.
+DL=.1{d
+if.badrc c=.binverchk DL do.c return.end.
 x=.2{.x,DEFAULT
 select.{.x
 case.WORD do.
@@ -1109,6 +1122,7 @@ b=.~.y,readobid a=.obidfile 0
 ((30<.#b){.b)(writenoun ::_1:)a
 )
 second=:1&({)
+sha256=:3&(128!:6)
 tc=:3!:0
 trimnl=:-.&' '&.>
 tslash2=:([:-'\/'e.~{:)}.'/',~]
@@ -2223,7 +2237,7 @@ end.
 )
 putgs=:4 :0
 'DL d i'=.x
-if.badrc k=.binverchk DL do.k return.end.
+if.badrc l=.binverchk DL do.l return.end.
 if.badrc k=.pathnl d do.k return.end.
 y=./:~~.}.y[g=.{.y
 if.*./b=.y e.;}.k do.
@@ -2232,50 +2246,50 @@ jderr ERR054
 elseif.do.
 e=.{.j=.(>dnix__DL i),'__DL'
 c=.(>dncn__DL i),'__DL'
-o=.(".j)i.g
+p=.(".j)i.g
 dfopen__DL e
 h=.".e,'P__DL'
-if.o=#".j do.
-if.+./o=.(<g)e.&>}.pathnl i do.
-if.badrc p=.i getgstext g do.p return.else.o=.(1;0 1){::p end.
+if.p=#".j do.
+if.+./p=.(<g)e.&>}.pathnl i do.
+if.badrc q=.i getgstext g do.q return.else.p=.(1;0 1){::q end.
 else.
-o=.''
+p=.''
 end.
-f=.<g,o;<y
+f=.<g,p;<y
 f=.f,<g,3$<''
 if.badappend a=.f jappend h do.
 jderr ERR058[dfclose__DL e return.
 end.
-l=.nowfd now''
-o=.l;l;<a:
-p=.CNPUTDATE,CNCREATION,CNEXPLAIN
-if.badrc k=.o invappend h;p do.k
+o=.nowfd now''
+p=.o;o;<a:
+q=.CNPUTDATE,CNCREATION,CNEXPLAIN
+if.badrc k=.p invappend h;q do.k
 else.
-o=.(".j),g
-p=.(".c),{.a
-if.badrc(i,h)savedir__DL o;p do.
+p=.(".j),g
+q=.(".c),{.a
+if.badrc(i,h)savedir__DL p;q do.
 jderr k[dfclose__DL e return.
 else.
 (<(#".j);now'')jreplace h;CNMARK
 end.
 end.
 else.
-a=.o{".c
-if.badjr p=.jread h;a do.
+a=.p{".c
+if.badjr q=.jread h;a do.
 jderr ERR088[dfclose__DL e return.
-elseif.g-:0{>p do.
-if.badreps(<(}:>p),<y)jreplace h;a do.
+elseif.g-:0{>q do.
+if.badreps(<(}:>q),<y)jreplace h;a do.
 jderr ERR056[dfclose__DL e return.
 end.
-p=.o;nowfd now''
-if.badrc k=.p invreplace h;CNPUTDATE do.k return.end.
+q=.p;nowfd now''
+if.badrc k=.q invreplace h;CNPUTDATE do.k return.end.
 elseif.do.
 jderr ERR055 return.
 end.
 end.
 dfclose__DL e
-o=.,>dnnm__DL i
-ok(o,' <',(>g),'> ',OK059);DNAME__DL
+p=.,>dnnm__DL i
+ok(p,' <',(>g),'> ',OK059);DNAME__DL
 end.
 else.
 (jderr ERR083),y#~-.b
@@ -2905,6 +2919,7 @@ DUMPMSG1=:'Names & DidNums on current path'
 DUMPMSG2=:'''NB. end-of-JOD-dump-file regenerate cross references with:  0 globs&> }. revo '''''''' '''
 DUMPMSG3=:'NB. Generated with JOD version'
 DUMPMSG4=:'NB. J version: '
+DUMPMSG5=:'NB. JOD put dictionary path: '
 ERR0150=:'confused declarations ->'
 ERR0151=:'word syntax'
 ERR0152=:'no definition ->'
@@ -2916,6 +2931,7 @@ ERR0157=:'directory-component name class inconsistency -- dump aborted ->'
 ERR0158=:'invalid fully qualified dump file name'
 ERR0159=:'mixed assignments ->'
 ERR0160=:'invalid object timestamp table'
+ERR0161=:'cannot prefix hash ->'
 EXPLAINFAC=:10
 EXPPFX0=:4 5$'1 : ''2 : ''3 : ''4 : '''
 EXPPFX1=:3 8$'3 : ('':''3 : (,'':4 : (,'':'
@@ -3018,6 +3034,7 @@ if._1-:''(write ::_1:)y do.(jderr ERR0156),<y return.end.
 b=.DUMPMSG0,tstamp''
 b=.b,LF,DUMPMSG3,;(<'; '),&.>":&.>JODVMD
 b=.b,LF,DUMPMSG4,":,9!:14''
+b=.b,LF,DUMPMSG5,;{:1{>1{did~0
 b=.b,LF,ctl'NB. ',"1 ' ',DUMPMSG1,":0 1{"1 DPATH__ST
 b=.b,LF,LF
 9!:7 a
@@ -3209,26 +3226,27 @@ y jnb~masknb y
 jscript=:[:;(([:<"0[)#&.>(10{a.)"_),&.>]
 jscriptdefs=:(([:{."1]),&.>(<'=:')"_),&.>[:{:"1]
 makedump=:3 :0
-if.badrc d=.checkopen__ST 0 do.d return.end.
+if.badrc e=.checkopen__ST 0 do.e return.end.
 DL=.{:{.DPATH__ST
 a=.DUMPFACTOR__DL
 if.isempty y do.b=.DMP__DL,DNAME__DL,IJS
 elseif.badcl y do.jderr ERR0158 return.
 elseif.do.b=.y
 end.
-if.0 =nc<'RETAINAGE__DL'do.c=.1-:RETAINAGE__DL else.c=.0 end.
+if.0 =nc<'RETAINAGE__DL'do.d=.1-:RETAINAGE__DL else.d=.0 end.
+if.0 =nc<'HASHDUMP__DL'do.c=.1-:HASHDUMP__DL else.c=.0 end.
 b=.jpathsep b
-if.badrc d=.dumpheader b do.d
-elseif.badrc d=.a dumpwords b do.d
-elseif.badrc d=.(a,TEST)dumptm b do.d
-elseif.badrc d=.(a,MACRO)dumptm b do.d
-elseif.badrc d=.(a,GROUP)dumpgs b do.d
-elseif.badrc d=.(a,SUITE)dumpgs b do.d
-elseif.badrc d=.dumpdictdoc b do.d
-elseif.badrc d=.c dumpntstamps b do.d
-elseif.badrc d=.dumptrailer b do.d
+if.badrc e=.dumpheader b do.e
+elseif.badrc e=.a dumpwords b do.e
+elseif.badrc e=.(a,TEST)dumptm b do.e
+elseif.badrc e=.(a,MACRO)dumptm b do.e
+elseif.badrc e=.(a,GROUP)dumpgs b do.e
+elseif.badrc e=.(a,SUITE)dumpgs b do.e
+elseif.badrc e=.dumpdictdoc b do.e
+elseif.badrc e=.d dumpntstamps b do.e
+elseif.badrc e=.dumptrailer b do.e
 elseif.do.
-(ok OK0151),<b
+if.c do.prefixdumphash b else.(ok OK0151),<b end.
 end.
 )
 makegs=:4 :0
@@ -3344,6 +3362,19 @@ if.(0{DDEFESCS)e.e=.;e do.
 e=.e#~ddefescmask e
 end.
 e=.ok(<a),(<b),<e
+end.
+)
+prefixdumphash=:3 :0
+if._1-:a=.(read ::_1:)y do.
+(jderr ERR0161),<y return.
+else.
+b=.sha256 a-.CR
+a=.(toHOST'NB. sha256:',b,LF),a
+if._1-:a(write ::_1:)y do.
+(jderr ERR0161),<y return.
+else.
+(ok OK0151),<y
+end.
 end.
 )
 putallts=:3 :0
